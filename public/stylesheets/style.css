@@ -1,0 +1,74 @@
+body {
+  /*padding: 30px;*/
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+  /* font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif; */
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background-color: #fefefe;
+}
+
+/* index.ejs */
+.bg-1 span{
+  font-size: 1.5em;
+}
+span.big{
+  font-size: 2em;
+}
+.bg-1 img{
+  width: 100%
+}
+.bg-1 a{
+  color: #ffffff;
+}
+.bg-1 a:hover{
+  text-decoration:none;
+  color: #ddd;
+}
+.bg-1 a .text{
+  position : relative;
+  bottom: 65px;
+  left: 15px;
+}
+
+/* project report 边栏样式 */
+#pwr .aside{
+  padding: 30px 30px 100px;
+  background-color: #eee;
+  margin-top: 30px;
+}
+
+/* input 样式*/
+#content{
+  width: 600px;
+}
+
+span.label{
+  margin-left: 1em;
+}
+
+.report{
+  margin-top: 3em;
+}
+
+.layout-head{
+  z-index: 3;
+  border-top: 3px solid #0088cc;
+  box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.1), 0 1px rgba(0,0,0,0.1);
+  background: #fafafa;
+}
+
+#login{
+  margin-top: 6em;
+}
+#message{
+  width: 200px;
+  float: right
+}
+
+/* bootstrap navbar 样式改变 */
+.navbar{
+  margin-bottom: 5px;
+}
+
+.todo-op{
+  font-size: 0.9em;
+}

@@ -1,0 +1,148 @@
+<% include ../layout/head.ejs %>
+<!-- special css -->
+<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
+<link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<body>
+    <% include ../layout/nav.ejs %>
+    <div class="container">
+        <div id="toolbar">
+            <a class="btn btn-warning btn-sm" id="add"><i class="glyphicon glyphicon-plus"></i>添加</a>
+        </div>
+        <table id="table"></table>
+    </div>
+    <!-- add modal -->
+    <% include ../modals/todolist-add.ejs %>
+</body>
+<!-- special script -->
+<!-- bootstrap-table -->
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- self -->
+<script src="/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
+<script src="/bootstrap-table/lib/tableExport.js"></script>
+<script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script>
+    $(function(){
+        var $table = $('#table');
+        $table.bootstrapTable({
+            url: '/ajax/bootstrapTable/todo',
+            height: window.innerHeight - 100,
+            // responseHandler: function (res) {
+            //     return res;
+            // },
+            search: true,
+            idField: 'id',
+            showColumns: true,
+            showExport: true,
+            // showToggle: true,
+            // showRefresh: true,
+            toolbar: '#toolbar',
+            cache: false,
+            columns: [{
+                field: 'title',
+                title: '标题',
+                valign: 'middle',
+                sortable: true
+            }, {
+                field: 'content',
+                title: '内容',
+                valign: 'middle'
+            }, {
+                field: 'result',
+                title: '方向',
+                valign: 'middle',
+                visible: true
+            }, {
+                field: 'priority',
+                title: '优先级',
+                valign: 'middle'
+            }, {
+                field: 'officer',
+                title: '负责人',
+                valign: 'middle',
+                visible: true
+            }, {
+                field: 'ower',
+                title: '执行者',
+                valign: 'middle',
+                visible: true
+            }, {
+                field: 'state',
+                title: '状态',
+                valign: 'middle',
+                sortable: true,
+                editable: {
+                    type: 'select',
+                    source: [{
+                            value: '等待中',
+                            text: '等待中'
+                        },
+                        {
+                            value: 'FS完成',
+                            text: 'FS完成'
+                        },
+                        {
+                            value: '开发完成',
+                            text: '开发完成'
+                        },
+                        {
+                            value: '测试完成',
+                            text: '测试完成'
+                        }
+                    ],
+                    url: '/project/dl',
+                    success: function (response, newValue) {
+                        //            alert(response);
+                    }
+                }
+            }, {
+                field: 'planFinishDate',
+                title: '计划完成时间',
+                valign: 'middle',
+                /*        editable: {
+                          type: 'text',
+                          url: '/project/dl',
+                          validate: function (value) {
+                            value = $.trim(value);
+                            if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
+                              return '6位数字日期，请按规范填写'
+                            }
+                          }
+                        }*/
+            }, {
+                field: 'realFinishDate',
+                title: '实际完成时间',
+                valign: 'middle',
+                editable: {
+                    type: 'text',
+                    url: '/project/dl',
+                    validate: function (value) {
+                        value = $.trim(value);
+                        if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
+                            return '6位数字日期，请按规范填写'
+                        }
+                    }
+                }
+            }, {
+                field: 'bz',
+                title: '备注',
+                valign: 'middle',
+                visible: true,
+                editable: {
+                    type: 'textarea',
+                    url: '/project/dl'
+                }
+            }]
+        });
+        $('#add').click(function () {
+          $('#addModal').modal('show');
+        });
+    });
+</script>
+<% include ../layout/foot.ejs %>

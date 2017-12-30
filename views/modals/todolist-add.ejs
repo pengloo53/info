@@ -1,0 +1,77 @@
+<!-- Add todolist -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myAddModalLabel">添加任务
+                    <small>填写下面主要信息，其他信息在表格内更新</small>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="title" class="control-label col-lg-2">标题</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="（必填）填写尽量简短明了">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="control-label col-lg-2">内容</label>
+                        <div class="col-lg-9">
+                            <textarea rows="1" name="content" id="content" class="form-control" placeholder="（选填）简单描述一下工作内容" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="result" class="control-label col-lg-2">方向/目标</label>
+                        <div class="col-lg-9">
+                            <textarea rows="1" name="result" id="result" class="form-control" placeholder="（选填）所要达到的效果或是执行方向" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">选择</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">优先级</option>
+                                <option value="MDM">MDM</option>
+                                <option value="ERP">ERP</option>
+                                <option value="BPC">BPC</option>
+                                <option value="BW">BW</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="state" id="state" class="form-control">
+                                <option value="">状态</option>
+                                <option value="接口">接口</option>
+                                <option value="功能">功能</option>
+                                <option value="报表">报表</option>
+                                <option value="增强">增强</option>
+                                <option value="配置">配置</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="form-control" name="ower" id="ower" placeholder="填写承接人">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">计划日期</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="fsPlanDate" id="fsPlanDate" placeholder="FS编写">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="devPlanDate" id="devPlanDate" placeholder="开发">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="testPlanDate" id="testPlanDate" placeholder="测试">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <strong class="text-danger" id="errMessage"></strong>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="addConfirm">添加</button>
+            </div>
+        </div><!-- modal-content -->
+    </div>
+</div>
