@@ -27,6 +27,7 @@
 <script src="/bootstrap-table/lib/tableExport.js"></script>
 <script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
 <script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script src="/javascripts/self.js"></script> 
 <script>
     $(function(){
         var $table = $('#table');
@@ -140,8 +141,11 @@
                 }
             }]
         });
+        // 点击add按钮，显示addModal
         $('#add').click(function () {
-          $('#addModal').modal('show');
+            $('#addModal').modal('show');
+            getSelectList('priority');
+            getSelectList('state');
         });
     });
 </script>

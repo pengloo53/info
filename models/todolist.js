@@ -27,8 +27,4 @@ var todolist = sequelize.define('todolist',{
     timestamps: false
 });
 
-todolist.sync({
-    force: true
-});
-
 module.exports = todolist;
