@@ -1,3 +1,5 @@
+import { print } from 'util';
+
 var express = require('express');
 var router = express.Router();
 // 引入数据模型
@@ -31,6 +33,19 @@ router.get('/get/:table',function(req,res,next){
         default:
             res.send([]);
     }    
+});
+
+router.get('/convert/:table', function(req,res,next){
+    var table = req.params.table || '';
+    var id = req.query.id;
+    switch(table){
+        case 'priority':
+            priority.findOne({
+                where: ["id",id]
+            }).then(function(r){
+                
+            });
+    }
 });
 
 module.exports = router;

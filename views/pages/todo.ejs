@@ -89,7 +89,10 @@
             }, {
                 field: 'priority',
                 title: '优先级',
-                valign: 'middle'
+                valign: 'middle',
+                formatter: function(value,row,index){
+                    return $.get('/ajax/convert/priority?id='+ value);
+                }
             }, {
                 field: 'officer',
                 title: '负责人',
@@ -105,6 +108,7 @@
                 title: '状态',
                 valign: 'middle',
                 sortable: true,
+                class: 'selfState',
                 editable: {
                     type: 'select',
                     source: [{
@@ -231,7 +235,7 @@
                         $planFinishDate.val('');
                         $realFinishDate.val('');
                         $table.bootstrapTable('refresh');
-                        $table.bootstrapTable('resetSearch', titleValue);
+                        // $table.bootstrapTable('resetSearch', titleValue);
                     }
                 });
             }else{
