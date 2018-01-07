@@ -29,23 +29,50 @@
 <script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script src="/javascripts/self.js"></script> 
 <script>
+    window.delList = {
+    'click [title=删除]': function (e, value, row, index) {
+//      clickId = row.id;
+      if (confirm('确定是否删除？便于操作简单，没有用户管理，尽量不要删除别人填写的内容')) {
+        $.ajax({
+          url: '/project/report/del/' + page,
+          data: {
+//            id: clickId
+            id: row.id
+          },
+          method: 'POST',
+          success: function (result) {
+            $table.bootstrapTable('refresh');
+          }
+        });
+      }else{
+          alert(row.id);
+      }
+    }
+  };
     $(function(){
         var $table = $('#table');
         $table.bootstrapTable({
             url: '/ajax/bootstrapTable/todo',
             height: window.innerHeight - 100,
-            // responseHandler: function (res) {
-            //     return res;
-            // },
+            responseHandler: function (res) {
+                for (var i = 0; i < res.length; i++) {
+                    res[i].rid = i + 1;
+                }
+                return res;
+            },
             search: true,
             idField: 'id',
             showColumns: true,
             showExport: true,
-            // showToggle: true,
-            // showRefresh: true,
+            showRefresh: true,
             toolbar: '#toolbar',
             cache: false,
             columns: [{
+                field: 'rid',
+                title: '#',
+                valign: 'middle',
+                align: 'middle'
+            },{
                 field: 'title',
                 title: '标题',
                 valign: 'middle',
@@ -67,9 +94,9 @@
                 field: 'officer',
                 title: '负责人',
                 valign: 'middle',
-                visible: true
+                visible: false
             }, {
-                field: 'ower',
+                field: 'owner',
                 title: '执行者',
                 valign: 'middle',
                 visible: true
@@ -106,16 +133,16 @@
                 field: 'planFinishDate',
                 title: '计划完成时间',
                 valign: 'middle',
-                /*        editable: {
-                          type: 'text',
-                          url: '/project/dl',
-                          validate: function (value) {
-                            value = $.trim(value);
-                            if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
-                              return '6位数字日期，请按规范填写'
-                            }
-                          }
-                        }*/
+                editable: {
+                  type: 'text',
+                  url: '/project/dl',
+                  validate: function (value) {
+                    value = $.trim(value);
+                    if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
+                        return '6位数字日期，请按规范填写'
+                    }
+                  }
+                }
             }, {
                 field: 'realFinishDate',
                 title: '实际完成时间',
@@ -134,18 +161,82 @@
                 field: 'bz',
                 title: '备注',
                 valign: 'middle',
-                visible: true,
+                visible: false,
                 editable: {
                     type: 'textarea',
                     url: '/project/dl'
+                }
+            },{
+                field: 'operator',
+                title: '操作',
+                valign: 'middle',
+                events: delList,
+                formatter: function (value, row, index) {
+                    return '<a class="op" href="javascript:void(0)" title="删除">' +
+                       '<i class="glyphicon glyphicon-trash text-danger"></i></a>';
                 }
             }]
         });
         // 点击add按钮，显示addModal
         $('#add').click(function () {
             $('#addModal').modal('show');
+            $('#errMessage').html('');
             getSelectList('priority');
             getSelectList('state');
+        });
+        // 点击add confirm，提交表单
+        var $title = $('#title');
+        var $content = $('#content');
+        var $result = $('#result');
+        var $priority = $('#priority');
+        var $state = $('#state');
+        var $owner = $('#owner');
+        var $startDate = $('#startDate');
+        var $planFinishDate = $('#planFinishDate');
+        var $realFinishDate = $('#realFinishDate');
+        $('#addConfirm').click(function(){
+            var titleValue = $title.val().trim();
+            var contentValue = $content.val().trim();
+            var resultValue = $result.val().trim();
+            var priorityValue = $priority.val().trim();
+            var stateValue = $state.val().trim();
+            var ownerValue = $owner.val().trim();
+            var startDateValue = $startDate.val().trim();
+            var planFinishDateValue = $planFinishDate.val().trim();
+            var realFinishDateValue = $realFinishDate.val().trim();
+            if(titleValue && contentValue && resultValue && stateValue && ownerValue && startDateValue && planFinishDate && realFinishDate){
+                $.ajax({
+                    url: '/todo/add',
+                    method: 'POST',
+                    data: {
+                        title: titleValue,
+                        content: contentValue,
+                        result: resultValue,
+                        priority: priorityValue,
+                        state: stateValue,
+                        owner: ownerValue,
+                        startDate: startDateValue,
+                        planFinishDate: planFinishDateValue,
+                        realFinishDate: realFinishDateValue
+                    },
+                    success: function(r){
+                        $('#addModal').modal('hide');
+                        $title.val('');
+                        $content.val('');
+                        $result.val('');
+                        $state.val('');
+                        $priority.val('');
+                        $owner.val('');
+                        $startDate.val('');
+                        $planFinishDate.val('');
+                        $realFinishDate.val('');
+                        $table.bootstrapTable('refresh');
+                        $table.bootstrapTable('resetSearch', titleValue);
+                    }
+                });
+            }else{
+                $('#errMessage').html('<请填写完整>');
+            }
         });
     });
 </script>

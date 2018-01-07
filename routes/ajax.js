@@ -5,18 +5,16 @@ var todolist = require('../models/todolist.js');
 var state = require('../models/state.js');
 var priority = require('../models/priority.js');
 
+// 获取table的数据
 router.get('/bootstrapTable/todo', function(req, res, next) {
-    var result = [];
-    var testData = {
-        title: 'TEST1',
-        content: 'Content',
-        result: 'Your want ',
-        priority: '重要紧急'
-    };
-    result.push(testData);
-    res.send(result);
+    todolist.findAll({
+        order: [['id','desc']]
+    }).then(function(r){
+        res.send(r);
+    });
 });
 
+// 获取select选项数据
 router.get('/get/:table',function(req,res,next){
     var table = req.params.table || '';
     switch(table){
