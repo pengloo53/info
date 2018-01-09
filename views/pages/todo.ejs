@@ -29,6 +29,7 @@
 <script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
 <script src="/javascripts/self.js"></script> 
 <script>
+    $.fn.editable.defaults.mode = 'inline';
     window.delList = {
     'click [title=删除]': function (e, value, row, index) {
 //      clickId = row.id;
@@ -70,98 +71,90 @@
             columns: [{
                 field: 'rid',
                 title: '#',
-                valign: 'middle',
-                align: 'middle'
+                align: 'center'
             },{
                 field: 'title',
-                title: '标题',
-                valign: 'middle',
-                sortable: true
+                title: 'title'
             }, {
                 field: 'content',
-                title: '内容',
+                title: 'content',
                 valign: 'middle'
             }, {
                 field: 'result',
                 title: '方向',
-                valign: 'middle',
                 visible: true
             }, {
                 field: 'priority',
                 title: '优先级',
-                valign: 'middle'
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    var msg = '';
+                    switch(value){
+                        case '重要紧急':
+                            msg = '<lable class="label label-danger" title="' + value +'">1</lable>';
+                            break;
+                        case '重要不紧急':
+                            msg = '<lable class="label label-primary" title="'+ value +'">2</lable>';
+                            break;
+                        case '不重要紧急':
+                            msg = '<lable class="label label-warning" title="'+ value +'">3</lable>';
+                            break;
+                        case '不重要不紧急':
+                            msg = '<lable class="label label-success" title="'+ value +'">4</lable>';
+                            break;
+                    }
+                    return msg;
+                }
             }, {
                 field: 'officer',
                 title: '负责人',
-                valign: 'middle',
                 visible: false
             }, {
                 field: 'owner',
                 title: '执行者',
-                valign: 'middle',
-                visible: true
+                visible: true,
+                editable: true
             }, {
                 field: 'state',
                 title: '状态',
-                valign: 'middle',
-                class: 'selfState',
-                editable: {
-                    type: 'select',
-                    source: function(){
-                        return ['备案中','on going','close'];
-                    },
-                    url: '/project/dl',
-                    success: function (response, newValue) {
-                        //            alert(response);
-                    }
-                }
+                // editable: {
+                //     type: 'select',
+                //     source: function(){
+                //         return ['备案中','on going','close'];
+                //     },
+                //     url: '/project/dl',
+                //     success: function (response, newValue) {
+                //         //            alert(response);
+                //     }
+                // }
             }, {
                 field: 'startDate',
                 title: '开始时间',
-                valign: 'middle',
                 class: 'selfDate',
                 editable: {
                   type: 'text',
-                  url: '/project/dl',
-                  validate: function (value) {
-                    value = $.trim(value);
-                    if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
-                        return '6位数字日期，请按规范填写'
-                    }
-                  }
+                  url: '/project/dl'
                 }
             },{
                 field: 'planFinishDate',
                 title: '计划完成时间',
-                valign: 'middle',
+                class: 'selfDate',
                 editable: {
                   type: 'text',
                   url: '/project/dl',
-                  validate: function (value) {
-                    value = $.trim(value);
-                    if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
-                        return '6位数字日期，请按规范填写'
-                    }
-                  }
                 }
             }, {
                 field: 'realFinishDate',
                 title: '实际完成时间',
-                valign: 'middle',
+                class: 'selfDate',
                 editable: {
                     type: 'text',
                     url: '/project/dl',
-                    validate: function (value) {
-                        value = $.trim(value);
-                        if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
-                            return '6位数字日期，请按规范填写'
-                        }
-                    }
                 }
             }, {
                 field: 'bz',
                 title: '备注',
-                valign: 'middle',
                 visible: false,
                 editable: {
                     type: 'textarea',
@@ -170,7 +163,6 @@
             },{
                 field: 'operator',
                 title: '操作',
-                valign: 'middle',
                 events: delList,
                 formatter: function (value, row, index) {
                     return '<a class="op" href="javascript:void(0)" title="删除">' +
@@ -197,15 +189,15 @@
         var $realFinishDate = $('#realFinishDate');
         $('#addConfirm').click(function(){
             var titleValue = $title.val().trim();
-            var contentValue = $content.val().trim();
-            var resultValue = $result.val().trim();
+            var contentValue = $content.val().trim() || '-';
+            var resultValue = $result.val().trim() || '-';
             var priorityValue = $priority.val().trim();
             var stateValue = $state.val().trim();
-            var ownerValue = $owner.val().trim();
+            var ownerValue = $owner.val().trim() || '-';
             var startDateValue = $startDate.val().trim();
-            var planFinishDateValue = $planFinishDate.val().trim();
-            var realFinishDateValue = $realFinishDate.val().trim();
-            if(titleValue && contentValue && resultValue && stateValue && ownerValue && startDateValue && planFinishDate && realFinishDate){
+            var planFinishDateValue = $planFinishDate.val().trim() || '-';
+            var realFinishDateValue = $realFinishDate.val().trim() || '-';
+            if(titleValue && priorityValue && stateValue && startDateValue){
                 $.ajax({
                     url: '/todo/add',
                     method: 'POST',
@@ -236,7 +228,7 @@
                     }
                 });
             }else{
-                $('#errMessage').html('<请填写完整>');
+                $('#errMessage').html('请填写完整');
             }
         });
         // 日期选择框
