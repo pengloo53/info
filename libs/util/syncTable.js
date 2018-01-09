@@ -11,6 +11,6 @@ state.sync({
     force: true
 });
 
-priority.sync({
-    force: true
-});
+// priority.sync({
+//     force: true
+// });

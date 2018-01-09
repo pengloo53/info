@@ -89,10 +89,7 @@
             }, {
                 field: 'priority',
                 title: '优先级',
-                valign: 'middle',
-                formatter: function(value,row,index){
-                    return $.get('/ajax/convert/priority?id='+ value);
-                }
+                valign: 'middle'
             }, {
                 field: 'officer',
                 title: '负责人',
@@ -107,33 +104,33 @@
                 field: 'state',
                 title: '状态',
                 valign: 'middle',
-                sortable: true,
                 class: 'selfState',
                 editable: {
                     type: 'select',
-                    source: [{
-                            value: '等待中',
-                            text: '等待中'
-                        },
-                        {
-                            value: 'FS完成',
-                            text: 'FS完成'
-                        },
-                        {
-                            value: '开发完成',
-                            text: '开发完成'
-                        },
-                        {
-                            value: '测试完成',
-                            text: '测试完成'
-                        }
-                    ],
+                    source: function(){
+                        return ['备案中','on going','close'];
+                    },
                     url: '/project/dl',
                     success: function (response, newValue) {
                         //            alert(response);
                     }
                 }
             }, {
+                field: 'startDate',
+                title: '开始时间',
+                valign: 'middle',
+                class: 'selfDate',
+                editable: {
+                  type: 'text',
+                  url: '/project/dl',
+                  validate: function (value) {
+                    value = $.trim(value);
+                    if (value && !/^([12]\d{3})(0\d|1[0-2])([0-2]\d|3[01])$/.test(value)) {
+                        return '6位数字日期，请按规范填写'
+                    }
+                  }
+                }
+            },{
                 field: 'planFinishDate',
                 title: '计划完成时间',
                 valign: 'middle',
@@ -185,7 +182,7 @@
         $('#add').click(function () {
             $('#addModal').modal('show');
             $('#errMessage').html('');
-            getSelectList('priority');
+            // getSelectList('priority');
             getSelectList('state');
         });
         // 点击add confirm，提交表单
@@ -242,6 +239,32 @@
                 $('#errMessage').html('<请填写完整>');
             }
         });
+        // 日期选择框
+        $('input.date').datepicker({
+            format: "yyyymmdd",
+            weekStart: 7,
+            maxViewMode: 1,
+            language: "zh-CN",
+            // daysOfWeekDisabled: "0,6",
+            // daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            todayHighlight: true,
+            // startDate: new Date()
+        });
+        //
+        $table.on('editable-shown.bs.table',function(editable, field, row, $el){
+            $('.selfDate .editable-input input').datepicker({
+                format: "yyyymmdd",
+                weekStart: 7,
+                maxViewMode: 1,
+                language: "zh-CN",
+                // daysOfWeekDisabled: "0,6",
+                // daysOfWeekHighlighted: "0,6",
+                autoclose: true,
+                todayHighlight: true,
+                // startDate: new Date()
+            });
+        })
     });
 </script>
 <% include ../layout/foot.ejs %>

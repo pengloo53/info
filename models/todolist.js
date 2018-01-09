@@ -12,7 +12,7 @@ var todolist = sequelize.define('todolist',{
     title: Sequelize.STRING(100),  // 标题&任务
     content: Sequelize.STRING(500),  // 详细内容&方向
     result: Sequelize.STRING,   // 产出
-    priority: Sequelize.INTEGER,  // 级别
+    priority: Sequelize.STRING,  // 级别
     officer: Sequelize.STRING, // 负责人
     owner: Sequelize.STRING,  // 承接人
     startDate: Sequelize.STRING, // 开始时间

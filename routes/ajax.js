@@ -1,5 +1,3 @@
-import { print } from 'util';
-
 var express = require('express');
 var router = express.Router();
 // 引入数据模型
@@ -41,10 +39,15 @@ router.get('/convert/:table', function(req,res,next){
     switch(table){
         case 'priority':
             priority.findOne({
-                where: ["id",id]
+                where: {
+                    id: id
+                }
             }).then(function(r){
-                
+                res.send(r.title);
             });
+            break;
+        default:
+            res.send('');
     }
 });
 
