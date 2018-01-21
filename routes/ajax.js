@@ -45,6 +45,15 @@ router.get('/convert/:table', function(req,res,next){
                 res.send(r.title);
             });
             break;
+        case 'state':
+            state.findOne({
+                where: {
+                    id: id
+                }
+            }).then(function(r){
+                res.send(r.title);
+            });
+            break;
         default:
             res.send('');
     }

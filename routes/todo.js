@@ -18,22 +18,21 @@ router.post('/add', function (req, res, next) {
   var content = req.body.content.trim() || '-';
   var result = req.body.result.trim() || '-';
   var priority = req.body.priority.trim();
-  // var state = req.body.state.trim() || '-';
-  // var owner = req.body.owner.trim() || '-';
+  var state = 1;
   var startDate = req.body.startDate.trim();
   var planFinishDate = req.body.planFinishDate.trim();
-  // var realFinishDate = req.body.realFinishDate.trim() || '-';
+  // var officer = req.session.user.name || '-';
+  var officer = '-';
   if(title && priority && startDate && planFinishDate){
     todolist.create({
       title: title,
       content: content,
       result: result,
       priority: priority,
-      // state: state,
-      // owner: owner,
+      state: state,
+      officer: officer,
       startDate: startDate,
-      planFinishDate: planFinishDate,
-      // realFinishDate: realFinishDate
+      planFinishDate: planFinishDate
     }).then(function (p) {
       console.log('created.' + JSON.stringify(p));
       res.send('success');
@@ -59,23 +58,63 @@ router.post('/delete', function(req,res,next){
     res.send('del error');
   }
 });
-
-// update 
+// update all
+router.post('/updateAll', function(req,res,next){
+  var title = req.body.title;
+  var content = req.body.content;
+  var result = req.body.result;
+  var startDate = req.body.startDate;
+  var planFinishDate = req.body.planFinishDate;
+  var realFinishDate = req.body.realFinishDate;
+  var priority = req.body.priority;
+  var bz = req.body.bz;
+  var id = req.body.id;
+  todolist.update({
+    title: title,
+    content: content,
+    result: result,
+    startDate: startDate,
+    planFinishDate: planFinishDate,
+    realFinishDate: realFinishDate,
+    priority: priority,
+    bz: bz
+  },{
+    where: {
+      id: id
+    }
+  }).then(function(p){
+    res.send('update all success');
+  });
+});
+// update element
 router.post('/update', function(req,res,next){
-  var value = req.body.value || '-';
+  var value = req.body.value || '';
   var name = req.body.name || '';
   var id = req.body.pk;
   // console.log('id=' + id + ', name=' + name + ',value: '+ value);
-  if(name && value){
+  if(name && value && name == 'owner'){
     todolist.update({
-      name: value
+      owner: value
     },{
       where: {
         'id': id
       }
     }).then(function(p){
       console.log('update.' + JSON.stringify(p));
-      res.send('success');
+      res.send('update owner success');
+    });
+  }else if(name && name == 'realFinishDate'){
+    var state = value?3:2;
+    todolist.update({
+      realFinishDate: value,
+      state: state
+    },{
+      where: {
+        id: id
+      }
+    }).then(function(p){
+      console.log('update.' + JSON.stringify(p));
+      res.send('update realFinishDate success');
     });
   }else{
     res.send('error');

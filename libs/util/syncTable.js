@@ -8,4 +8,18 @@ todolist.sync({
 
 state.sync({
     force: true
-});
+}).then(
+    function(){
+        // 创建基础数据
+        state.bulkCreate(
+            [{
+                title: '任务备案'
+            },{
+                title: 'on going'
+            },{
+                title: 'closed'
+            }]
+        );
+    }
+);
+

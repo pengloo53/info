@@ -6,7 +6,8 @@
     "start": "NODE_ENV=production supervisor --harmony -i views/ ./bin/www",
     "test": "NODE_ENV=test supervisor --harmony -i views/ ./bin/www",
     "winStart": "SET NODE_ENV=production&&supervisor --harmony -i views/ ./bin/www",
-    "winTest": "SET NODE_ENV=test&&supervisor --harmony -i views/ ./bin/www"
+    "winTest": "SET NODE_ENV=test&&supervisor --harmony -i views/ ./bin/www",
+    "syncDB" : "NODE_ENV=test node libs/util/syncTable.js"
   },
   "dependencies": {
     "body-parser": "~1.18.2",

@@ -4,8 +4,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myAddModalLabel">添加任务
-                    <small>填写下面主要信息，其他信息在表格内更新</small>
+                <h4 class="modal-title" id="myAddModalLabel">
+                    <!-- <small>填写下面主要信息，其他信息在表格内更新</small> -->
                 </h4>
             </div>
             <div class="modal-body">
@@ -39,40 +39,45 @@
                                 <option value="不重要不紧急">不重要不紧急</option>
                             </select>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="开始日期">
+                        <div class="col-lg-3 col-md-4 col-sm-4 add-modal">
+                            <input type="text" class="date form-control" name="startDate" id="startDate1" placeholder="开始日期">
                         </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="计划完成日期">
+                        <div class="col-lg-3 col-md-4 col-sm-4 add-modal">
+                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate1" placeholder="计划完成日期">
                         </div>
-<!--                        <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="col-lg-3 col-md-4 col-sm-4 edit-modal">
                             <select type="text" name="state" id="state" class="form-control">
                                 <option value="">状态</option>
                             </select>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4">
+                        <div class="col-lg-3 col-md-4 col-sm-4 edit-modal">
                             <input type="text" class="form-control" name="owner" id="owner" placeholder="填写承接人">
                         </div>
-                        
                     </div>
-                    <div class="form-group">
+                    <div class="form-group edit-modal">
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">日期</label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="开始日期">
+                            <input type="text" class="date form-control" name="startDate" id="startDate2" placeholder="开始日期">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="计划完成日期">
+                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate2" placeholder="计划完成日期">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <input type="text" class="date form-control" name="realFinishDate" id="realFinishDate" placeholder="实际完成日期">
                         </div>
-                    </div>-->
+                    </div>
+                    <div class="form-group edit-modal">
+                        <label for="bz" class="control-label col-lg-2">备注</label>
+                        <div class="col-lg-9">
+                            <textarea rows="2" name="bz" id="bz" class="form-control" placeholder="（选填）备注" style="width:100%;"></textarea>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <strong class="text-danger" id="errMessage"></strong>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="addConfirm">添加</button>
+                <button type="button" class="btn btn-primary" id="addConfirm">提交</button>
             </div>
         </div><!-- modal-content -->
     </div>
