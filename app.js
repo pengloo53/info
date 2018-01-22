@@ -27,10 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 正常请求的日志
 app.use(expressWinston.logger({
   transports: [
-    new (winston.transports.Console)({
-        json: true,
-        colorize: true
-    }),
+    // new (winston.transports.Console)({
+    //     json: true,
+    //     colorize: true
+    // }),
     new winston.transports.File({
       filename: 'logs/success.log'
     })
@@ -42,10 +42,10 @@ index(app);   // 路由转移
 // 错误请求的日志
 app.use(expressWinston.errorLogger({
   transports: [
-    new winston.transports.Console({
-        json: true,
-        colorize: true
-    }),
+    // new winston.transports.Console({
+    //     json: true,
+    //     colorize: true
+    // }),
     new winston.transports.File({
       filename: 'logs/error.log'
     })
