@@ -18,11 +18,11 @@ router.post('/add', function (req, res, next) {
   var content = req.body.content.trim() || '-';
   var result = req.body.result.trim() || '-';
   var priority = req.body.priority.trim();
-  var state = 1;
+  var state = 1; // 1: 备案
   var startDate = req.body.startDate.trim();
   var planFinishDate = req.body.planFinishDate.trim();
-  // var officer = req.session.user.name || '-';
-  var officer = '-';
+  var owner = req.body.owner.trim() || '-';
+  var officer = '-';  // 后续加入用户管理直接保存管理员名称
   if(title && priority && startDate && planFinishDate){
     todolist.create({
       title: title,
@@ -30,6 +30,7 @@ router.post('/add', function (req, res, next) {
       result: result,
       priority: priority,
       state: state,
+      owner: owner,
       officer: officer,
       startDate: startDate,
       planFinishDate: planFinishDate
@@ -58,6 +59,7 @@ router.post('/delete', function(req,res,next){
     res.send('del error');
   }
 });
+
 // update all
 router.post('/updateAll', function(req,res,next){
   var title = req.body.title;
@@ -69,6 +71,7 @@ router.post('/updateAll', function(req,res,next){
   var priority = req.body.priority;
   var bz = req.body.bz;
   var id = req.body.id;
+  var owner = req.body.owner;
   todolist.update({
     title: title,
     content: content,
@@ -77,7 +80,8 @@ router.post('/updateAll', function(req,res,next){
     planFinishDate: planFinishDate,
     realFinishDate: realFinishDate,
     priority: priority,
-    bz: bz
+    bz: bz,
+    owner: owner
   },{
     where: {
       id: id

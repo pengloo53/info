@@ -1,0 +1,79 @@
+<!-- Add todolist -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">更新任务清单
+                    <!-- <small>填写下面主要信息，其他信息在表格内更新</small> -->
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <input type="hidden" id="listId">
+                    <div class="form-group">
+                        <label for="title" class="control-label col-lg-2">标题</label>
+                        <div class="col-lg-9">
+                            <input type="text" name="title" id="etitle" class="form-control" placeholder="（必填）填写尽量简短明了">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="control-label col-lg-2">内容</label>
+                        <div class="col-lg-9">
+                            <textarea rows="1" id="econtent" class="form-control" placeholder="（选填）简单描述一下工作内容" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="result" class="control-label col-lg-2">方向/目标</label>
+                        <div class="col-lg-9">
+                            <textarea rows="1" id="eresult" class="form-control" placeholder="（选填）所要达到的效果或是执行方向" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">选择</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" id="epriority" class="form-control">
+                                <option value="">优先级</option>
+                                <option value="重要紧急">重要紧急</option>
+                                <option value="重要不紧急">重要不紧急</option>
+                                <option value="不重要紧急">不重要紧急</option>
+                                <option value="不重要不紧急">不重要不紧急</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" id="estate" class="form-control">
+                                <option value="">状态</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="form-control" id="eowner" placeholder="填写承接人">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">日期</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" id="estartDate" placeholder="开始日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" id="eplanFinishDate" placeholder="计划完成日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" id="erealFinishDate" placeholder="实际完成日期">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bz" class="control-label col-lg-2">备注</label>
+                        <div class="col-lg-9">
+                            <textarea rows="2" id="ebz" class="form-control" placeholder="（选填）备注" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <strong class="text-danger" class="errMessage"></strong>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="editConfirm">更新</button>
+            </div>
+        </div><!-- modal-content -->
+    </div>
+</div>

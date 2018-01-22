@@ -1,6 +1,25 @@
 // $.fn.editable.defaults.mode = 'inline';
 $(function () {
     var $table = $('#table');
+    // add 字段
+    var $title = $('#title');
+    var $content = $('#content');
+    var $result = $('#result');
+    var $priority = $('#priority');
+    var $state = $('#state');
+    var $owner = $('#owner');
+    var $startDate = $('#startDate');
+    var $planFinishDate = $('#planFinishDate');
+    // eidt 字段
+    var $etitle = $('#etitle');
+    var $econtent = $('#econtent');
+    var $eresult = $('#eresult');
+    var $eowner = $('#eowner');
+    var $estartDate = $('#estartDate');
+    var $eplanFinishDate = $('#eplanFinishDate');
+    var $erealFinishDate = $('#erealFinishDate');
+    var $epriority = $('#epriority');
+    var $ebz = $('#ebz');
     window.operator = {
         'click [title=删除]': function (e, value, row, index) {
             if (confirm('确定是否删除？')) {
@@ -11,28 +30,35 @@ $(function () {
                     },
                     method: 'POST',
                     success: function (result) {
-                        // alert(result);
                         $table.bootstrapTable('refresh');
                     }
                 });
             }
         },
-        // 'click [title=邮件]': function (e, value, row, index) {
-        //     if (!row.owner) { // 当owner为空时，阻止modal弹出
-        //         e.stopPropagation();
-        //         alert('执行担当不存在，请先指定担当');
-        //     }
-        //     // $('#mailModal').modal('show');
-        // },
-        // 'click [title=编辑]': function (e, value, row, index) {
-        //     console.log('id=%d,title=%s,startDate=%s', row.id, row.title, row.startDate);
-        //     // $('#addModal').modal('show');
-
-        // }
+        'click [title=邮件]': function (e, value, row, index) {
+            if (!row.owner) { // 当owner为空时，阻止modal弹出
+                e.stopPropagation();
+                alert('执行担当不存在，请先指定担当');
+            }
+            // $('#mailModal').modal('show');
+        },
+        'click [title=编辑]': function (e, value, row, index) {
+            console.log('id:%d,title:%s,content:%s,startDate:%s', row.id, row.title, row.content, row.startDate);
+            $('#listId').val(row.id);
+            $ebz.val(row.bz);
+            $etitle.val(row.title);
+            $econtent.val(row.content);
+            $eresult.val(row.result);
+            $epriority.val(row.priority);
+            $estartDate.val(row.startDate);
+            $eplanFinishDate.val(row.planFinishDate);
+            $erealFinishDate.val(row.realFinishDate);
+            $eowner.val(row.owner);
+        }
     };
     $table.bootstrapTable({
         url: '/todo/bootstrapTable',
-        height: window.innerHeight - 100,
+        height: window.innerHeight - 60,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {
                 res[i].rid = i + 1;
@@ -191,10 +217,10 @@ $(function () {
             visible: false,
             align: 'center',
             valign: 'middle',
-            editable: {
-                type: 'textarea',
-                url: '/todo/update'
-            }
+            // editable: {
+            //     type: 'textarea',
+            //     url: '/todo/update'
+            // }
         }, {
             field: 'operator',
             title: '操作',
@@ -208,80 +234,19 @@ $(function () {
                     '<button class="op btn btn-default btn-sm" title="删除">' +
                     '<i class="glyphicon glyphicon-trash"></i></button>' +
                     '<a class="op btn btn-default btn-sm" title="邮件" href=mailto:' +
-                    ownerMail + '?cc=' + ownerMail + '&subject=【代办】' + row.title.split(' ').join('%20') + '&body=' +
-                    row.content.split(' ').join('%20') + '>' +
+                    ownerMail + '?cc=' + ownerMail + '&subject=【代办】' + row.title.split(' ').join('%20') + '&body=' + row.content.split(' ').join('%20') + '>' +
                     '<i class="glyphicon glyphicon-send"></i></a>' +
-                    '<button class="op btn btn-default btn-sm" title="编辑" data-whatever="editModal" ' +
-                    'data-target="#addModal" data-toggle="modal" ' +
-                    'data-id=' + row.id + ' data-title="' + row.title + '" ' +
-                    'data-content="' + row.content + '" data-state="' + row.state + '" ' +
-                    'data-result="' + row.result + '" data-priority="' + row.priority + '" ' +
-                    'data-owner="' + row.owner + '" data-startDate="' + row.startDate + '" ' +
-                    'data-planFinishDate="' + row.planFinishDate + '" data-realFinishDate="' + row.realFinishDate + '">' +
+                    '<button class="op btn btn-default btn-sm" title="编辑" ' +
+                    'data-target="#editModal" data-toggle="modal">' +
                     '<i class="glyphicon glyphicon-pencil"></i></button>' +
                     '</div>';
             }
         }]
     });
     // --------------------- modal -------------------
-    var $title = $('#title');
-    var $content = $('#content');
-    var $result = $('#result');
-    var $priority = $('#priority');
-    var $state = $('#state');
-    var $owner = $('#owner');
-    var $startDate1 = $('#startDate1');
-    var $planFinishDate1 = $('#planFinishDate1');
-    var $startDate2 = $('#startDate2');
-    var $planFinishDate2 = $('#planFinishDate2');
-    var $realFinishDate = $('#realFinishDate');
-    var $bz = $('#bz');
-    // addModal 个性化显示，当点击add时，显示少；当点击edit时，显示多
-    $('#addModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        var modal = $(this);
-        // console.log('when show.bs.modal: %s', recipient);
-        if (recipient && recipient == 'addModal') {
-            modal.find('.edit-modal').hide();
-            modal.find('.add-modal').show();
-            modal.find('.modal-title').html('添加任务清单');
-            modal.find('.modal-footer').attr('data-what', 'add');
-            modal.find('.modal-footer button[data-dismiss=modal]').attr('isedit', 0);
-        } else {
-            modal.find('.add-modal').hide();
-            modal.find('.edit-modal').show();
-            modal.find('.modal-title').html('更新任务清单');
-            modal.find('.modal-footer').attr('data-what', 'edit');
-            modal.find('.modal-footer button[data-dismiss=modal]').attr('isedit', '1');
-            $title.val(button.data('title'));
-            $content.val(button.data('content'));
-            $result.val(button.data('result'));
-            $priority.val(button.data('priority'));
-            $owner.val(button.data('owner'));
-            $startDate2.val(button.data('startdate'));
-            $planFinishDate2.val(button.data('planfinishdate'));
-            $realFinishDate.val(button.data('realfinishdate'));
-        }
-        // modal.find('.modal-title').text('New message to ' + recipient)
-        // modal.find('.modal-body input').val(recipient)
-    });
-    $('#addModal').on('hide.bs.modal', function (e) {
-        var isEdit = $(this).find('.modal-footer button[data-dismiss=modal]').attr('isedit');
-        if (isEdit == '1') {
-            $title.val('');
-            $content.val('');
-            $result.val('');
-            $owner.val('');
-            $startDate2.val('');
-            $planFinishDate2.val('');
-        }
-    });
     // 点击add按钮，显示addModal
     $('#add').click(function () {
         $('#errMessage').html('');
-        // getSelectList('priority');
-        // getSelectList('state');
     });
     // 点击add confirm，提交表单
     $('#addConfirm').click(function () {
@@ -289,67 +254,69 @@ $(function () {
         var contentValue = $content.val().trim() || '';
         var resultValue = $result.val().trim() || '';
         var priorityValue = $priority.val().trim();
-        var startDateValue = $startDate1.val().trim();
-        var planFinishDateValue = $planFinishDate1.val().trim();
-        var startDateValue2 = $startDate2.val().trim();
-        var planFinishDateValue2 = $planFinishDate2.val().trim();
+        var startDateValue = $startDate.val().trim();
+        var planFinishDateValue = $planFinishDate.val().trim();
         var ownerValue = $owner.val().trim() || '';
-        var bzValue = $bz.val().trim() || '';
-        var $this = $('.modal-footer'); // 通过一个what属性来判断是添加modal还是更新modal
-        if ($this.data('what') == 'add') {
-            if (titleValue && priorityValue && startDateValue) {
-                $.ajax({
-                    url: '/todo/add',
-                    method: 'POST',
-                    data: {
-                        title: titleValue,
-                        content: contentValue,
-                        result: resultValue,
-                        priority: priorityValue,
-                        startDate: startDateValue,
-                        planFinishDate: planFinishDateValue,
-                    },
-                    success: function (r) {
-                        $('#addModal').modal('hide');
-                        $title.val('');
-                        $content.val('');
-                        $result.val('');
-                        $priority.val('');
-                        $startDate1.val('');
-                        $planFinishDate1.val('');
-                        $table.bootstrapTable('refresh');
-                    }
-                });
-            } else {
-                $('#errMessage').html('请填写完整');
-            }
-        } else if($this.data('what') == 'edit') {
-            console.log('edit commit');
-            // $.ajax({
-            //     url: '/todo/updateAll',
-            //     method: 'POST',
-            //     data: {
-            //         title: titleValue,
-            //         content: contentValue,
-            //         result: resultValue,
-            //         priority: priorityValue,
-            //         startDate: startDateValue2,
-            //         planFinishDate: planFinishDateValue2,
-            //         realFinishDate: realFinishDate,
-            //         bz: bzValue,
-            //         owner: ownerValue
-            //     },
-            //     success: function (r) {
-            //         $title.val('');
-            //         $content.val('');
-            //         $result.val('');
-            //         $owner.val('');
-            //         $startDate2.val('');
-            //         $planFinishDate2.val('');
-            //         $table.bootstrapTable('refresh');
-            //     }
-            // });
+        if (titleValue && priorityValue && startDateValue) {
+            $.ajax({
+                url: '/todo/add',
+                method: 'POST',
+                data: {
+                    title: titleValue,
+                    content: contentValue,
+                    result: resultValue,
+                    priority: priorityValue,
+                    startDate: startDateValue,
+                    planFinishDate: planFinishDateValue,
+                    owner: ownerValue
+                },
+                success: function (r) {
+                    $('#addModal').modal('hide');
+                    $title.val('');
+                    $content.val('');
+                    $result.val('');
+                    $priority.val('');
+                    $startDate.val('');
+                    $planFinishDate.val('');
+                    $table.bootstrapTable('refresh');
+                }
+            });
+        } else {
+            $('#errMessage').html('请填写完整');
         }
+    });
+    // 点击更新按钮
+    $('#editConfirm').click(function () {
+        var etitleValue = $etitle.val().trim();
+        var econtentValue = $econtent.val().trim() || '';
+        var eresultValue = $eresult.val().trim() || '';
+        var epriorityValue = $epriority.val().trim();
+        var estartDateValue = $estartDate.val().trim();
+        var eplanFinishDateValue = $eplanFinishDate.val().trim();
+        var eownerValue = $eowner.val().trim() || '';
+        var erealFinishDateValue = $erealFinishDate.val().trim();
+        var ebzValue = $ebz.val().trim() || '-';
+        var id = $('#listId').val();
+        $.ajax({
+            url: '/todo/updateAll',
+            method: 'POST',
+            data: {
+                id: id,
+                title: etitleValue,
+                content: econtentValue,
+                result: eresultValue,
+                priority: epriorityValue,
+                startDate: estartDateValue,
+                planFinishDate: eplanFinishDateValue,
+                realFinishDate: erealFinishDateValue,
+                bz: ebzValue,
+                owner: eownerValue
+            },
+            success: function (r) {
+                $('#editModal').modal('hide');
+                $table.bootstrapTable('refresh');
+            }
+        });
     });
     // --------------------- datepicker -------------------
     // 日期选择框
