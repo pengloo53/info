@@ -36,7 +36,8 @@ $(function () {
             }
         },
         'click [title=邮件]': function (e, value, row, index) {
-            if (!row.owner) { // 当owner为空时，阻止modal弹出
+            if (!row.owner || row.owner == '') { // 当owner为空时，阻止modal弹出
+                e.preventDefault();
                 e.stopPropagation();
                 alert('执行担当不存在，请先指定担当');
             }
@@ -71,8 +72,8 @@ $(function () {
             };
         },
         pageNumber: 1,
-        pageSize: 10,
-        pageList: '[10, 20, 50, ALL]',
+        pageSize: 15,
+        pageList: '[15, 30, 50, ALL]',
         pagination: true,
         paginationLoopz: true,
         search: true,
