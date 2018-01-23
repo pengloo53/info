@@ -3,7 +3,9 @@ var router = express.Router();
 
 /* 登陆页 */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.render('pages/login.ejs',{
+    title: '登陆页'
+  });
 });
 
 // 登陆动作
