@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var sequelize = require('./dbConnect.js');
+var sequelize = require('../util/dbConnect.js');
 
 var state = sequelize.define('state',{
     id: {
@@ -8,9 +8,9 @@ var state = sequelize.define('state',{
         allowNull: false,
         autoIncrement: true
     },
-    title: Sequelize.STRING,
+    state: Sequelize.STRING,
 },{
-    timestamps: false,
+    // timestamps: false,
     tableName: 'u_state'
 });
 
