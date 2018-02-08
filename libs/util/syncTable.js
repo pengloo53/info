@@ -15,6 +15,14 @@ state.sync({
 });
 dept.sync({
     force: true
+}).then(function(){
+    dept.create({
+        centre: 'DBG信管中心',
+        department: 'B1信管部',
+        office: 'B1应用系统科',
+        place: 'B1',
+        bz: '-',
+    });
 });
 grade.sync({
     force: true

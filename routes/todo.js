@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 // 引入todolist数据模型
-var todolist = require('../models/todolist.js');
+var todolist = require('../models/todo/todolist.js');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {

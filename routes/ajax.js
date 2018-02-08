@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 // 引入数据模型
-var todolist = require('../models/todolist.js');
-var state = require('../models/state.js');
+var todolist = require('../models/todo/todolist.js');
+var state = require('../models/todo/state.js');
 
 // 获取table的数据
 router.get('/bootstrapTable/todo', function(req, res, next) {

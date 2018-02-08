@@ -8,8 +8,9 @@ var staff = sequelize.define('staff',{
         allowNull: false,
         autoIncrement: true
     },
-    deptId: Sequelize.BIGINT(11),   // 部门id
+    // deptId: Sequelize.BIGINT(11),   // 部门id
     name: Sequelize.STRING,         // 姓名
+    userid: Sequelize.STRING,       // 员工号
     gender: Sequelize.STRING,       // 性别
     birthday: Sequelize.STRING,     // 出生年月
     birth_place: Sequelize.STRING,  // 籍贯
@@ -27,7 +28,7 @@ var staff = sequelize.define('staff',{
     bz: Sequelize.STRING(500),      // 备注：离职原因
 },{
     // timestamps: false,
-    tableName: 'staff'
+    // tableName: 'staff'
 });
 
 module.exports = staff;
