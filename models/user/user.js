@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var sequelize = require('./dbConnect.js');
+var sequelize = require('../util/dbConnect.js');
 
 // 定义user表结构
 var user = sequelize.define('user', {
