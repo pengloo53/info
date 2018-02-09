@@ -8,7 +8,14 @@ var staff = sequelize.define('staff',{
         allowNull: false,
         autoIncrement: true
     },
-    // deptId: Sequelize.BIGINT(11),   // 部门id
+    deptId: {
+        type: Sequelize.BIGINT(11),
+        // field: 'dept_id',  // 在数据库中的字段名指定为user_id
+        // references: {
+        //     model: 'Dept',
+        //     key: 'id'
+        // } 
+    },   // 部门id
     name: Sequelize.STRING,         // 姓名
     userid: Sequelize.STRING,       // 员工号
     gender: Sequelize.STRING,       // 性别
@@ -27,8 +34,13 @@ var staff = sequelize.define('staff',{
     state: Sequelize.STRING,        // 状态：1实习，2试用，3在岗，4离职
     bz: Sequelize.STRING(500),      // 备注：离职原因
 },{
-    // timestamps: false,
-    // tableName: 'staff'
+    timestamps: true,
+    // underscored: true,  // 默认字段采用蛇形命名，如create_at
+    paranoid: true,     // 虚拟删除。启用该配置后，数据不会真实删除，而是添加一个deletedAt属性
+    freezeTableName: true,
+    tableName: 'staff',
+    charset: 'utf8',
+    collate: 'utf8_general_ci'
 });
 
 module.exports = staff;
