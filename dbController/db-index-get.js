@@ -9,7 +9,7 @@ function getUser(id, callback){
 }
 
 // validate user
-function validateUser(username,password,callback){
+function validateUser(username,callback){
   var sql = 'select password from user where username="' + username + '"';
   querySQL(sql, function(err,rows,fields){
     callback(err,rows,fields);
@@ -32,10 +32,11 @@ function findStaffByDepartment(department, callback){
   });
 }
 
-validateUser('118663','password',function(){
+validateUser('118663', function(){
   console.log('yes');
 })
 
 exports.getUser = getUser;
+exports.validateUser = validateUser;
 exports.findStaffByDepartment = findStaffByDepartment;
 exports.findStaffByCentre = findStaffByCentre;

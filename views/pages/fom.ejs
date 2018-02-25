@@ -1,0 +1,74 @@
+<% include ../layout/head.ejs %>
+<!-- special css -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
+<link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<!-- 自定义 -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+<style>
+    .dept li{
+        text-align: center;
+    }
+    .dept li a{
+        margin-top: 5px;
+    }
+</style>
+<body>
+    <% include ../layout/nav.ejs %>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1">
+                <div class="dept">
+                    <ul class="list-unstyled">
+                        <li><a href="/admin" class="btn btn-default">B1</a></li>
+                        <li><a href="/admin/staff" class="btn btn-default active">B2</a></li>
+                        <li><a href="/sys/admins" class="btn btn-default">B3</a></li>
+                        <li><a href="/sys/depts" class="btn btn-default">B4</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B5</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B6</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B7</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B8</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B9</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B10</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B11</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B12</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">BMDT</a></li>
+                        <li><a href="/sys/types" class="btn btn-default">B17</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-11">
+                <div id="toolbar">
+                    <button class="btn btn-primary btn-sm" id="add" data-toggle="modal" data-target="#addModal" data-whatever=" addModal">
+                        <i class="glyphicon glyphicon-plus"></i> 添加人员
+                    </button>
+                </div>
+                <table id="table"></table>
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+<!--     <% include ../modals/todolist-add.ejs %>
+    <% include ../modals/todolist-edit.ejs %> -->
+</body>
+<!-- special script -->
+<!-- bootstrap-table -->
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- self -->
+<script src="/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
+<script src="/bootstrap-table/lib/tableExport.js"></script>
+<script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script src="/bootstrap-others/dropdown-hover.js"></script>
+<!-- personal -->
+<script src="/javascripts/self.js"></script> 
+<script src="/javascripts/pages/todolist.js"></script>
+
+<% include ../layout/foot.ejs %>

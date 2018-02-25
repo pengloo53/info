@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-var dbget = require('../dbController/db-index-get.js');
+var dbGet = require('../dbController/db-index-get.js');
 
 /* 登陆页 */
 router.get('/', function(req, res, next) {
   res.render('pages/login.ejs',{
-    title: '登陆页'
+    title: '登陆页',
+    page: 'login'
   });
 });
 
@@ -14,13 +15,22 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req,res,next){
   var username = req.body.username; 
   var password = req.body.password;
-  dbget.validateUser(username,password,function(err,rows,fields){
-    if(!rows || rows.length == 0){
-      res.flash('error','未找到用户');
-      res.redirect('/login');
-    }else if(password != rows[0].password){
-      res.flash('error','用户密码不正确');
-      res.redirect('/login');
+  dbGet.validateUser(username, function(err,rows,fields){
+    if(!err){
+      var user = rows[0];
+      if(!user){
+        req.flash('error','not exist user!');
+        return res.redirect('/login');
+      }
+      if(user.password !== password){
+        req.flash('error','Password is not correct!');
+        return res.redirect('/login');
+      }
+      req.flash('success','Login Success!');
+      res.session.user = user;
+      res.redirect('/');
+    }else{
+      next(err);
     }
   });
 });

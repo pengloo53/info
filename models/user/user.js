@@ -14,11 +14,8 @@ var user = sequelize.define('user', {
     password: Sequelize.STRING(500),  // 密码
     userid: Sequelize.STRING, // 员工号
     email: Sequelize.STRING, // 邮箱
-    phone: Sequelize.INTEGER, // 密码
     deptId: Sequelize.BIGINT, // 部门id
-    createdAt: Sequelize.BIGINT,
-    updatedAt: Sequelize.BIGINT,
-    version: Sequelize.BIGINT
+    role: Sequelize.STRING,     // A: 超级管理员 B：中心管理员 C：部门管理员
 },{
     timestamps: true,
     // underscored: true,  // 默认字段采用蛇形命名，如create_at
@@ -29,6 +26,16 @@ var user = sequelize.define('user', {
     collate: 'utf8_general_ci'
 });
 
-user.sync();
+user.sync({force: true}).then(function(p){
+    var createTime = new Date().getTime();
+    user.create({
+        username: 'admin',
+        password: 'admin',
+        userid: '118663',
+        email: 'lupeng_ot@boe.com.cn',
+        deptId: 1,
+        role: 'A'
+    });
+});
 
 module.exports = user;

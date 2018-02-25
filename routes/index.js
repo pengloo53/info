@@ -11,5 +11,4 @@ module.exports = function(app){
   app.use('/todo',require('./todo'));       // 1. 待办事项页
   app.use('/fom',require('./fom'));         // 2. FOM人员管理
   app.use('/project',require('./project')); // 3. 重点项目管理
-  app.use('/ajax',require('./ajax'));       // 异步请求
 }

@@ -15,10 +15,34 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/todo">任务清单</a></li>
+                    <li class="<%= page == 'todo' ? 'active' : '' %>"><a href="/todo">任务清单</a></li>
+                    <li class="<%= page == 'fom' ? 'active' : '' %>"><a href="/fom">FOM表</a></li>
+                    <li class="<%= page == 'project' ? 'active' : '' %>"><a href="/project">项目管理</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
 </div>
-
+<div id="message">
+    <div class="text-center">
+        <% if(error && error.length !== 0){ %>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button><%= error %>
+        </div>
+        <% }else if(success && success.length !== 0){ %>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button><%= success %>
+        </div>
+        <% }else if(info && info.length !== 0){ %>
+        <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button><%= info %>
+        </div>
+        <% } %>
+    </div>
+</div>

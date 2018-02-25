@@ -4,6 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+// config
+var config = require('config-lite')(__dirname);
+// session & flash
+var session = require('express-session');
+var flash = require('connect-flash');
 // logger modules
 var winston = require('winston');
 var expressWinston = require('express-winston');
@@ -15,6 +20,24 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// session config
+app.set('trust proxy', 1);
+app.use(session(config.session));
+
+// display mysql-config
+console.log("mysql服务器：" + JSON.stringify(config.mysql));
+
+// flash config
+app.use(flash());
+app.use(function(req,res,next){
+  res.locals.user = req.session.user;
+  res.locals.project = req.session.project;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
+  res.locals.info = req.flash('info');
+  next();
+});
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
