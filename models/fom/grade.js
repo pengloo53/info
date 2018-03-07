@@ -11,7 +11,7 @@ var grade = sequelize.define('grade',{
     grade: Sequelize.STRING,
 },{
     // timestamps: false,
-    tableName: 'u_grade'
+    tableName: 'fom_grade'
 });
 
 module.exports = grade;

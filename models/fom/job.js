@@ -11,7 +11,7 @@ var job = sequelize.define('job',{
     job: Sequelize.STRING,
 },{
     // timestamps: false,
-    tableName: 'u_job'
+    tableName: 'fom_job'
 });
 
 module.exports = job;

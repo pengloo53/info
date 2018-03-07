@@ -12,7 +12,7 @@ var post = sequelize.define('post',{
     describe: Sequelize.STRING(500)
 },{
     // timestamps: false,
-    tableName: 'u_post'
+    tableName: 'fom_post'
 });
 
 module.exports = post;
