@@ -11,7 +11,7 @@ var state = sequelize.define('state',{
     state: Sequelize.STRING,
 },{
     // timestamps: false,
-    tableName: 'u_state'
+    tableName: 'todo_state'
 });
 
 module.exports = state;

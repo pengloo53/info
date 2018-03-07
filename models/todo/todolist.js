@@ -25,7 +25,7 @@ var todolist = sequelize.define('todolist',{
     // version: Sequelize.BIGINT
 },{
     // timestamps: false,
-    tableName: 'todolist'
+    tableName: 'todo_list'
 });
 
 module.exports = todolist;
