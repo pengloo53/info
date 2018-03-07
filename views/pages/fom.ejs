@@ -8,46 +8,65 @@
 <!-- 自定义 -->
 <link rel="stylesheet" href="/stylesheets/style.css">
 <style>
-    .dept li{
+    .content{
+        margin-top: 15px;
+    }
+    .dept a{
         text-align: center;
     }
-    .dept li a{
-        margin-top: 5px;
+    .well-self{
+        background-color: #f5f5f5;
+        padding: 10px;
+        border: 1px solid #e3e3e3;
+        border-radius: 5px;
     }
 </style>
 <body>
     <% include ../layout/nav.ejs %>
     <div class="container">
+        <div class="content">
         <div class="row">
             <div class="col-lg-1">
                 <div class="dept">
-                    <ul class="list-unstyled">
-                        <li><a href="/admin" class="btn btn-default">B1</a></li>
-                        <li><a href="/admin/staff" class="btn btn-default active">B2</a></li>
-                        <li><a href="/sys/admins" class="btn btn-default">B3</a></li>
-                        <li><a href="/sys/depts" class="btn btn-default">B4</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B5</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B6</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B7</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B8</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B9</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B10</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B11</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B12</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">BMDT</a></li>
-                        <li><a href="/sys/types" class="btn btn-default">B17</a></li>
-                    </ul>
+                    <div class="list-group">
+                        <a href="/fom" class="list-group-item">总览</a>
+                        <a href="/fom/B1" class="list-group-item <%= dept == 'B1' ? 'active' : '' %>">B1</a>
+                        <a href="/fom/B2" class="list-group-item">B2</a>
+                        <a href="/fom/B3" class="list-group-item">B3</a>
+                        <a href="/fom/B4" class="list-group-item">B4</a>
+                        <a href="/fom/B5" class="list-group-item">B5</a>
+                        <a href="/fom/B6" class="list-group-item">B6</a>
+                        <a href="/fom/B7" class="list-group-item">B7</a>
+                        <a href="/fom/B8" class="list-group-item">B8</a>
+                        <a href="/fom/B9" class="list-group-item">B9</a>
+                        <a href="/fom/B10" class="list-group-item">B10</a>
+                        <a href="/fom/B11" class="list-group-item">B11</a>
+                        <a href="/fom/B12" class="list-group-item">B12</a>
+                        <a href="/fom/BMDT" class="list-group-item">BMDT</a>
+                        <a href="/fom/B17" class="list-group-item">B17</a>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-11">
-                <div id="toolbar">
-                    <button class="btn btn-primary btn-sm" id="add" data-toggle="modal" data-target="#addModal" data-whatever=" addModal">
-                        <i class="glyphicon glyphicon-plus"></i> 添加人员
-                    </button>
+                <div class="well-self">
+                        部门长：<i><b><u><span class="text-primary">魏晓明</span></u></b></i>
+                       ，当前编制人数：<i><b><u>12</u></b></i>
+                       ，现有人数：<i><b><u>12</u></b></i>
+                    </div>
+                <div id="toolbar">             
+                    <div class="btn-group" role="group" aria-label="..." style="float: left">
+                      <button type="button" class="btn btn-default btn-sm">应用系统科</button>
+                      <button type="button" class="btn btn-default btn-sm">IT科</button>
+                    </div>
+<!--                     <div>
+                        部门长：<span class="label label-lg label-danger" for="">魏晓明</span>， 
+                        编制共：<span>10</span>人，现员：<span>8</span>人。
+                    </div> -->
                 </div>
                 <table id="table"></table>
             </div>
         </div>
+        <div><!-- end content -->
     </div>
     <!-- modal -->
 <!--     <% include ../modals/todolist-add.ejs %>
@@ -69,6 +88,10 @@
 <script src="/bootstrap-others/dropdown-hover.js"></script>
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
-<script src="/javascripts/pages/todolist.js"></script>
+<script src="/javascripts/pages/fom.js"></script>
+<script>
+    $(function(){
 
+    });
+</script>
 <% include ../layout/foot.ejs %>

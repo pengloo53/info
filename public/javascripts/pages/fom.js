@@ -78,15 +78,12 @@ $(function () {
         paginationLoopz: true,
         search: true,
         idField: 'id',
-        // cartView: true,
-        showToggle: true,
         showColumns: true,
         showExport: true,
         showRefresh: true,
         toolbar: '#toolbar',
         cache: false,
         detailView: true,
-        // clickToSelect: true,
         detailFormatter: function () {
             return 'somethings';
         },

@@ -1,0 +1,134 @@
+<% include ../layout/head.ejs %>
+<!-- special css -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
+<link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<!-- 自定义 -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+<style>
+    .content{
+        margin-top: 15px;
+    }
+    .dept a{
+        text-align: center;
+    }
+    .well-self{
+        background-color: #f5f5f5;
+        padding: 10px;
+        border: 1px solid #e3e3e3;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+    <% include ../layout/nav.ejs %>
+    <div class="container">
+        <div class="content">
+        <div class="row">
+            <div class="col-lg-1">
+                <div class="dept">
+                    <div class="list-group">
+                        <a href="/fom" class="list-group-item active">总览</a>
+                        <a href="/fom/B1" class="list-group-item">B1</a>
+                        <a href="/fom/B2" class="list-group-item">B2</a>
+                        <a href="/fom/B3" class="list-group-item">B3</a>
+                        <a href="/fom/B4" class="list-group-item">B4</a>
+                        <a href="/fom/B5" class="list-group-item">B5</a>
+                        <a href="/fom/B6" class="list-group-item">B6</a>
+                        <a href="/fom/B7" class="list-group-item">B7</a>
+                        <a href="/fom/B8" class="list-group-item">B8</a>
+                        <a href="/fom/B9" class="list-group-item">B9</a>
+                        <a href="/fom/B10" class="list-group-item">B10</a>
+                        <a href="/fom/B11" class="list-group-item">B11</a>
+                        <a href="/fom/B12" class="list-group-item">B12</a>
+                        <a href="/fom/BMDT" class="list-group-item">BMDT</a>
+                        <a href="/fom/B17" class="list-group-item">B17</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-11">
+                <!-- <div class="row">
+                    <div class="col-lg-4">
+                        <label for="">中心长：</label><span class="label label-lg label-danger" for="">韩小龙</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="">当前编制人数：</label><span class="label label-lg label-danger">283</span>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="">现有人数：</label><span class="label label-lg label-danger">193</span>
+                    </div>
+                </div>
+                <div class="row">                    
+                    <div class="col-lg-6">
+                        <div class="">
+                            管理职级人数：<span>12</span>
+                            专业职级人数：<span>12</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        
+                    </div><div class="">
+                            高级及以上人数：<span>23</span>
+                            中级及以下人数：<span>344</span>
+                        </div>
+                </div>
+                <div class="row">
+                    
+                </div> -->
+                
+                <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading">DBG 信管中心</div>
+                  <div class="panel-body">
+                       <label for="">中心长：</label><i><b><u><span class="text-primary">韩小龙</span></u></b></i>
+                       ，<label for="">当前编制人数：</label><i><b><u>12</u></b></i>
+                       ，<label for="">现有人数：</label><i><b><u>12</u></b></i>
+                  </div>
+                
+                  <!-- Table -->
+                  <table class="table table-hover table-bordered">
+                     <tr>
+                         <td>部长：<i><b><u>12</u></b></i></td>
+                         <td>科长：<i><b><u>12</u></b></i></td>
+                     </tr>
+                     <tr>
+                         <td>高级及以上：<i><b><u>12</u></b></i></td>
+                         <td>中级及以下：<i><b><u>12</u></b></i></td>
+                     </tr>
+                  </table>
+                </div>
+            </div>
+        </div><!-- end row -->
+        <div><!-- end content -->
+    </div>
+    <!-- modal -->
+<!--     <% include ../modals/todolist-add.ejs %>
+    <% include ../modals/todolist-edit.ejs %> -->
+</body>
+<!-- special script -->
+<!-- bootstrap-table -->
+<script src="/jquery/dist/jquery.js"></script>
+<!-- <script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script> -->
+<!-- self -->
+<!-- <script src="/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
+<script src="/bootstrap-table/lib/tableExport.js"></script>
+<script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script src="/bootstrap-others/dropdown-hover.js"></script> -->
+<!-- personal -->
+<script src="/javascripts/self.js"></script> 
+<script src="/javascripts/pages/todolist.js"></script>
+<script>
+    $('.dept a').click(function(){
+        var $this = $(this);
+        $('.dept a').removeClass('active');
+        $this.addClass('avtive');
+    });
+</script>
+<% include ../layout/foot.ejs %>

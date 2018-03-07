@@ -1,0 +1,108 @@
+<% include ../layout/head.ejs %>
+
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
+<!--   <link rel="stylesheet" type="text/css" href="/assets/bootstrap/css/bootstrap.css"> -->
+<!-- 自定义 -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <% include ../layout/nav.ejs %>
+    <div class="container">
+        <div id="toolbar">
+            <button class="btn btn-primary btn-sm" id="add" data-toggle="modal" data-target="#addModal" data-whatever="addModal">
+                <i class="glyphicon glyphicon-plus"></i> 添加清单
+            </button>
+        </div>
+        <table id="table"></table>
+    </div>
+    <!-- modal -->
+    <% include ../modals/todolist-add.ejs %>
+    <% include ../modals/todolist-edit.ejs %>
+</body>
+<!-- <script src="/assets/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.js"></script>
+<script src="/assets/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/assets/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script> -->
+
+<script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript">
+$(function(){
+  $('#table').bootstrapTable({
+    url: '/examples/bootstrap_table/data',
+    toolbar: '#toolbar',
+    striped: false,
+    sortName: 'id',
+    sortOrder: 'desc',
+    idField: 'id',
+    cardView: false,
+    detailView: true,
+    pagination: true,
+    paginationLoop: true,
+    sidePagination: 'server',
+    search: true,
+    showColumns: true,
+    showRefresh: true,
+    // showFooter: true,
+    showToggle: true,
+    showPaginationSwitch: true,
+    clickToSelect: true,
+    // responseHandler: responseHandler,
+    // onlyInfoPagination: true,
+
+    icons: {
+      paginationSwitchDown: 'glyphicon-collapse-down icon-chevron-down',
+      paginationSwitchUp: 'glyphicon-collapse-up icon-chevron-up',
+      refresh: 'glyphicon-refresh icon-refresh',
+      toggle: 'glyphicon-list-alt icon-list-alt',
+      columns: 'glyphicon-th icon-th',
+      detailOpen: 'glyphicon-plus icon-plus',
+      detailClose: 'glyphicon-minus icon-minus'
+    },
+    columns: [
+    {
+      field: 'state',
+      checkbox: true,
+    }, {
+      field: 'id',
+      title: 'Item ID'
+    }, {
+      field: 'name',
+      title: 'Item Name'
+    }, {
+      field: 'price',
+      title: 'Item Price'
+    }, {
+      field: 'operate',
+      title: 'Item Operate',
+      align: 'center',
+    } ]
+  });
+/*  function operateFormatter(value, row, index) {
+    return [
+    '<a class="like" href="javascript:void(0)" title="Like">',
+    '<i class="glyphicon glyphicon-heart"></i>',
+    '</a>  ',
+    '<a class="remove" href="javascript:void(0)" title="Remove">',
+    '<i class="glyphicon glyphicon-remove"></i>',
+    '</a>'
+    ].join('');
+  }
+
+  window.operateEvents = {
+    'click .like': function (e, value, row, index) {
+      alert('You click like action, row: ' + JSON.stringify(row));
+    },
+    'click .remove': function (e, value, row, index) {
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: [row.id]
+      });
+    }
+  };*/
+});
+</script>
+</html>
