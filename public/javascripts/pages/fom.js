@@ -58,7 +58,7 @@ $(function () {
         }
     };
     $table.bootstrapTable({
-        url: '/todo/bootstrapTable',
+        url: '/fom/bootstrapTable',
         height: window.innerHeight - 80,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {
@@ -94,125 +94,57 @@ $(function () {
             valign: 'middle',
             visible: false
         }, {
-            field: 'title',
-            title: '标题',
+            field: 'dept',
+            title: '部门',
             // align: 'center',
             valign: 'middle',
-            // editable: {
-            //     type: 'textarea',
-            //     url: '/todo/update'
-            // }
         }, {
-            field: 'content',
-            title: '内容',
+            field: 'office',
+            title: '科室',
             align: 'center',
             valign: 'middle',
-            visible: false,
-            // editable: {
-            //     type: 'textarea',
-            //     url: '/todo/update'
-            // }
         }, {
-            field: 'result',
-            title: '方向',
+            field: 'name',
+            title: '姓名',
             align: 'center',
             valign: 'middle',
-            visible: false,
-            // editable: {
-            //     type: 'textarea',
-            //     url: '/todo/update'
-            // }
-        }, {
-            field: 'priority',
-            title: '级别',
+        },{
+            field: 'gender',
+            title: '性别',
             align: 'center',
-            valign: 'middle',
-            sortable: true,
-            width: '3%',
-            formatter: function (value, row, index) {
-                var msg = '';
-                switch (value) {
-                    case '重要紧急':
-                        msg = '<lable class="label label-danger" title="' + value + '">1</lable>';
-                        break;
-                    case '重要不紧急':
-                        msg = '<lable class="label label-primary" title="' + value + '">2</lable>';
-                        break;
-                    case '不重要紧急':
-                        msg = '<lable class="label label-warning" title="' + value + '">3</lable>';
-                        break;
-                    case '不重要不紧急':
-                        msg = '<lable class="label label-success" title="' + value + '">4</lable>';
-                        break;
-                }
-                return msg;
-            }
-        }, {
-            field: 'officer',
-            title: '负责人',
-            visible: false,
+            valign: 'middle'
+        },{
+            field: 'grade',
+            title: '职级',
             align: 'center',
             valign: 'middle'
         }, {
-            field: 'owner',
-            title: '执行者',
-            visible: true,
+            field: 'mainPost',
+            title: '主岗',
+            align: 'center',
+            valign: 'middle'
+        },{
+            field: 'subPost',
+            title: '次岗',
+            align: 'center',
+            valign: 'middle'
+        },{
+            field: 'postType',
+            title: '岗位类别',
+            align: 'center',
+            valign: 'middle'
+        },{
+            field: 'postDescribe',
+            title: '岗位描述',
             align: 'center',
             valign: 'middle',
-            editable: {
-                type: 'text',
-                url: '/todo/update'
-            }
-        }, {
+            visible: false
+        },{
             field: 'state',
             title: '状态',
             align: 'center',
-            valign: 'middle',
-            width: '3%',
-            // editable: {
-            //     type: 'select',
-            //     source: function(){
-            //         return ['备案中','on going','close'];
-            //     },
-            //     url: '/todo/update',
-            //     success: function (response, newValue) {
-            //         //            alert(response);
-            //     }
-            // }
-        }, {
-            field: 'startDate',
-            title: '开始时间',
-            class: 'selfDate',
-            align: 'center',
-            valign: 'middle',
-            // editable: {
-            //     type: 'text',
-            //     url: '/todo/update'
-            // }
-        }, {
-            field: 'planFinishDate',
-            title: '计划完成时间',
-            class: 'selfDate',
-            align: 'center',
-            valign: 'middle',
-            // editable: {
-            //     type: 'text',
-            //     url: '/todo/update'
-            // }
-        }, {
-            field: 'realFinishDate',
-            title: '实际完成时间',
-            class: 'selfDate',
-            align: 'center',
-            valign: 'middle',
-            editable: {
-                type: 'text',
-                url: '/todo/update',
-                success: function (r) {
-                    $table.bootstrapTable('refresh');
-                }
-            }
-        }, {
+            valign: 'middle'
+        },{  
             field: 'bz',
             title: '备注',
             visible: false,
@@ -230,13 +162,9 @@ $(function () {
             valign: 'middle',
             width: '12%',
             formatter: function (value, row, index) {
-                var ownerMail = 'lupeng_ot@boe.com.cn';
                 return '<div class="btn-group" role="btn-group">' +
                     '<button class="op btn btn-default btn-sm" title="删除">' +
                     '<i class="glyphicon glyphicon-trash"></i></button>' +
-                    '<a class="op btn btn-default btn-sm" title="邮件" href=mailto:' +
-                    ownerMail + '?cc=' + ownerMail + '&subject=【代办】' + row.title.split(' ').join('%20') + '&body=' + row.content.split(' ').join('%20') + '>' +
-                    '<i class="glyphicon glyphicon-send"></i></a>' +
                     '<button class="op btn btn-default btn-sm" title="编辑" ' +
                     'data-target="#editModal" data-toggle="modal">' +
                     '<i class="glyphicon glyphicon-pencil"></i></button>' +

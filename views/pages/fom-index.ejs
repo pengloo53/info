@@ -31,52 +31,27 @@
                 <div class="dept">
                     <div class="list-group">
                         <a href="/fom" class="list-group-item active">总览</a>
-                        <a href="/fom/B1" class="list-group-item">B1</a>
-                        <a href="/fom/B2" class="list-group-item">B2</a>
-                        <a href="/fom/B3" class="list-group-item">B3</a>
-                        <a href="/fom/B4" class="list-group-item">B4</a>
-                        <a href="/fom/B5" class="list-group-item">B5</a>
-                        <a href="/fom/B6" class="list-group-item">B6</a>
-                        <a href="/fom/B7" class="list-group-item">B7</a>
-                        <a href="/fom/B8" class="list-group-item">B8</a>
-                        <a href="/fom/B9" class="list-group-item">B9</a>
-                        <a href="/fom/B10" class="list-group-item">B10</a>
-                        <a href="/fom/B11" class="list-group-item">B11</a>
-                        <a href="/fom/B12" class="list-group-item">B12</a>
-                        <a href="/fom/BMDT" class="list-group-item">BMDT</a>
-                        <a href="/fom/B17" class="list-group-item">B17</a>
+                        <% for(var i = 0 ; i < depts.length ; i++){ %>
+                            <a href="/fom/<%= depts[i].plant %>" class="list-group-item"><%= depts[i].plant %></a>
+                        <% } %>
+<!--                         <a href="/fom/dept/B1" class="list-group-item">B1</a>
+                        <a href="/fom/dept/B2" class="list-group-item">B2</a>
+                        <a href="/fom/dept/B3" class="list-group-item">B3</a>
+                        <a href="/fom/dept/B4" class="list-group-item">B4</a>
+                        <a href="/fom/dept/B5" class="list-group-item">B5</a>
+                        <a href="/fom/dept/B6" class="list-group-item">B6</a>
+                        <a href="/fom/dept/B7" class="list-group-item">B7</a>
+                        <a href="/fom/dept/B8" class="list-group-item">B8</a>
+                        <a href="/fom/dept/B9" class="list-group-item">B9</a>
+                        <a href="/fom/dept/B10" class="list-group-item">B10</a>
+                        <a href="/fom/dept/B11" class="list-group-item">B11</a>
+                        <a href="/fom/dept/B12" class="list-group-item">B12</a>
+                        <a href="/fom/dept/BMDT" class="list-group-item">BMDT</a>
+                        <a href="/fom/dept/B17" class="list-group-item">B17</a> -->
                     </div>
                 </div>
             </div>
             <div class="col-lg-11">
-                <!-- <div class="row">
-                    <div class="col-lg-4">
-                        <label for="">中心长：</label><span class="label label-lg label-danger" for="">韩小龙</span>
-                    </div>
-                    <div class="col-lg-4">
-                        <label for="">当前编制人数：</label><span class="label label-lg label-danger">283</span>
-                    </div>
-                    <div class="col-lg-4">
-                        <label for="">现有人数：</label><span class="label label-lg label-danger">193</span>
-                    </div>
-                </div>
-                <div class="row">                    
-                    <div class="col-lg-6">
-                        <div class="">
-                            管理职级人数：<span>12</span>
-                            专业职级人数：<span>12</span>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        
-                    </div><div class="">
-                            高级及以上人数：<span>23</span>
-                            中级及以下人数：<span>344</span>
-                        </div>
-                </div>
-                <div class="row">
-                    
-                </div> -->
                 
                 <div class="panel panel-default">
                   <!-- Default panel contents -->

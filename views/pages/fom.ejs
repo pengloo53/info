@@ -30,7 +30,10 @@
                 <div class="dept">
                     <div class="list-group">
                         <a href="/fom" class="list-group-item">总览</a>
-                        <a href="/fom/B1" class="list-group-item <%= dept == 'B1' ? 'active' : '' %>">B1</a>
+                        <% for(var i = 0 ; i < depts.length ; i++){ %>
+                            <a href="/fom/<%= depts[i].plant %>" class="list-group-item <%= dept == '<%= depts[i].plant %>' ? 'active' : '' %>"><%= depts[i].plant %></a>
+                        <% } %>
+ <!--                        <a href="/fom/B1" class="list-group-item <%= dept == 'B1' ? 'active' : '' %>">B1</a>
                         <a href="/fom/B2" class="list-group-item">B2</a>
                         <a href="/fom/B3" class="list-group-item">B3</a>
                         <a href="/fom/B4" class="list-group-item">B4</a>
@@ -43,7 +46,7 @@
                         <a href="/fom/B11" class="list-group-item">B11</a>
                         <a href="/fom/B12" class="list-group-item">B12</a>
                         <a href="/fom/BMDT" class="list-group-item">BMDT</a>
-                        <a href="/fom/B17" class="list-group-item">B17</a>
+                        <a href="/fom/B17" class="list-group-item">B17</a> -->
                     </div>
                 </div>
             </div>

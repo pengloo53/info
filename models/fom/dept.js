@@ -11,7 +11,7 @@ var dept = sequelize.define('dept',{
     centreId: Sequelize.BIGINT,       // 中心
     plant: Sequelize.STRING,  // 工厂
     place: Sequelize.STRING, // 地点
-    department: Sequelize.STRING,   // 部门
+    dept: Sequelize.STRING,   // 部门
     owner: Sequelize.STRING,   // 部长
     preparation: Sequelize.BIGINT,  // 总编制
     bz: Sequelize.STRING   // 备注

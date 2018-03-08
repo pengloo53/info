@@ -32,6 +32,14 @@ function findStaffByDepartment(department, callback){
   });
 }
 
+// 通过中心名获取所有部门
+function findALlDeptsByCentreId(centreId, callback){
+  var sql = 'select dept from fom_dept where centre = ' + centreId;
+  querySQL(sql, function(err,rows,fields){
+    callback(err,rows,fields);
+  });
+}
+
 validateUser('118663', function(){
   console.log('yes');
 })
