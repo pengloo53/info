@@ -1,0 +1,11 @@
+<div class="dept">
+    <div class="list-group">
+        <a href="/fom" class="list-group-item <%= dept == 'index' ? 'active' :  '' %>">总览</a>
+        <% for(var i = 0 ; i < deptList.length ; i++){ 
+            var plant = deptList[i].plant;
+            var department = deptList[i].dept;
+        %>
+            <a href="/fom/dept?dept=<%= department %>" class="list-group-item <%= dept == department ? 'active' :  '' %>"><%= department %></a>
+        <% } %>
+    </div>
+</div>

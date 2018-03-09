@@ -26,61 +26,36 @@
     <% include ../layout/nav.ejs %>
     <div class="container">
         <div class="content">
-        <div class="row">
-            <div class="col-lg-1">
-                <div class="dept">
-                    <div class="list-group">
-                        <a href="/fom" class="list-group-item active">总览</a>
-                        <% for(var i = 0 ; i < depts.length ; i++){ %>
-                            <a href="/fom/<%= depts[i].plant %>" class="list-group-item"><%= depts[i].plant %></a>
-                        <% } %>
-<!--                         <a href="/fom/dept/B1" class="list-group-item">B1</a>
-                        <a href="/fom/dept/B2" class="list-group-item">B2</a>
-                        <a href="/fom/dept/B3" class="list-group-item">B3</a>
-                        <a href="/fom/dept/B4" class="list-group-item">B4</a>
-                        <a href="/fom/dept/B5" class="list-group-item">B5</a>
-                        <a href="/fom/dept/B6" class="list-group-item">B6</a>
-                        <a href="/fom/dept/B7" class="list-group-item">B7</a>
-                        <a href="/fom/dept/B8" class="list-group-item">B8</a>
-                        <a href="/fom/dept/B9" class="list-group-item">B9</a>
-                        <a href="/fom/dept/B10" class="list-group-item">B10</a>
-                        <a href="/fom/dept/B11" class="list-group-item">B11</a>
-                        <a href="/fom/dept/B12" class="list-group-item">B12</a>
-                        <a href="/fom/dept/BMDT" class="list-group-item">BMDT</a>
-                        <a href="/fom/dept/B17" class="list-group-item">B17</a> -->
+            <div class="row">
+              <div class="col-lg-2">
+                <% include fom-layout-dept.ejs %>
+              </div>
+              <div class="col-lg-10">
+                  <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">DBG 信管中心</div>
+                    <div class="panel-body">
+                         <label for="">中心长：</label><i><b><u><span class="text-primary">韩小龙</span></u></b></i>
+                         ，<label for="">当前编制人数：</label><i><b><u>12</u></b></i>
+                         ，<label for="">现有人数：</label><i><b><u>12</u></b></i>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-11">
-                
-                <div class="panel panel-default">
-                  <!-- Default panel contents -->
-                  <div class="panel-heading">DBG 信管中心</div>
-                  <div class="panel-body">
-                       <label for="">中心长：</label><i><b><u><span class="text-primary">韩小龙</span></u></b></i>
-                       ，<label for="">当前编制人数：</label><i><b><u>12</u></b></i>
-                       ，<label for="">现有人数：</label><i><b><u>12</u></b></i>
+                  
+                    <!-- Table -->
+                    <table class="table table-hover table-bordered">
+                       <tr>
+                           <td>部长：<i><b><u>12</u></b></i></td>
+                           <td>科长：<i><b><u>12</u></b></i></td>
+                       </tr>
+                       <tr>
+                           <td>高级及以上：<i><b><u>12</u></b></i></td>
+                           <td>中级及以下：<i><b><u>12</u></b></i></td>
+                       </tr>
+                    </table>
                   </div>
-                
-                  <!-- Table -->
-                  <table class="table table-hover table-bordered">
-                     <tr>
-                         <td>部长：<i><b><u>12</u></b></i></td>
-                         <td>科长：<i><b><u>12</u></b></i></td>
-                     </tr>
-                     <tr>
-                         <td>高级及以上：<i><b><u>12</u></b></i></td>
-                         <td>中级及以下：<i><b><u>12</u></b></i></td>
-                     </tr>
-                  </table>
-                </div>
+              </div>
             </div>
-        </div><!-- end row -->
-        <div><!-- end content -->
+        </div>
     </div>
-    <!-- modal -->
-<!--     <% include ../modals/todolist-add.ejs %>
-    <% include ../modals/todolist-edit.ejs %> -->
 </body>
 <!-- special script -->
 <!-- bootstrap-table -->
@@ -98,7 +73,7 @@
 <script src="/bootstrap-others/dropdown-hover.js"></script> -->
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
-<script src="/javascripts/pages/todolist.js"></script>
+
 <script>
     $('.dept a').click(function(){
         var $this = $(this);

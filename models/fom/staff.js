@@ -8,14 +8,7 @@ var staff = sequelize.define('staff',{
         allowNull: false,
         autoIncrement: true
     },
-    deptId: {
-        type: Sequelize.BIGINT(11),
-        // field: 'dept_id',  // 在数据库中的字段名指定为user_id
-        // references: {
-        //     model: 'Dept',
-        //     key: 'id'
-        // } 
-    },   // 部门id
+    officeId: Sequelize.BIGINT,     // 科室id
     name: Sequelize.STRING,         // 姓名
     userid: Sequelize.STRING,       // 员工号
     gender: Sequelize.STRING,       // 性别

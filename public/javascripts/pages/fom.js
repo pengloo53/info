@@ -59,7 +59,7 @@ $(function () {
     };
     $table.bootstrapTable({
         url: '/fom/bootstrapTable',
-        height: window.innerHeight - 80,
+        height: window.innerHeight - 120,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {
                 res[i].rid = i + 1;
