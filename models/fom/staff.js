@@ -8,6 +8,7 @@ var staff = sequelize.define('staff',{
         allowNull: false,
         autoIncrement: true
     },
+    deptId: Sequelize.BIGINT,       // 部门id
     officeId: Sequelize.BIGINT,     // 科室id
     name: Sequelize.STRING,         // 姓名
     userid: Sequelize.STRING,       // 员工号

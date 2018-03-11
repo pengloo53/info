@@ -6,6 +6,9 @@ var router = express.Router();
 
 var staffModel = require('../models/fom/staff.js');
 var deptModel = require('../models/fom/dept.js');
+var officeModel = require('../models/fom/office.js');
+
+var dbGet = require('../dbController/db-index-get.js');
 
 
 router.use(function(req,res,next){
@@ -29,9 +32,13 @@ router.get('/', function(req,res,next){
 router.get('/dept', function(req,res,next){
     var dept = req.query.dept;
     res.locals.dept = dept;
-    deptModel.findOne({where: {dept: dept}}).then(function(p){
-      res.locals.deptInfo = p;
-      next();
+    deptModel.findOne({where: {dept: dept}}).then(function(p1){  // 根据部门名称查部门信息
+      res.locals.deptInfo = p1;
+      var deptId = p1.id;
+      officeModel.findAll({where: {deptId: deptId}}).then(function(p2){
+        res.locals.officeList = p2;
+        next();
+      });
     });
   }, function(req,res,next){
     res.render('pages/fom.ejs',{
@@ -41,20 +48,17 @@ router.get('/dept', function(req,res,next){
 
 // 获取FOM dept table数据
 router.get('/bootstrapTable',function(req,res,next){
-  staffModel.findAll({
-    where: {
-      deptId: 1 
-    }
-  }).then(function(p){
-    res.send(p);
+  var deptId = req.query.deptId;
+  // staffModel.findAll({
+  //   where: {
+  //     deptId: deptId 
+  //   }
+  // }).then(function(p){
+  //   res.send(p);
+  // });
+  dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
+    res.send(rows);
   });
-});
-
-
-// 获取FOM表格式：
-// select d.department,d.office,s.name,s.gender,s.grade,s.mainPost,s.subPost,s.postType,s.postDescribe,s.bz from staff s left join dept d where s.deptId = d.id;
-router.get('/getFom',function(req,res,next){
-  staffModel.findAll().then();
 });
 
 // 获取月报人员变动格式：

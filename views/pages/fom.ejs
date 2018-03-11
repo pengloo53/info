@@ -31,16 +31,21 @@
                 </div>
                 <div class="col-lg-10">
                     <div class="well-self">
-                            部门长：<i><b><u><span class="text-primary"><%= deptInfo.owner %></span></u></b></i>
-                           ，当前编制人数：<i><b><u><% = deptInfo.preparation %></u></b></i>
-                           ，现有人数：<i><b><u>12</u></b></i>
-                        </div>
-                    <div id="toolbar">             
-                        <div class="btn-group" role="group" aria-label="..." style="float: left">
-                          <button type="button" class="btn btn-default btn-sm">应用系统科</button>
-                          <button type="button" class="btn btn-default btn-sm">IT科</button>
+                        部长：<i><b><u><span class="text-primary"><%= deptInfo.owner %></span></u></b></i>
+                       ，部门编制：<i><b><u><%= deptInfo.preparation %></u></b></i>
+                       ，当前人数：<i><b><u><span id='staffNum'></span></u></b></i>
+                    </div>
+                    <div id="toolbar">
+                        <button class="btn btn-primary btn-sm" id="add" data-toggle="modal" data-target="#addModal" data-whatever="addModal">
+                                <i class="glyphicon glyphicon-plus"></i> 新入职
+                        </button>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <% for(var i=0; i < officeList.length; i++){ %>
+                                <button type="button" class="btn btn-default btn-sm" data-officeId=<%= officeList[i].id %>><%= officeList[i].office %></button>
+                            <% } %>
                         </div>
                     </div>
+                    <span id="dataSpan" data-deptid=<%= deptInfo.id %>></span>
                     <table id="table"></table>
                 </div>
             </div>

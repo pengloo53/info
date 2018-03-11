@@ -1,6 +1,7 @@
 // $.fn.editable.defaults.mode = 'inline';
 $(function () {
     var $table = $('#table');
+    var deptId = $('#dataSpan').data('deptid');
     // add 字段
     var $title = $('#title');
     var $content = $('#content');
@@ -58,7 +59,7 @@ $(function () {
         }
     };
     $table.bootstrapTable({
-        url: '/fom/bootstrapTable',
+        url: '/fom/bootstrapTable?deptId=' + deptId,
         height: window.innerHeight - 120,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {
@@ -84,20 +85,21 @@ $(function () {
         toolbar: '#toolbar',
         cache: false,
         detailView: true,
-        detailFormatter: function () {
-            return 'somethings';
+        detailFormatter: function (value, row , index) {
+            return '<p>' + row.postDescribe + '</p>';
         },
         columns: [{
             field: 'rid',
             title: '#',
             align: 'center',
             valign: 'middle',
-            visible: false
+            // visible: false
         }, {
             field: 'dept',
             title: '部门',
-            // align: 'center',
+            align: 'center',
             valign: 'middle',
+            visible: false
         }, {
             field: 'office',
             title: '科室',
@@ -106,6 +108,11 @@ $(function () {
         }, {
             field: 'name',
             title: '姓名',
+            align: 'center',
+            valign: 'middle',
+        },{
+            field: 'userid',
+            title: '员工号',
             align: 'center',
             valign: 'middle',
         },{
@@ -172,6 +179,12 @@ $(function () {
             }
         }]
     });
+    // 获取当前人数
+    $table.on('load-success.bs.table', function(){
+        var staffNum = $table.bootstrapTable('getData').length;
+        $('#staffNum').html(staffNum);
+    });
+
     // --------------------- modal -------------------
     // 点击add按钮，显示addModal
     $('#add').click(function () {

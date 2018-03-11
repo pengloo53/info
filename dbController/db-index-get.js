@@ -8,14 +8,6 @@ function getUser(id, callback){
   });
 }
 
-// validate user
-function validateUser(username,callback){
-  var sql = 'select password from user where username="' + username + '"';
-  querySQL(sql, function(err,rows,fields){
-    callback(err,rows,fields);
-  });
-}
-
 // 获取中心所有员工
 function findStaffByCentre(centre,callback){
   var sql = 'select * from staff s left join u_dept d where s.deptId= d.id and d.centre="' + centre + '"';
@@ -24,27 +16,18 @@ function findStaffByCentre(centre,callback){
   });
 }
 
-// 获取部门员工
-function findStaffByDepartment(department, callback){
-  var sql = 'select * from staff s left join u_dept d where s.deptId= d.id and d.department="' + department + '"';
+// 获取部门员工，根据deptId
+function findStaffByDeptId(deptId, callback){
+  var sql = 'select * from fom_staff s left join fom_dept d on s.deptId= d.id left join fom_office o on s.officeId = o.id where s.deptId=' + deptId;
   querySQL(sql, function(err,rows,fields){
     callback(err,rows,fields);
   });
 }
 
-// 通过中心名获取所有部门
-function findALlDeptsByCentreId(centreId, callback){
-  var sql = 'select dept from fom_dept where centre = ' + centreId;
-  querySQL(sql, function(err,rows,fields){
-    callback(err,rows,fields);
-  });
-}
-
-validateUser('118663', function(){
-  console.log('yes');
-})
+// findStaffByDeptId(1, function(err,rows,fields){
+//   console.log(rows);
+// })
 
 exports.getUser = getUser;
-exports.validateUser = validateUser;
-exports.findStaffByDepartment = findStaffByDepartment;
+exports.findStaffByDeptId = findStaffByDeptId;
 exports.findStaffByCentre = findStaffByCentre;
