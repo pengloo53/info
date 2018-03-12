@@ -68,6 +68,9 @@ span.label{
 .navbar{
   margin-bottom: 10px;
 }
+.list-group-item{
+  padding: 7px 15px;
+}
 
 .todo-op{
   font-size: 0.9em;

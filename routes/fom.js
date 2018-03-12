@@ -10,7 +10,7 @@ var officeModel = require('../models/fom/office.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
-
+// 获取部门列表
 router.use(function(req,res,next){
   var centreId = 1; 
   deptModel.findAll({where: {centreId: centreId}}).then(function(p){
@@ -49,13 +49,6 @@ router.get('/dept', function(req,res,next){
 // 获取FOM dept table数据
 router.get('/bootstrapTable',function(req,res,next){
   var deptId = req.query.deptId;
-  // staffModel.findAll({
-  //   where: {
-  //     deptId: deptId 
-  //   }
-  // }).then(function(p){
-  //   res.send(p);
-  // });
   dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
     res.send(rows);
   });

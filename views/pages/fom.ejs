@@ -39,11 +39,22 @@
                         <button class="btn btn-primary btn-sm" id="add" data-toggle="modal" data-target="#addModal" data-whatever="addModal">
                                 <i class="glyphicon glyphicon-plus"></i> 新入职
                         </button>
-                        <div class="btn-group" role="group" aria-label="...">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                科室 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <!-- <li><a href="#">Action</a></li> -->
+                                <% for(var i=0; i < officeList.length; i++){ %>
+                                    <li data-officeId=<%= officeList[i].id %>><a href="javascript:void(0)"><span class="badge pull-right"><%= officeList[i].preparation %></span><%= officeList[i].office %></a></li>
+                                <% } %>
+                            </ul>
+                        </div>
+<!--                         <div class="btn-group" role="group" aria-label="...">
                             <% for(var i=0; i < officeList.length; i++){ %>
                                 <button type="button" class="btn btn-default btn-sm" data-officeId=<%= officeList[i].id %>><%= officeList[i].office %></button>
                             <% } %>
-                        </div>
+                        </div> -->
                     </div>
                     <span id="dataSpan" data-deptid=<%= deptInfo.id %>></span>
                     <table id="table"></table>
@@ -51,6 +62,8 @@
             </div>
         </div>  
     </div>
+    <!-- modal -->
+    <% include ../modals/fom-add.ejs %>
 </body>
 <!-- special script -->
 <!-- bootstrap-table -->

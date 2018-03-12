@@ -73,8 +73,8 @@ $(function () {
             };
         },
         pageNumber: 1,
-        pageSize: 15,
-        pageList: '[15, 30, 50, ALL]',
+        pageSize: 20,
+        pageList: '[30, 50, ALL]',
         pagination: true,
         paginationLoopz: true,
         search: true,
@@ -139,7 +139,8 @@ $(function () {
             field: 'postType',
             title: '岗位类别',
             align: 'center',
-            valign: 'middle'
+            valign: 'middle',
+            visible: false
         },{
             field: 'postDescribe',
             title: '岗位描述',

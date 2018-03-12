@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var sequelize = require('../util/dbConnect.js');
+var sequelize = require('./util/dbConnect.js');
 
 var state = sequelize.define('state',{
     id: {
@@ -8,7 +8,7 @@ var state = sequelize.define('state',{
         allowNull: false,
         autoIncrement: true
     },
-    page: Squelize.STRING,
+    page: Sequelize.STRING,
     state: Sequelize.STRING,
 },{
     timestamps: true,
@@ -26,7 +26,7 @@ state.sync({force: true}).then(function(){
   	{page: 'todo', state: 'on going'},
   	{page: 'todo', state: 'closed'},
   	{page: 'fom', state: '在岗'},
-  	{page: 'fom', state: '试用'}
+  	{page: 'fom', state: '试用'},
   	{page: 'fom', state: '实习'},
   	{page: 'fom', state: '离职'}
   ]);

@@ -22,4 +22,14 @@ var centre = sequelize.define('centre',{
     collate: 'utf8_general_ci'
 });
 
+// 新建初始数据
+centre.sync({force: true}).then(function(){
+    centre.bulkCreate([{
+        centre: 'DBG 信管中心',
+        owner: '韩小龙',
+        preparation: 247,
+        bz: 'xxx'
+    }]);
+});
+
 module.exports = centre;
