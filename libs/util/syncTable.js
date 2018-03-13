@@ -1,5 +1,5 @@
 // 通用
-var state = require('../../models/todo/state.js');
+var state = require('../../models/state.js');
 
 // todo
 var todolist = require('../../models/todo/todolist.js');
