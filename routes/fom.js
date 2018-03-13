@@ -47,11 +47,19 @@ router.get('/dept', function(req,res,next){
 });
 
 // 获取FOM dept table数据
-router.get('/bootstrapTable',function(req,res,next){
-  var deptId = req.query.deptId;
-  dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
-    res.send(rows);
-  });
+router.get('/bootstrapTable/:whichDept',function(req,res,next){
+  var whichDept = req.params.whichDept;
+  if(whichDept && whichDept == 'dept'){
+    var deptId = req.query.deptId;
+    dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
+      res.send(rows);
+    });
+  }else if(whichDept && whichDept == 'centre'){
+    var centreId = 1;
+    dbGet.findStaffByCentreId(centreId, function(err,rows,fields){
+      res.send(rows);
+    });
+  }
 });
 
 // 获取月报人员变动格式：

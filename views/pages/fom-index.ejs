@@ -7,21 +7,6 @@
 <link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
 <!-- 自定义 -->
 <link rel="stylesheet" href="/stylesheets/style.css">
-<style>
-    .content{
-        margin-top: 15px;
-    }
-    .dept a{
-        text-align: center;
-    }
-    .well-self{
-        background-color: #f5f5f5;
-        padding: 10px;
-        border: 1px solid #e3e3e3;
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
-</style>
 <body>
     <% include ../layout/nav.ejs %>
     <div class="container">
@@ -36,43 +21,68 @@
                     <div class="panel-heading">DBG 信管中心</div>
                     <div class="panel-body">
                          <label for="">中心长：</label><i><b><u><span class="text-primary">韩小龙</span></u></b></i>
-                         ，<label for="">当前编制人数：</label><i><b><u>12</u></b></i>
-                         ，<label for="">现有人数：</label><i><b><u>12</u></b></i>
+                         ，<label for="">当前编制人数：</label><i><b><u>247</u></b></i>
+                         ，<label for="">现有人数：</label><i><b><u>190</u></b></i>
                     </div>
                   
                     <!-- Table -->
                     <table class="table table-hover table-bordered">
                        <tr>
                            <td>部长：<i><b><u>12</u></b></i></td>
-                           <td>科长：<i><b><u>12</u></b></i></td>
+                           <td>科长：<i><b><u>25</u></b></i></td>
+                           <td>男：<i><b><u>12</u></b></i></td>
+                           <td>女：<i><b><u>12</u></b></i></td>
                        </tr>
                        <tr>
-                           <td>高级及以上：<i><b><u>12</u></b></i></td>
-                           <td>中级及以下：<i><b><u>12</u></b></i></td>
+                           <td>资深及以上：<i><b><u>12</u></b></i></td>
+                           <td>中高级：<i><b><u>12</u></b></i></td>
+                           <td>初级及以下：<i><b><u>12</u></b></i></td>
+                           <td>实习：<i><b><u>12</u></b></i></td>
                        </tr>
                     </table>
                   </div>
+
+                  <div id="toolbar">
+                        <button class="btn btn-primary btn-sm" id="add" data-toggle="modal" data-target="#addModal" data-whatever="addModal">
+                                <i class="glyphicon glyphicon-plus"></i> 新入职
+                        </button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                部门 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <!-- <li><a href="#">Action</a></li> -->
+                                <% for(var i=0; i < deptList.length; i++){ %>
+                                    <li data-officeId=<%= deptList[i].id %>><a href="javascript:void(0)"><%= deptList[i].dept %></a></li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                  <table id="table"></table>
               </div>
             </div>
         </div>
     </div>
+    <!-- modal -->
+    <% include ../modals/fom-add.ejs %>
 </body>
 <!-- special script -->
 <!-- bootstrap-table -->
 <script src="/jquery/dist/jquery.js"></script>
-<!-- <script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script> -->
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <!-- self -->
-<!-- <script src="/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/bootstrap-table/dist/bootstrap-table.js"></script>
 <script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
 <script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
 <script src="/bootstrap-table/lib/tableExport.js"></script>
 <script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
 <script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
-<script src="/bootstrap-others/dropdown-hover.js"></script> -->
+<script src="/bootstrap-others/dropdown-hover.js"></script>
 <!-- personal -->
-<script src="/javascripts/self.js"></script> 
+<script src="/javascripts/self.js"></script>
+<script src="/javascripts/pages/fom-index.js"></script>
 
 <script>
     $('.dept a').click(function(){

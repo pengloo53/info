@@ -59,8 +59,8 @@ $(function () {
         }
     };
     $table.bootstrapTable({
-        url: '/fom/bootstrapTable/dept?deptId=' + deptId,
-        height: window.innerHeight - 120,
+        url: '/fom/bootstrapTable/centre',
+        height: window.innerHeight - 250,
         // height: 300,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {
@@ -87,7 +87,7 @@ $(function () {
         cache: false,
         detailView: true,
         detailFormatter: function (value, row , index) {
-            return '<p>' + row.postDescribe + '</p>';
+            return '<p>' + row.postDescribe.replace('\\n\g','<br/>') + '</p>';
         },
         columns: [{
             field: 'rid',
@@ -100,7 +100,7 @@ $(function () {
             title: '部门',
             align: 'center',
             valign: 'middle',
-            visible: false
+            // visible: false
         }, {
             field: 'office',
             title: '科室',
@@ -229,39 +229,7 @@ $(function () {
             $('#errMessage').html('请填写完整');
         }
     });
-    // 点击更新按钮
-    $('#editConfirm').click(function () {
-        var etitleValue = $etitle.val().trim();
-        var econtentValue = $econtent.val().trim() || '';
-        var eresultValue = $eresult.val().trim() || '';
-        var epriorityValue = $epriority.val().trim();
-        var estartDateValue = $estartDate.val().trim();
-        var eplanFinishDateValue = $eplanFinishDate.val().trim();
-        var eownerValue = $eowner.val().trim() || '';
-        var erealFinishDateValue = $erealFinishDate.val().trim();
-        var ebzValue = $ebz.val().trim() || '-';
-        var id = $('#listId').val();
-        $.ajax({
-            url: '/todo/updateAll',
-            method: 'POST',
-            data: {
-                id: id,
-                title: etitleValue,
-                content: econtentValue,
-                result: eresultValue,
-                priority: epriorityValue,
-                startDate: estartDateValue,
-                planFinishDate: eplanFinishDateValue,
-                realFinishDate: erealFinishDateValue,
-                bz: ebzValue,
-                owner: eownerValue
-            },
-            success: function (r) {
-                $('#editModal').modal('hide');
-                $table.bootstrapTable('refresh');
-            }
-        });
-    });
+    
     // --------------------- datepicker -------------------
     // 日期选择框
     $('input.date').datepicker({

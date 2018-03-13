@@ -1,55 +1,119 @@
 <!-- Add staff -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">新增部门人员
+                <h4 class="modal-title">新增人员
                     <small>填写关键信息</small>
                 </h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="title" class="control-label col-lg-2">标题<span class="text-danger"> *</span></label>
-                        <div class="col-lg-9">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="（必填）填写尽量简短明了">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="content" class="control-label col-lg-2">内容</label>
-                        <div class="col-lg-9">
-                            <textarea rows="1" name="content" id="content" class="form-control" placeholder="（选填）简单描述一下工作内容" style="width:100%;"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="result" class="control-label col-lg-2">方向/目标</label>
-                        <div class="col-lg-9">
-                            <textarea rows="1" name="result" id="result" class="form-control" placeholder="（选填）所要达到的效果或是执行方向" style="width:100%;"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="owner" class="control-label col-lg-2">承接人</label>
-                        <div class="col-lg-9">
-                            <input type="text" name="owner" id="owner" class="form-control" placeholder="（选填）任务实际执行人">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">选择</label>
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">组织 <span class="text-danger">(*)</span></label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="priority" id="priority" class="form-control">
-                                <option value="">优先级</option>
-                                <option value="重要紧急">重要紧急</option>
-                                <option value="重要不紧急">重要不紧急</option>
-                                <option value="不重要紧急">不重要紧急</option>
-                                <option value="不重要不紧急">不重要不紧急</option>
+                                <option value="">选择中心</option>
+                                <option value="1" selected>DBG信管中心</option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="开始日期">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">选择部门</option>
+
+                            </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="计划完成日期">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">选择科室</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">基本信息 <span class="text-danger">(*)</span></label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="填写姓名">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="填写员工号">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">性别</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">出生信息</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="出生日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="出生地">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="户口所在地">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">毕业信息 <span class="text-danger">(*)</span></label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="毕业学校">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="毕业专业">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">学历</option>
+                                <option value="本科">本科</option>
+                                <option value="硕士">硕士</option>
+                                <option value="博士">博士</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">入职信息</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="毕业日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="开始工作日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="入职日期">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">岗位信息 <span class="text-danger">(*)</span></label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">级别</option>
+                                <option value="初级">初级</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">岗位</option>
+                                <option value="初级">PP BPO</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">在职状态</option>
+                                <option value="初级">在岗</option>
+                                <option value="初级">实习</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="control-label col-lg-2">备注</label>
+                        <div class="col-lg-9">
+                            <textarea rows="2" name="content" id="content" class="form-control" placeholder="" style="width:100%;"></textarea>
                         </div>
                     </div>
                 </form>

@@ -14,10 +14,12 @@ var staff = sequelize.define('staff',{
     userid: Sequelize.STRING,       // 员工号
     gender: Sequelize.STRING,       // 性别
     birthday: Sequelize.STRING,     // 出生年月
-    birth_place: Sequelize.STRING,  // 籍贯
+    birth_place: Sequelize.STRING,  // 出生地
+    domicile_place: Sequelize.STRING, // 户籍所在地
     education: Sequelize.STRING,    // 学历：本科，硕士，博士
     school: Sequelize.STRING,       // 毕业学校
     major: Sequelize.STRING,        // 专业
+    graduation_date: Sequelize.STRING, // 毕业日期
     work_date: Sequelize.STRING,    // 工作时间
     enter_date: Sequelize.STRING,   // 入司时间
     grade: Sequelize.STRING,        // 职级
