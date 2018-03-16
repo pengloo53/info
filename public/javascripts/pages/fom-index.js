@@ -36,14 +36,6 @@ $(function () {
                 });
             }
         },
-        'click [title=邮件]': function (e, value, row, index) {
-            if (!row.owner || row.owner == '') { // 当owner为空时，阻止modal弹出
-                e.preventDefault();
-                e.stopPropagation();
-                alert('执行担当不存在，请先指定担当');
-            }
-            // $('#mailModal').modal('show');
-        },
         'click [title=编辑]': function (e, value, row, index) {
             console.log('id:%d,title:%s,content:%s,startDate:%s', row.id, row.title, row.content, row.startDate);
             $('#listId').val(row.id);
@@ -74,8 +66,8 @@ $(function () {
             };
         },
         pageNumber: 1,
-        pageSize: 20,
-        pageList: '[30, 50, ALL]',
+        pageSize: 15,
+        pageList: '[7, 15, 30, 50, ALL]',
         pagination: true,
         paginationLoopz: true,
         search: true,
@@ -87,7 +79,8 @@ $(function () {
         cache: false,
         detailView: true,
         detailFormatter: function (value, row , index) {
-            return '<p>' + row.postDescribe.replace('\\n\g','<br/>') + '</p>';
+             return '<p><b>' + row.postType + '</b></p>' +
+            '<p>' + row.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>';
         },
         columns: [{
             field: 'rid',
@@ -163,20 +156,21 @@ $(function () {
             //     type: 'textarea',
             //     url: '/todo/update'
             // }
-        }, {
+        },{
             field: 'operator',
             title: '操作',
             events: operator,
             align: 'center',
             valign: 'middle',
             width: '12%',
+            visible: false,
             formatter: function (value, row, index) {
                 return '<div class="btn-group" role="btn-group">' +
-                    '<button class="op btn btn-default btn-sm" title="删除">' +
-                    '<i class="glyphicon glyphicon-trash"></i></button>' +
-                    '<button class="op btn btn-default btn-sm" title="编辑" ' +
+                    '<button class="op btn btn-default btn-sm" title="离职">' +
+                    '<i class="glyphicon glyphicon-window"></i></button>' +
+                    '<button class="op btn btn-default btn-sm" title="内部调转" ' +
                     'data-target="#editModal" data-toggle="modal">' +
-                    '<i class="glyphicon glyphicon-pencil"></i></button>' +
+                    '<i class="glyphicon glyphicon-refresh"></i></button>' +
                     '</div>';
             }
         }]

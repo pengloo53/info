@@ -18,7 +18,5 @@ var grade = sequelize.define('grade',{
     charset: 'utf8',
     collate: 'utf8_general_ci'
 });
-grade.sync({force: true}).then(function(){
-  grade.bulkCreate([{grade: '专家'},{grade: '资深'},{grade:'高级'},{grade:'中级'},{grade: '初级'},{grade:'助理'}]);
-});
+
 module.exports = grade;

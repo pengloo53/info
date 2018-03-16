@@ -18,7 +18,7 @@ function findStaffByCentre(centre,callback){
 
 // 获取中心所有员工，根据centreId
 function findStaffByCentreId(centreId, callback){
-  var sql = 'select * from fom_staff s left join fom_dept d on s.deptId= d.id left join fom_office o on s.officeId = o.id where d.centreId=' + centreId;
+  var sql = 'select * from fom_staff s left join fom_centre c on c.id = s.centreId left join fom_dept d on s.deptId= d.id left join fom_office o on s.officeId = o.id where s.centreId=' + centreId + ' order by s.centreId ,s.deptId, s.officeId';
   querySQL(sql, function(err,rows,fields){
     callback(err,rows,fields);
   });
@@ -26,7 +26,7 @@ function findStaffByCentreId(centreId, callback){
 
 // 获取部门员工，根据deptId
 function findStaffByDeptId(deptId, callback){
-  var sql = 'select * from fom_staff s left join fom_dept d on s.deptId= d.id left join fom_office o on s.officeId = o.id where s.deptId=' + deptId;
+  var sql = 'select * from fom_staff s left join fom_dept d on s.deptId= d.id left join fom_office o on s.officeId = o.id where s.deptId=' + deptId + ' order by s.deptId,s.officeId';
   querySQL(sql, function(err,rows,fields){
     callback(err,rows,fields);
   });

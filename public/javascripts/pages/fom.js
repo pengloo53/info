@@ -22,27 +22,20 @@ $(function () {
     var $epriority = $('#epriority');
     var $ebz = $('#ebz');
     window.operator = {
-        'click [title=删除]': function (e, value, row, index) {
-            if (confirm('确定是否删除？')) {
+        'click [title=离职]': function (e, value, row, index) {
+            if (confirm('确定离职？')) {
                 $.ajax({
-                    url: '/todo/delete',
+                    url: '/fom/delete',
                     data: {
                         id: row.id
                     },
                     method: 'POST',
                     success: function (result) {
+                        alert(result);
                         $table.bootstrapTable('refresh');
                     }
                 });
             }
-        },
-        'click [title=邮件]': function (e, value, row, index) {
-            if (!row.owner || row.owner == '') { // 当owner为空时，阻止modal弹出
-                e.preventDefault();
-                e.stopPropagation();
-                alert('执行担当不存在，请先指定担当');
-            }
-            // $('#mailModal').modal('show');
         },
         'click [title=编辑]': function (e, value, row, index) {
             console.log('id:%d,title:%s,content:%s,startDate:%s', row.id, row.title, row.content, row.startDate);
@@ -60,7 +53,7 @@ $(function () {
     };
     $table.bootstrapTable({
         url: '/fom/bootstrapTable/dept?deptId=' + deptId,
-        height: window.innerHeight - 120,
+        height: window.innerHeight - 130,
         // height: 300,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {
@@ -87,7 +80,8 @@ $(function () {
         cache: false,
         detailView: true,
         detailFormatter: function (value, row , index) {
-            return '<p>' + row.postDescribe + '</p>';
+            return '<p><b>' + row.postType + '</b></p>' +
+            '<p>' + row.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>';
         },
         columns: [{
             field: 'rid',
@@ -169,14 +163,16 @@ $(function () {
             events: operator,
             align: 'center',
             valign: 'middle',
-            width: '12%',
+            width: '15%',
             formatter: function (value, row, index) {
                 return '<div class="btn-group" role="btn-group">' +
-                    '<button class="op btn btn-default btn-sm" title="删除">' +
-                    '<i class="glyphicon glyphicon-trash"></i></button>' +
-                    '<button class="op btn btn-default btn-sm" title="编辑" ' +
+                    '<button class="op btn btn-default btn-sm" title="离职">' +
+                    '<i class="glyphicon glyphicon-new-window"></i></button>' +
+                    '<button class="op btn btn-default btn-sm" title="内部调转" ' +
                     'data-target="#editModal" data-toggle="modal">' +
-                    '<i class="glyphicon glyphicon-pencil"></i></button>' +
+                    '<i class="glyphicon glyphicon-refresh"></i></button>' +
+                    '<button class="op btn btn-default btn-sm" title="外调">' +
+                    '<i class="glyphicon glyphicon-export"></i></button>' +
                     '</div>';
             }
         }]

@@ -4,27 +4,43 @@
 var express = require('express');
 var router = express.Router();
 
+var sequelize = require('../models/util/dbConnect.js');
+
 var staffModel = require('../models/fom/staff.js');
+var centreModel = require('../models/fom/centre.js');
 var deptModel = require('../models/fom/dept.js');
 var officeModel = require('../models/fom/office.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
-// 获取部门列表
+// var centreId = 1;
+// 获取部门列表，中心信息
 router.use(function(req,res,next){
   var centreId = 1; 
-  deptModel.findAll({where: {centreId: centreId}}).then(function(p){
-    res.locals.deptList = p;
-    res.locals.page = 'fom';
-    next();
+  res.locals.page = 'fom';
+  centreModel.findOne({where: {id: centreId }}).then(function(p1){
+    res.locals.centreInfo = p1;
+    deptModel.findAll({where: {centreId: centreId}}).then(function(p2){
+      res.locals.deptList = p2;
+      next();
+    });
   });
 });
 
 // 获取FOM首页
 router.get('/', function(req,res,next){
-  res.render('pages/fom-index.ejs',{
-    title: 'FOM首页',
-    dept: 'index',
+  var centreId = 1;
+  staffModel.findAll({
+    attributes: ['mainPost',[sequelize.fn('COUNT',sequelize.col('mainPost')),'countMainPost']],
+    group: 'mainPost'
+  },{
+    where : {centreId : centreId}
+  }).then(function(p){
+    res.render('pages/fom-index.ejs',{
+      title: 'FOM首页',
+      dept: 'index',
+      mainPostCate: p
+    });
   });
 });
 
@@ -60,6 +76,18 @@ router.get('/bootstrapTable/:whichDept',function(req,res,next){
       res.send(rows);
     });
   }
+});
+
+// 添加 FOM 人员
+router.post('/add', function(req,res,next){
+  var delId = req.body.id;
+  res.send(delId);
+});
+
+// 删除 FOM 人员
+router.post('/delete', function(req,res,next){
+  var id = req.body.id;
+  res.send(id);
 });
 
 // 获取月报人员变动格式：

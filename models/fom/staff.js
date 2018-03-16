@@ -8,6 +8,7 @@ var staff = sequelize.define('staff',{
         allowNull: false,
         autoIncrement: true
     },
+    centreId: Sequelize.BIGINT,     // 中心id
     deptId: Sequelize.BIGINT,       // 部门id
     officeId: Sequelize.BIGINT,     // 科室id
     name: Sequelize.STRING,         // 姓名
@@ -38,5 +39,5 @@ var staff = sequelize.define('staff',{
     charset: 'utf8',
     collate: 'utf8_general_ci'
 });
-
+// staff.sync({force: true});
 module.exports = staff;

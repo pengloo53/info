@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">新增人员
-                    <small>填写关键信息</small>
+                    <small>(*)为必填信息</small>
                 </h4>
             </div>
             <div class="modal-body">
@@ -13,21 +13,23 @@
                     <div class="form-group">
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">组织 <span class="text-danger">(*)</span></label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="priority" id="priority" class="form-control" disabled>
                                 <option value="">选择中心</option>
-                                <option value="1" selected>DBG信管中心</option>
+                                <option value="<%= centreInfo.id %>" selected><%= centreInfo.centre %></option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="priority" id="priority" class="form-control" disabled>
                                 <option value="">选择部门</option>
-
+                                <option value="<%= deptInfo.id %>" selected><%= deptInfo.dept %></option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="priority" id="priority" class="form-control">
                                 <option value="">选择科室</option>
-
+                                <% for(var i = 0 ; i< officeList.length ; i++){ %>
+                                    <option value="<%= officeList[i].id %>"><%= officeList[i].office %></option>
+                                <% } %>
                             </select>
                         </div>
                     </div>

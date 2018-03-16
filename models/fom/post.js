@@ -20,5 +20,5 @@ var post = sequelize.define('post',{
     charset: 'utf8',
     collate: 'utf8_general_ci'
 });
-post.sync({force: true});
+// post.sync({force: true});
 module.exports = post;
