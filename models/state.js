@@ -20,16 +20,4 @@ var state = sequelize.define('state',{
     collate: 'utf8_general_ci'
 });
 
-state.sync({force: true}).then(function(){
-  state.bulkCreate([
-  	{page: 'todo', state: '任务备案'},
-  	{page: 'todo', state: 'on going'},
-  	{page: 'todo', state: 'closed'},
-  	{page: 'fom', state: '在岗'},
-  	{page: 'fom', state: '试用'},
-  	{page: 'fom', state: '实习'},
-  	{page: 'fom', state: '离职'}
-  ]);
-});
-
 module.exports = state;

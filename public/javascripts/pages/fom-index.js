@@ -66,8 +66,8 @@ $(function () {
             };
         },
         pageNumber: 1,
-        pageSize: 15,
-        pageList: '[7, 15, 30, 50, ALL]',
+        pageSize: 20,
+        pageList: '[20, 50, 100, ALL]',
         pagination: true,
         paginationLoopz: true,
         search: true,

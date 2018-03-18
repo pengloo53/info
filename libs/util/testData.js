@@ -26,3 +26,27 @@ centre.sync({force: true}).then(function(){
 grade.sync({force: true}).then(function(){
   grade.bulkCreate([{grade: '专家'},{grade: '资深'},{grade:'高级'},{grade:'中级'},{grade: '初级'},{grade:'助理'}]);
 });
+
+user.sync({force: true}).then(function(p){
+    var createTime = new Date().getTime();
+    user.create({
+        username: 'admin',
+        password: 'admin',
+        userid: '118663',
+        email: 'lupeng_ot@boe.com.cn',
+        deptId: 1,
+        role: 'A'
+    });
+});
+
+state.sync({force: true}).then(function(){
+  state.bulkCreate([
+  	{page: 'todo', state: '任务备案'},
+  	{page: 'todo', state: 'on going'},
+  	{page: 'todo', state: 'closed'},
+  	{page: 'fom', state: '在岗'},
+  	{page: 'fom', state: '试用'},
+  	{page: 'fom', state: '实习'},
+  	{page: 'fom', state: '离职'}
+  ]);
+});

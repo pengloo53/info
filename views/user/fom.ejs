@@ -1,0 +1,106 @@
+<% include ../layout/head.ejs %>
+<!-- special css -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
+<link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<!-- 自定义 -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+<body>
+    <div class="layout-head">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><%= deptInfo.dept %></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/fom">FOM表</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/login/out">登出</a></li>
+                    <!--<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">个人中心 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>-->
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <% include ../layout/alertMessage.ejs %>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="well-self">
+                    部长：<i><b><u><span class="text-primary"><%= deptInfo.owner %></span></u></b></i>
+                   ，编制：<i><b><u><%= deptInfo.preparation %></u></b></i>
+                   ，现员：<i><b><u><span id='staffNum'></span></u></b></i>。
+                   <% for(var ii=0; ii<officeList.length; ii++){ %>
+                   （<%= officeList[ii].office %> 科长：<span class="text-primary"><%= officeList[ii].owner %></span>，编制：<i><b><%= officeList[ii].preparation %></b></i>）
+                   <% } %>
+                   
+                </div>
+                <div id="toolbar">
+                    <button class="btn btn-primary btn-sm" id="add" data-toggle="modal" data-target="#addModal" data-whatever="addModal">
+                            <i class="glyphicon glyphicon-plus"></i> 新入职
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            科室 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <!-- <li><a href="#">Action</a></li> -->
+                            <% for(var i=0; i < officeList.length; i++){ %>
+                                <li data-officeId=<%= officeList[i].id %>><a href="javascript:void(0)"><%= officeList[i].office %></a></li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+                <span id="dataSpan" data-deptid=<%= deptInfo.id %>></span>
+                <table id="table"></table>
+            </div>
+        </div>  
+    </div>
+    <!-- modal -->
+
+</body>
+<!-- special script -->
+<!-- bootstrap-table -->
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- self -->
+<script src="/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
+<script src="/bootstrap-table/lib/tableExport.js"></script>
+<script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<!-- personal -->
+<script src="/javascripts/self.js"></script> 
+<script src="/javascripts/pages/fom.js"></script>
+<script>
+    $(function(){
+
+    });
+</script>
+<% include ../layout/foot.ejs %>

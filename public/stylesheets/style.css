@@ -61,7 +61,9 @@ span.label{
 }
 #message{
   width: 200px;
-  float: right
+  /*float: right;*/
+  position: absolute;
+  right: 0;
 }
 
 /* bootstrap navbar 样式改变 */

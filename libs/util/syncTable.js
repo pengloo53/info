@@ -1,5 +1,6 @@
 // 通用
 var state = require('../../models/state.js');
+var user = require('../../models/user/user.js');
 
 // todo
 var todolist = require('../../models/todo/todolist.js');
@@ -14,6 +15,7 @@ var staff = require('../../models/fom/staff.js');
 
 // 同步表结构
 state.sync({force: true});
+user.sync({force: true});
 
 // todo 相关
 todolist.sync({force: true});

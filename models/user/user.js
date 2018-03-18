@@ -26,16 +26,4 @@ var user = sequelize.define('user', {
     collate: 'utf8_general_ci'
 });
 
-user.sync({force: true}).then(function(p){
-    var createTime = new Date().getTime();
-    user.create({
-        username: 'admin',
-        password: 'admin',
-        userid: '118663',
-        email: 'lupeng_ot@boe.com.cn',
-        deptId: 1,
-        role: 'A'
-    });
-});
-
 module.exports = user;
