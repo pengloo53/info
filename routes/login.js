@@ -31,7 +31,11 @@ router.post('/', function(req,res,next){
     }
     req.flash('success','Login Success!');
     req.session.user = user;
-    res.redirect('/user/fom');
+    if(user.role == 'B'){  // 中心管理员
+      res.redirect('/fom');
+    }else if(user.role == 'C'){  // 部门管理员
+      res.redirect('/user/fom');
+    }
   });
 });
 

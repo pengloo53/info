@@ -13,9 +13,12 @@ var officeModel = require('../models/fom/office.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
+var checkLogin = require('../libs/middle/checkLogin.js').checkLogin;
+var isCentreManager = require('../libs/middle/checkLogin.js').isCentreManager;
+
 // var centreId = 1;
 // 获取部门列表，中心信息
-router.use(function(req,res,next){
+router.use(checkLogin, isCentreManager, function(req,res,next){
   var centreId = 1; 
   res.locals.page = 'fom';
   centreModel.findOne({where: {id: centreId }}).then(function(p1){

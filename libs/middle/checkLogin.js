@@ -14,4 +14,12 @@ module.exports = {
     }
     next();
   },
+
+  isCentreManager: function(req, res, next){
+    if(req.session.user && req.session.user.role == 'B'){
+      next();
+    }else{
+      return res.redirect('/login');
+    }
+  }
 };
