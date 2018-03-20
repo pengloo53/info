@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var sequelize = require('../util/dbConnect.js');
 
 var staff = sequelize.define('staff',{
-    id: {
+    sid: {
         type: Sequelize.BIGINT(11),
         primaryKey: true,
         allowNull: false,

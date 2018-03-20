@@ -1,7 +1,6 @@
 // $.fn.editable.defaults.mode = 'inline';
 $(function () {
     var $table = $('#table');
-    var deptId = $('#dataSpan').data('deptid');
     // add 字段
     var $title = $('#title');
     var $content = $('#content');
@@ -11,23 +10,13 @@ $(function () {
     var $owner = $('#owner');
     var $startDate = $('#startDate');
     var $planFinishDate = $('#planFinishDate');
-    // eidt 字段
-    var $etitle = $('#etitle');
-    var $econtent = $('#econtent');
-    var $eresult = $('#eresult');
-    var $eowner = $('#eowner');
-    var $estartDate = $('#estartDate');
-    var $eplanFinishDate = $('#eplanFinishDate');
-    var $erealFinishDate = $('#erealFinishDate');
-    var $epriority = $('#epriority');
-    var $ebz = $('#ebz');
     window.operator = {
         'click [title=离职]': function (e, value, row, index) {
             if (confirm('确定离职？')) {
                 $.ajax({
-                    url: '/fom/delete',
+                    url: '/user/fom/delete',
                     data: {
-                        id: row.id
+                        id: row.sid
                     },
                     method: 'POST',
                     success: function (result) {
@@ -36,22 +25,15 @@ $(function () {
                 });
             }
         },
-        'click [title=编辑]': function (e, value, row, index) {
-            console.log('id:%d,title:%s,content:%s,startDate:%s', row.id, row.title, row.content, row.startDate);
-            $('#listId').val(row.id);
-            $ebz.val(row.bz);
-            $etitle.val(row.title);
-            $econtent.val(row.content);
-            $eresult.val(row.result);
-            $epriority.val(row.priority);
-            $estartDate.val(row.startDate);
-            $eplanFinishDate.val(row.planFinishDate);
-            $erealFinishDate.val(row.realFinishDate);
-            $eowner.val(row.owner);
+        'click [title=内部调转]': function (e, value, row, index) {
+            alert('你点了「内部调转」，但是功能还没有完成');
+        },
+        'click [title=外调]': function (e, value, row, index) {
+            alert('你点了「外调」，但是功能还没有完成');
         }
     };
     $table.bootstrapTable({
-        url: '/fom/bootstrapTable/dept?deptId=' + deptId,
+        url: '/user/fom/bootstrapTable',
         height: window.innerHeight - 130,
         // height: 300,
         responseHandler: function (res) {
@@ -71,7 +53,7 @@ $(function () {
         pagination: true,
         paginationLoopz: true,
         search: true,
-        idField: 'id',
+        idField: 'sid',
         showColumns: true,
         showExport: true,
         showRefresh: true,
@@ -140,7 +122,11 @@ $(function () {
             title: '岗位描述',
             align: 'center',
             valign: 'middle',
-            visible: false
+            visible: false,
+            // editable: {
+            //     type: 'textarea',
+            //     url: '/todo/update'
+            // }
         },{
             field: 'state',
             title: '状态',
@@ -162,16 +148,16 @@ $(function () {
             events: operator,
             align: 'center',
             valign: 'middle',
-            width: '15%',
+            width: '12%',
             formatter: function (value, row, index) {
                 return '<div class="btn-group" role="btn-group">' +
                     '<button class="op btn btn-default btn-sm" title="离职">' +
-                    '<i class="glyphicon glyphicon-new-window"></i></button>' +
+                    '<i class="glyphicon glyphicon-remove"></i></button>' +
                     '<button class="op btn btn-default btn-sm" title="内部调转" ' +
                     'data-target="#editModal" data-toggle="modal">' +
-                    '<i class="glyphicon glyphicon-refresh"></i></button>' +
+                    '<i class="glyphicon glyphicon-repeat"></i></button>' +
                     '<button class="op btn btn-default btn-sm" title="外调">' +
-                    '<i class="glyphicon glyphicon-export"></i></button>' +
+                    '<i class="glyphicon glyphicon-open"></i></button>' +
                     '</div>';
             }
         }]
@@ -198,7 +184,7 @@ $(function () {
         var ownerValue = $owner.val().trim() || '';
         if (titleValue && priorityValue && startDateValue) {
             $.ajax({
-                url: '/todo/add',
+                url: '/user/fom/add',
                 method: 'POST',
                 data: {
                     title: titleValue,
@@ -223,70 +209,5 @@ $(function () {
         } else {
             $('#errMessage').html('请填写完整');
         }
-    });
-    // 点击更新按钮
-    $('#editConfirm').click(function () {
-        var etitleValue = $etitle.val().trim();
-        var econtentValue = $econtent.val().trim() || '';
-        var eresultValue = $eresult.val().trim() || '';
-        var epriorityValue = $epriority.val().trim();
-        var estartDateValue = $estartDate.val().trim();
-        var eplanFinishDateValue = $eplanFinishDate.val().trim();
-        var eownerValue = $eowner.val().trim() || '';
-        var erealFinishDateValue = $erealFinishDate.val().trim();
-        var ebzValue = $ebz.val().trim() || '-';
-        var id = $('#listId').val();
-        $.ajax({
-            url: '/todo/updateAll',
-            method: 'POST',
-            data: {
-                id: id,
-                title: etitleValue,
-                content: econtentValue,
-                result: eresultValue,
-                priority: epriorityValue,
-                startDate: estartDateValue,
-                planFinishDate: eplanFinishDateValue,
-                realFinishDate: erealFinishDateValue,
-                bz: ebzValue,
-                owner: eownerValue
-            },
-            success: function (r) {
-                $('#editModal').modal('hide');
-                $table.bootstrapTable('refresh');
-            }
-        });
-    });
-    // --------------------- datepicker -------------------
-    // 日期选择框
-    $('input.date').datepicker({
-        format: "yyyy-mm-dd",
-        weekStart: 7,
-        maxViewMode: 1,
-        language: "zh-CN",
-        // daysOfWeekDisabled: "0,6",
-        // daysOfWeekHighlighted: "0,6",
-        autoclose: true,
-        todayHighlight: true,
-        // startDate: new Date()
-    }).on('show', function (e) {
-        e.preventDefault();
-        e.stopPropagation(); // 禁止触发父元素事件
-    }).on('hide', function (e) {
-        e.stopPropagation(); // 禁止触发父元素事件
-    });
-    // 日期选择
-    $table.on('editable-shown.bs.table', function (editable, field, row, $el) {
-        $('.selfDate .editable-input input').datepicker({
-            format: "yyyy-mm-dd",
-            weekStart: 7,
-            maxViewMode: 1,
-            language: "zh-CN",
-            // daysOfWeekDisabled: "0,6",
-            // daysOfWeekHighlighted: "0,6",
-            autoclose: true,
-            todayHighlight: true,
-            // startDate: new Date()
-        });
     });
 });
