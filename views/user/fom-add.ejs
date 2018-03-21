@@ -1,0 +1,179 @@
+<% include ../layout/head.ejs %>
+<!-- special css -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
+<link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<!-- 自定义 -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+<body>
+    <div class="layout-head">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><%= deptInfo.dept %></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/user/fom">FOM表</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">个人中心 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">操作明细</a></li>
+                                <li><a href="#">个人资料</a></li>
+<!--                                 <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li> -->
+                            </ul>
+                        </li>
+                        <li><a href="/login/out">登出</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <% include ../layout/alertMessage.ejs %>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="row">
+							<form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">组织 <span class="text-danger">(*)</span></label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control" disabled>
+                                <option value="">选择中心</option>
+                                <option value="<%= centreInfo.id %>" selected><%= centreInfo.centre %></option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control" disabled>
+                                <option value="">选择部门</option>
+                                <option value="<%= deptInfo.id %>" selected><%= deptInfo.dept %></option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">选择科室</option>
+                                <% for(var i = 0 ; i< officeList.length ; i++){ %>
+                                    <option value="<%= officeList[i].id %>"><%= officeList[i].office %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">基本信息 <span class="text-danger">(*)</span></label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="填写姓名">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="填写员工号">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">性别</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">出生信息</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="出生日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="出生地">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="户口所在地">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">毕业信息 <span class="text-danger">(*)</span></label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="毕业学校">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="毕业专业">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">学历</option>
+                                <option value="本科">本科</option>
+                                <option value="硕士">硕士</option>
+                                <option value="博士">博士</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">入职信息</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="毕业日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="开始工作日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="入职日期">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">岗位信息 <span class="text-danger">(*)</span></label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">级别</option>
+                                <option value="初级">初级</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">岗位</option>
+                                <option value="初级">PP BPO</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <select type="text" name="priority" id="priority" class="form-control">
+                                <option value="">在职状态</option>
+                                <option value="初级">在岗</option>
+                                <option value="初级">实习</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="control-label col-lg-2">备注</label>
+                        <div class="col-lg-9">
+                            <textarea rows="2" name="content" id="content" class="form-control" placeholder="" style="width:100%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+			                <strong class="text-danger" id="errMessage"></strong>
+			                <input type="reset" class="btn btn-default">
+			                <input type="submit" class="btn btn-primary" value="提交">
+			            	</div>
+                </form>
+            </div>
+        </div>  
+    </div>    
+<!-- special script -->
+<!-- bootstrap-table -->
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- personal -->
+<script src="/javascripts/self.js"></script> 
+<script src="/javascripts/user/fom.js"></script>
+<% include ../layout/foot.ejs %>

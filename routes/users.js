@@ -31,19 +31,19 @@ function getData(req,res,next){
 // 权限控制
 router.use(checkLogin);
 
-/* GET users index. */
+/* page: users index. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-// 更新FOM页面
+// page: 更新FOM页面
 router.get('/fom', getData, function(req,res,next){
 	res.render('user/fom.ejs',{
 		title: '更新人员FOM表'
 	});
 });
 
-// 获取FOM dept table数据
+// data: 获取FOM dept table数据
 router.get('/fom/bootstrapTable',function(req,res,next){
   // var whichDept = req.params.whichDept;
   var deptId = req.session.user.deptId;
@@ -52,7 +52,19 @@ router.get('/fom/bootstrapTable',function(req,res,next){
   });
 });
 
-// 离职
+// page: 获取添加人员表单
+router.get('/fom/add',getData, function(req,res,next){
+  res.render('user/fom-add.ejs', {
+    title: '添加新入职员工'
+  });
+});
+
+// action: 新入职
+router.post('/fom/add', function(req,res,next){
+  res.send('add success');
+});
+
+// action: 离职
 router.post('/fom/delete', function(req,res,next){
   var id = req.body.id;
   staffModel.destroy({
