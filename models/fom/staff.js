@@ -29,7 +29,7 @@ var staff = sequelize.define('staff',{
     postType: Sequelize.STRING,         // 岗位类型
     postDescribe: Sequelize.STRING(500),
     state: Sequelize.STRING,        // 状态：1实习，2试用，3在岗，4离职
-    bz: Sequelize.STRING(500),      // 备注：离职原因
+    sbz: Sequelize.STRING(500),      // 备注：离职原因
 },{
     timestamps: true,
     // underscored: true,  // 默认字段采用蛇形命名，如create_at

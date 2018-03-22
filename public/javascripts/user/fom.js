@@ -1,15 +1,6 @@
 // $.fn.editable.defaults.mode = 'inline';
 $(function () {
     var $table = $('#table');
-    // add 字段
-    var $title = $('#title');
-    var $content = $('#content');
-    var $result = $('#result');
-    var $priority = $('#priority');
-    var $state = $('#state');
-    var $owner = $('#owner');
-    var $startDate = $('#startDate');
-    var $planFinishDate = $('#planFinishDate');
     window.operator = {
         'click [title=离职]': function (e, value, row, index) {
             if (confirm('确定离职？')) {
@@ -133,7 +124,7 @@ $(function () {
             align: 'center',
             valign: 'middle'
         },{  
-            field: 'bz',
+            field: 'sbz',
             title: '备注',
             visible: false,
             align: 'center',
@@ -166,48 +157,5 @@ $(function () {
     $table.on('load-success.bs.table', function(){
         var staffNum = $table.bootstrapTable('getData').length;
         $('#staffNum').html(staffNum);
-    });
-
-    // --------------------- modal -------------------
-    // 点击add按钮，显示addModal
-    $('#add').click(function () {
-        $('#errMessage').html('');
-    });
-    // 点击add confirm，提交表单
-    $('#addConfirm').click(function () {
-        var titleValue = $title.val().trim();
-        var contentValue = $content.val().trim() || '';
-        var resultValue = $result.val().trim() || '';
-        var priorityValue = $priority.val().trim();
-        var startDateValue = $startDate.val().trim();
-        var planFinishDateValue = $planFinishDate.val().trim();
-        var ownerValue = $owner.val().trim() || '';
-        if (titleValue && priorityValue && startDateValue) {
-            $.ajax({
-                url: '/user/fom/add',
-                method: 'POST',
-                data: {
-                    title: titleValue,
-                    content: contentValue,
-                    result: resultValue,
-                    priority: priorityValue,
-                    startDate: startDateValue,
-                    planFinishDate: planFinishDateValue,
-                    owner: ownerValue
-                },
-                success: function (r) {
-                    $('#addModal').modal('hide');
-                    $title.val('');
-                    $content.val('');
-                    $result.val('');
-                    $priority.val('');
-                    $startDate.val('');
-                    $planFinishDate.val('');
-                    $table.bootstrapTable('refresh');
-                }
-            });
-        } else {
-            $('#errMessage').html('请填写完整');
-        }
     });
 });

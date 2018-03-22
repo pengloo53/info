@@ -25,7 +25,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/user/fom">FOM表</a></li>
+                        <li class="active"><a href="/user/fom">FOM管理</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -47,25 +47,29 @@
         <% include ../layout/alertMessage.ejs %>
     </div>
     <div class="container">
-        <div class="content">
-            <div class="row">
-							<form class="form-horizontal">
+        <!-- <div class="content"> -->
+            <ol class="breadcrumb">
+              <li><a href="/user/fom">FOM管理</a></li>
+              <li class="active">添加人员</li>
+            </ol>
+                <!-- <p class="lead">添加新入职员工<small> - <%= centreInfo.centre%> - <%= deptInfo.dept %></small></p> -->
+				<form class="form-horizontal" method="POST" action="/user/fom/add">
                     <div class="form-group">
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">组织 <span class="text-danger">(*)</span></label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control" disabled>
+                            <select type="text" name="centre" class="form-control">
                                 <option value="">选择中心</option>
                                 <option value="<%= centreInfo.id %>" selected><%= centreInfo.centre %></option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control" disabled>
+                            <select type="text" name="dept" class="form-control">
                                 <option value="">选择部门</option>
                                 <option value="<%= deptInfo.id %>" selected><%= deptInfo.dept %></option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="office" class="form-control">
                                 <option value="">选择科室</option>
                                 <% for(var i = 0 ; i< officeList.length ; i++){ %>
                                     <option value="<%= officeList[i].id %>"><%= officeList[i].office %></option>
@@ -76,41 +80,30 @@
                     <div class="form-group">
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">基本信息 <span class="text-danger">(*)</span></label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="填写姓名">
+                            <input type="text" name="name" class="form-control" placeholder="填写姓名">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="填写员工号">
+                            <input type="text" name="userid" class="form-control" placeholder="填写员工号">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="gender" class="form-control">
                                 <option value="">性别</option>
                                 <option value="男">男</option>
                                 <option value="女">女</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">出生信息</label>
-                        <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="出生日期">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="出生地">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="户口所在地">
-                        </div>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">毕业信息 <span class="text-danger">(*)</span></label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="毕业学校">
+                            <input type="text" name="school" class="form-control" placeholder="毕业学校">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" name="title" id="title" class="form-control" placeholder="毕业专业">
+                            <input type="text" name="major" class="form-control" placeholder="毕业专业">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="education" class="form-control">
                                 <option value="">学历</option>
                                 <option value="本科">本科</option>
                                 <option value="硕士">硕士</option>
@@ -121,31 +114,43 @@
                     <div class="form-group">
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">入职信息</label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="startDate" id="startDate" placeholder="毕业日期">
+                            <input type="text" class="date form-control" name="graduation_date" placeholder="毕业日期">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="开始工作日期">
+                            <input type="text" class="date form-control" name="work_date" placeholder="开始工作日期">
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <input type="text" class="date form-control" name="planFinishDate" id="planFinishDate" placeholder="入职日期">
+                            <input type="text" class="date form-control" name="enter_date" placeholder="入职日期">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label col-lg-2 hidden-md hidden-sm">出生信息</label>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" class="date form-control" name="birthday" placeholder="出生日期">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="birth_place" class="form-control" placeholder="出生地">
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <input type="text" name="domicile_place" class="form-control" placeholder="户口所在地">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">岗位信息 <span class="text-danger">(*)</span></label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="grade" class="form-control">
                                 <option value="">级别</option>
                                 <option value="初级">初级</option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="mainPost" class="form-control">
                                 <option value="">岗位</option>
                                 <option value="初级">PP BPO</option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
-                            <select type="text" name="priority" id="priority" class="form-control">
+                            <select type="text" name="state" class="form-control">
                                 <option value="">在职状态</option>
                                 <option value="初级">在岗</option>
                                 <option value="初级">实习</option>
@@ -155,17 +160,17 @@
                     <div class="form-group">
                         <label for="content" class="control-label col-lg-2">备注</label>
                         <div class="col-lg-9">
-                            <textarea rows="2" name="content" id="content" class="form-control" placeholder="" style="width:100%;"></textarea>
+                            <textarea rows="2" name="bz" class="form-control" placeholder="" style="width:100%;"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-			                <strong class="text-danger" id="errMessage"></strong>
-			                <input type="reset" class="btn btn-default">
-			                <input type="submit" class="btn btn-primary" value="提交">
-			            	</div>
+		                <div class="col-lg-6 col-lg-offset-2">
+		                	<button type="reset" class="btn btn-default">重置</button>
+		                	<button type="submit" class="btn btn-primary">提交</button>
+		             	</div>
+		            </div>
                 </form>
-            </div>
-        </div>  
+        <!-- </div>   -->
     </div>    
 <!-- special script -->
 <!-- bootstrap-table -->
@@ -176,4 +181,29 @@
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
 <script src="/javascripts/user/fom.js"></script>
+<script>
+    $(function(){
+        // --------------------- datepicker -------------------
+        // 日期选择框
+        $('input.date').datepicker({
+            format: "yyyy-mm-dd",
+            weekStart: 7,
+            // maxViewMode: 1,
+            language: "zh-CN",
+            // daysOfWeekDisabled: "0,6",
+            // daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            todayHighlight: true,
+            // startDate: new Date()
+        }).on('show', function (e) {
+            e.preventDefault();
+            e.stopPropagation(); // 禁止触发父元素事件
+        }).on('hide', function (e) {
+            e.stopPropagation(); // 禁止触发父元素事件
+        });
+
+        // select 异步获取选项
+        
+    });
+</script>
 <% include ../layout/foot.ejs %>
