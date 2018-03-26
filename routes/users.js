@@ -17,7 +17,7 @@ var checkLogin = require('../libs/middle/checkLogin.js').checkLogin;
 // 获取中心，部门信息，科室列表
 function getData(req,res,next){
   // var deptId = req.session.user.deptId;
-  var deptId = 6;    //  便于测试，暂时禁止权限控制
+  var deptId = 2;    //  便于测试，暂时禁止权限控制
   deptModel.findOne({where: {id: deptId}}).then(function(p1){
     res.locals.deptInfo = p1;
     var centreId = p1.centreId;
@@ -47,15 +47,12 @@ function getPost(req,res,next){
 };
 
 // 获取部门List
-// function getDeptList(req,res,next){
-//   var deptId = 6;
-//   deptModel.findOne({where: {id: deptId}}).then(function(p1){
-//     var centreId = p1.centreId;
-//     deptMoel.findAll({where: {centreId: centreId}}).then(function(p2){
-//       res.locals.deptList = p2;
-//     });
-//   });
-// }
+function getCentreList(req,res,next){
+  centreModel.findAll().then(function(p){
+    res.locals.centreList = p;
+    next();
+  });
+}
 
 // 权限控制
 // router.use(checkLogin);
@@ -66,7 +63,7 @@ router.get('/', function(req, res, next) {
 });
 
 // page: FOM表格页面
-router.get('/fom', getData, function(req,res,next){
+router.get('/fom', getData,getCentreList, function(req,res,next){
 	res.render('user/fom.ejs',{
 		title: '更新人员FOM表'
 	});
@@ -75,7 +72,7 @@ router.get('/fom', getData, function(req,res,next){
 // data: 获取FOM dept table数据
 router.get('/fom/bootstrapTable',function(req,res,next){
   // var deptId = req.session.user.deptId;
-  var deptId = 6;    //  便于测试，暂时禁止权限控制
+  var deptId = 2;    //  便于测试，暂时禁止权限控制
   dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
     res.send(rows);
   });
@@ -85,6 +82,14 @@ router.get('/fom/bootstrapTable',function(req,res,next){
 router.get('/fom/get/deptList', function(req,res,next){
   var centreId = req.query.centreId;
   deptModel.findAll({where: {centreId : centreId}}).then(function(p){
+    res.send(p);
+  });
+});
+
+// data: 根据deptId异步获取科室列表officeList
+router.get('/fom/get/officeList', function(req,res,next){
+  var deptId = req.query.deptId;
+  officeModel.findAll({where: {deptId : deptId}}).then(function(p){
     res.send(p);
   });
 });
@@ -151,16 +156,6 @@ router.post('/fom/add', function(req,res,next){
 });
 
 // action: 离职
-router.post('/fom/delete', function(req,res,next){
-  var id = req.body.id;
-  staffModel.destroy({
-    where: {sid: id}
-  }).then(function(p){
-    res.send('delete success!');
-  });
-});
-
-// action: 离职
 router.post('/fom/dimission', function(req,res,next){
   var id = req.body.id;
   var leave_date = req.body.leave_date;
@@ -183,11 +178,13 @@ router.post('/fom/change', function(req,res,next){
   var centreId = req.body.centre;
   var deptId = req.body.dept;
   var officeId = req.body.office;
+  // console.log('centreId is %d, deptId is %d , officeId is %d', centreId ,deptId , officeId);
   staffModel.update(
     {centreId : centreId, deptId : deptId, officeId: officeId},
+    {where: {sid: id}},
     {fields: [centreId,deptId,officeId]}
   ).then(function(){
-      res.flash('success', '调转操作成功');
+      req.flash('success', '调转操作成功');
       res.redirect('/user/fom');
   });
 });

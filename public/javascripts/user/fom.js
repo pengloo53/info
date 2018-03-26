@@ -9,6 +9,7 @@ $(function () {
         'click [title=调转]': function (e, value, row, index) {
             $('#change').modal('show');
             $('#change form input.sid').val(row.sid);
+            $('select[name=centre]').val('');
         },
         'click [title=更改]': function (e, value, row, index) {
             alert('你点了「更改」，但是功能还没有完成');
@@ -166,5 +167,35 @@ $(function () {
         e.stopPropagation(); // 禁止触发父元素事件
     }).on('hide', function (e) {
         e.stopPropagation(); // 禁止触发父元素事件
+    });
+
+    // 根据中心获取部门
+    $('#change').on('shown.bs.modal', function () {
+        $('select[name=centre]').change(function(){
+            var centreId = $(this).val();
+            $.ajax({
+                url: '/user/fom/get/deptList?centreId=' + centreId,
+                success: function(result){
+                    $('select[name=dept] option:gt(0)').remove();
+                    for(var i = 0 ; i< result.length; i++){
+                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].dept + '</option>');
+                        $('select[name=dept]').append($optionHtml);
+                    }
+                }
+            });
+        });
+        $('select[name=dept]').change(function(){
+            var deptId = $(this).val();
+            $.ajax({
+                url: '/user/fom/get/officeList?deptId=' + deptId,
+                success: function(result){
+                    $('select[name=office] option:gt(0)').remove();
+                    for(var i = 0 ; i< result.length; i++){
+                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].office + '</option>');
+                        $('select[name=office]').append($optionHtml);
+                    }
+                }
+            });
+        });
     });
 });

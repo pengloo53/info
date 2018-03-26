@@ -72,7 +72,6 @@
                         </ul>
                     </div>
                 </div>
-                <span id="dataSpan" data-deptid=<%= deptInfo.id %>></span>
                 <table id="table"></table>
             </div>
         </div>  
@@ -93,7 +92,9 @@
                     <div class="col-lg-10">
                         <select name="centre" class="form-control">
                             <option value="">请选择</option>
-                            <option value="<%= centreInfo.id %>"><%= centreInfo.centre %></option>
+                            <% for(var i =0; i< centreList.length; i++){ %>
+                                <option value="<%= centreList[i].id %>"><%= centreList[i].centre %></option>
+                            <% } %>
                         </select>
                     </div>
                 </div>
@@ -102,7 +103,7 @@
                     <div class="col-lg-10">
                         <select name="dept" class="form-control">
                             <option value="">请选择</option>
-    
+                            
                         </select>
                     </div>
                 </div>
@@ -111,7 +112,7 @@
                     <div class="col-lg-10">
                         <select name="office" class="form-control">
                             <option value="">请选择</option>
-
+                            
                         </select>
                     </div>
                 </div>
