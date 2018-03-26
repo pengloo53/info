@@ -29,6 +29,17 @@ function getData(req,res,next){
   });
 }
 
+// 获取部门List
+// function getDeptList(req,res,next){
+//   var deptId = 6;
+//   deptModel.findOne({where: {id: deptId}}).then(function(p1){
+//     var centreId = p1.centreId;
+//     deptMoel.findAll({where: {centreId: centreId}}).then(function(p2){
+//       res.locals.deptList = p2;
+//     });
+//   });
+// }
+
 // 权限控制
 // router.use(checkLogin);
 
@@ -50,6 +61,14 @@ router.get('/fom/bootstrapTable',function(req,res,next){
   var deptId = 6;    //  便于测试，暂时禁止权限控制
   dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
     res.send(rows);
+  });
+});
+
+// data: 根据centreId异步获取部门列表deptList
+router.get('/fom/get/deptList', function(req,res,next){
+  var centreId = req.query.centreId;
+  deptModel.findAll({where: {centreId : centreId}}).then(function(p){
+    res.send(p);
   });
 });
 

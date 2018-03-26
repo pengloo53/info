@@ -1,6 +1,7 @@
 // $.fn.editable.defaults.mode = 'inline';
 $(function () {
     var $table = $('#table');
+    var $innerChangeModal = $('#innerChange');
     window.operator = {
         'click [title=离职]': function (e, value, row, index) {
             if (confirm('确定离职？')) {
@@ -18,6 +19,7 @@ $(function () {
         },
         'click [title=内部调转]': function (e, value, row, index) {
             alert('你点了「内部调转」，但是功能还没有完成');
+            $innerChangeModal.modal('show');
         },
         'click [title=外调]': function (e, value, row, index) {
             alert('你点了「外调」，但是功能还没有完成');
@@ -53,7 +55,7 @@ $(function () {
         detailView: true,
         detailFormatter: function (value, row , index) {
             return '<p><b>' + row.postType + '</b></p>' +
-            '<p>' + row.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>';
+            '<p>' + row.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>'; // 将从excel导入的数据换行
         },
         columns: [{
             field: 'rid',
