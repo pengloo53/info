@@ -23,6 +23,7 @@ var staff = sequelize.define('staff',{
     graduation_date: Sequelize.STRING, // 毕业日期
     work_date: Sequelize.STRING,    // 工作时间
     enter_date: Sequelize.STRING,   // 入司时间
+    leave_date: Sequelize.STRING,   // 离职日期
     grade: Sequelize.STRING,        // 职级
     mainPost: Sequelize.STRING,     // 主责岗位
     subPost: Sequelize.STRING,      // 次责岗位

@@ -60,12 +60,12 @@ function getPost(req,res,next){
 // 权限控制
 // router.use(checkLogin);
 
-/* page: users index. */
+// page: users index.
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-// page: 更新FOM页面
+// page: FOM表格页面
 router.get('/fom', getData, function(req,res,next){
 	res.render('user/fom.ejs',{
 		title: '更新人员FOM表'
@@ -157,6 +157,38 @@ router.post('/fom/delete', function(req,res,next){
     where: {sid: id}
   }).then(function(p){
     res.send('delete success!');
+  });
+});
+
+// action: 离职
+router.post('/fom/dimission', function(req,res,next){
+  var id = req.body.id;
+  var leave_date = req.body.leave_date;
+  var bz = req.body.bz;
+  staffModel.update(
+    {'sbz': bz,'leave_date': leave_date},
+    {'where': {sid: id}},
+    {'fields': ['leave_date','sbz']}
+  ).then(function(){
+    staffModel.destroy({where:{sid: id}}).then(function(){
+      req.flash('success', '离职操作成功');
+      res.redirect('/user/fom');
+    });
+  });
+});
+
+// action: 调转
+router.post('/fom/change', function(req,res,next){
+  var id = req.body.id;
+  var centreId = req.body.centre;
+  var deptId = req.body.dept;
+  var officeId = req.body.office;
+  staffModel.update(
+    {centreId : centreId, deptId : deptId, officeId: officeId},
+    {fields: [centreId,deptId,officeId]}
+  ).then(function(){
+      res.flash('success', '调转操作成功');
+      res.redirect('/user/fom');
   });
 });
 

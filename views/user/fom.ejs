@@ -78,39 +78,81 @@
         </div>  
     </div>
     <!-- modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="innerChange">
+    <div class="modal fade" tabindex="-1" role="dialog" id="change">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">选择调转的部门和科室</h4>
+            <h4 class="modal-title">选择调入的组织</h4>
           </div>
+          <form class="form-horizontal" method="POST" action="/user/fom/change">
+            <input type="hidden" class="sid" name="id">
           <div class="modal-body">
-            <form  class="form-horizontal">
-                <div class="form-control">
+                <div class="form-group">
+                    <label for="" class="control-label col-lg-2">调入中心</label>
+                    <div class="col-lg-10">
+                        <select name="centre" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="<%= centreInfo.id %>"><%= centreInfo.centre %></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="" class="control-label col-lg-2">调入部门</label>
                     <div class="col-lg-10">
-                        <select name="dept">
+                        <select name="dept" class="form-control">
                             <option value="">请选择</option>
-
+    
                         </select>
                     </div>
                 </div>
-                <div class="form-control">
+                <div class="form-group">
                     <label for="" class="control-label col-lg-2">调入科室</label>
                     <div class="col-lg-10">
-                        <select name="office">
+                        <select name="office" class="form-control">
                             <option value="">请选择</option>
 
                         </select>
                     </div>
                 </div>
-            </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="submit" class="btn btn-primary">保存</button>
           </div>
+          </form>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="dimission">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title text-danger">确定离职？</h4>
+          </div>
+          <form class="form-horizontal" method="POST" action="/user/fom/dimission">
+            <input type="hidden" class="sid" name="id">
+          <div class="modal-body">
+                <div class="form-group">
+                    <label for="" class="control-label col-lg-2">离职日期</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="date form-control" name="leave_date" placeholder="离职日期">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="content" class="control-label col-lg-2">离职原因</label>
+                    <div class="col-lg-10">
+                        <textarea rows="2" name="bz" class="form-control" placeholder="选填" style="width:100%;"></textarea>
+                    </div>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="submit" class="btn btn-primary">确定</button>
+          </div>
+          </form>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

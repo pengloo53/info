@@ -139,13 +139,21 @@
                         <label for="" class="control-label col-lg-2 hidden-md hidden-sm">岗位信息 <span class="text-danger">(*)</span></label>
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="grade" class="form-control">
-                                <option value="">级别</option>
+                                <option value="">选择级别</option>
+<!--                                 <option value="初级">初级</option>
                                 <option value="初级">初级</option>
+                                <option value="初级">初级</option> -->
+                                <option value="专家">专家</option>
+                                <option value="资深">资深</option>
+                                <option value="高级">高级</option>
+                                <option value="中级">中级</option>
+                                <option value="初级">初级</option>
+                                <option value="助理">助理</option>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="mainPost" class="form-control">
-                                <option value="">岗位</option>
+                                <option value="">选择岗位</option>
                                 <% for(var i = 0 ; i< postList.length ; i++){ %>
                                     <option value="<%= postList[i].post %>"><%= postList[i].post %></option>
                                 <% } %>
@@ -153,7 +161,7 @@
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="state" class="form-control">
-                                <option value="">在职状态</option>
+                                <option value="">选择在职状态</option>
                                 <% for(var i = 0 ; i< stateList.length ; i++){ %>
                                     <option value="<%= stateList[i].state %>"><%= stateList[i].state %></option>
                                 <% } %>
@@ -204,10 +212,6 @@
         }).on('hide', function (e) {
             e.stopPropagation(); // 禁止触发父元素事件
         });
-
-        // select 异步获取选项
-        // 根据page获取state
-
         
     });
 </script>

@@ -1,28 +1,17 @@
 // $.fn.editable.defaults.mode = 'inline';
 $(function () {
     var $table = $('#table');
-    var $innerChangeModal = $('#innerChange');
     window.operator = {
         'click [title=离职]': function (e, value, row, index) {
-            if (confirm('确定离职？')) {
-                $.ajax({
-                    url: '/user/fom/delete',
-                    data: {
-                        id: row.sid
-                    },
-                    method: 'POST',
-                    success: function (result) {
-                        $table.bootstrapTable('refresh');
-                    }
-                });
-            }
+            $('#dimission').modal('show');
+            $('#dimission form input.sid').val(row.sid);
         },
-        'click [title=内部调转]': function (e, value, row, index) {
-            alert('你点了「内部调转」，但是功能还没有完成');
-            $innerChangeModal.modal('show');
+        'click [title=调转]': function (e, value, row, index) {
+            $('#change').modal('show');
+            $('#change form input.sid').val(row.sid);
         },
-        'click [title=外调]': function (e, value, row, index) {
-            alert('你点了「外调」，但是功能还没有完成');
+        'click [title=更改]': function (e, value, row, index) {
+            alert('你点了「更改」，但是功能还没有完成');
         }
     };
     $table.bootstrapTable({
@@ -146,11 +135,11 @@ $(function () {
                 return '<div class="btn-group" role="btn-group">' +
                     '<button class="op btn btn-default btn-sm" title="离职">' +
                     '<i class="glyphicon glyphicon-remove"></i></button>' +
-                    '<button class="op btn btn-default btn-sm" title="内部调转" ' +
+                    '<button class="op btn btn-default btn-sm" title="调转" ' +
                     'data-target="#editModal" data-toggle="modal">' +
                     '<i class="glyphicon glyphicon-repeat"></i></button>' +
-                    '<button class="op btn btn-default btn-sm" title="外调">' +
-                    '<i class="glyphicon glyphicon-open"></i></button>' +
+                    '<button class="op btn btn-default btn-sm" title="更改">' +
+                    '<i class="glyphicon glyphicon-pencil"></i></button>' +
                     '</div>';
             }
         }]
@@ -159,5 +148,23 @@ $(function () {
     $table.on('load-success.bs.table', function(){
         var staffNum = $table.bootstrapTable('getData').length;
         $('#staffNum').html(staffNum);
+    });
+
+    // 日期选择框
+    $('input.date').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 7,
+        maxViewMode: 1,
+        language: "zh-CN",
+        // daysOfWeekDisabled: "0,6",
+        // daysOfWeekHighlighted: "0,6",
+        autoclose: true,
+        todayHighlight: true,
+        // startDate: new Date()
+    }).on('show', function (e) {
+        e.preventDefault();
+        e.stopPropagation(); // 禁止触发父元素事件
+    }).on('hide', function (e) {
+        e.stopPropagation(); // 禁止触发父元素事件
     });
 });
