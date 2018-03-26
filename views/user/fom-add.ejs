@@ -146,14 +146,17 @@
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="mainPost" class="form-control">
                                 <option value="">岗位</option>
-                                <option value="初级">PP BPO</option>
+                                <% for(var i = 0 ; i< postList.length ; i++){ %>
+                                    <option value="<%= postList[i].post %>"><%= postList[i].post %></option>
+                                <% } %>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="state" class="form-control">
                                 <option value="">在职状态</option>
-                                <option value="初级">在岗</option>
-                                <option value="初级">实习</option>
+                                <% for(var i = 0 ; i< stateList.length ; i++){ %>
+                                    <option value="<%= stateList[i].state %>"><%= stateList[i].state %></option>
+                                <% } %>
                             </select>
                         </div>
                     </div>
@@ -203,6 +206,8 @@
         });
 
         // select 异步获取选项
+        // 根据page获取state
+
         
     });
 </script>

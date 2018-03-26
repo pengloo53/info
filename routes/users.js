@@ -7,6 +7,8 @@ var staffModel = require('../models/fom/staff.js');
 var centreModel = require('../models/fom/centre.js');
 var deptModel = require('../models/fom/dept.js');
 var officeModel = require('../models/fom/office.js');
+var stateModel = require('../models/state.js');
+var postModel = require('../models/fom/post.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
@@ -28,6 +30,21 @@ function getData(req,res,next){
     });
   });
 }
+// 获取状态选项
+function getState(req,res,next){
+  var page = 'fom';
+  stateModel.findAll({where:{page: page}}).then(function(p){
+    res.locals.stateList = p;
+    next();
+  });
+}
+// 获取岗位类别选项
+function getPost(req,res,next){
+  postModel.findAll().then(function(p){
+    res.locals.postList = p;
+    next();
+  });
+};
 
 // 获取部门List
 // function getDeptList(req,res,next){
@@ -73,7 +90,7 @@ router.get('/fom/get/deptList', function(req,res,next){
 });
 
 // page: 获取添加人员表单
-router.get('/fom/add',getData, function(req,res,next){
+router.get('/fom/add',getData, getState, getPost, function(req,res,next){
   res.render('user/fom-add.ejs', {
     title: '添加新入职员工'
   });

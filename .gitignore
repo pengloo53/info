@@ -44,3 +44,5 @@ public/images/uploads/**
 # config
 config/*
 !config/default.*
+
+package-lock.json
