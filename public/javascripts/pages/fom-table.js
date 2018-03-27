@@ -128,7 +128,7 @@ $(function () {
             events: operator,
             align: 'center',
             valign: 'middle',
-            width: '10%',
+            // width: '10%',
             // visible: false,
             formatter: function (value, row, index) {
                 return '<div class="btn-group" role="btn-group">' +
