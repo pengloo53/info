@@ -3,8 +3,8 @@
 <!-- bootstrap -->
 <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
 <link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
-<link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
-<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<!-- <link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css"> -->
 <!-- 自定义 -->
 <link rel="stylesheet" href="/stylesheets/style.css">
 <body>
@@ -13,7 +13,10 @@
         <div class="content">
             <div class="row">
               <div class="col-lg-2">
-                <% include fom-layout-dept.ejs %>
+                  <div class="list-group">
+                      <a href="/fom" class="list-group-item active">总览</a>
+                      <a href="/fom/table" class="list-group-item">详表</a>
+                  </div>
               </div>
               <div class="col-lg-10">
                   <div class="panel panel-default">
@@ -40,21 +43,6 @@
                        </tr>
                     </table>
                   </div>
-
-                  <div id="toolbar">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                部门 <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <!-- <li><a href="#">Action</a></li> -->
-                                <% for(var i=0; i < deptList.length; i++){ %>
-                                    <li><a href="javascript:void(0)"><%= deptList[i].dept %></a></li>
-                                <% } %>
-                            </ul>
-                        </div>
-                    </div>
-                  <table id="table"></table>
               </div>
             </div>
         </div>
@@ -64,15 +52,15 @@
 <!-- bootstrap-table -->
 <script src="/jquery/dist/jquery.js"></script>
 <script src="/bootstrap/dist/js/bootstrap.js"></script>
-<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- <script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script> -->
 <!-- self -->
-<script src="/bootstrap-table/dist/bootstrap-table.js"></script>
+<!-- <script src="/bootstrap-table/dist/bootstrap-table.js"></script>
 <script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
 <script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
 <script src="/bootstrap-table/lib/tableExport.js"></script>
 <script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
-<script src="/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script src="/bootstrap3-editable/js/bootstrap-editable.js"></script> -->
 <!-- personal -->
 <script src="/javascripts/self.js"></script>
 <script src="/javascripts/pages/fom-index.js"></script>

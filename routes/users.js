@@ -46,7 +46,7 @@ function getPost(req,res,next){
   });
 };
 
-// 获取部门List
+// 获取中心List
 function getCentreList(req,res,next){
   centreModel.findAll().then(function(p){
     res.locals.centreList = p;
@@ -161,8 +161,8 @@ router.post('/fom/add', function(req,res,next){
 // action: 离职
 router.post('/fom/dimission', function(req,res,next){
   var id = req.body.id;
-  var leave_date = req.body.leave_date;
-  var bz = req.body.bz;
+  var leave_date = req.body.leave_date || '';
+  var bz = req.body.bz || '';
   staffModel.update(
     {'sbz': bz,'leave_date': leave_date},
     {'where': {sid: id}},
@@ -178,9 +178,9 @@ router.post('/fom/dimission', function(req,res,next){
 // action: 调转
 router.post('/fom/change', function(req,res,next){
   var id = req.body.id;
-  var centreId = req.body.centre;
-  var deptId = req.body.dept;
-  var officeId = req.body.office;
+  var centreId = req.body.centre || 0;
+  var deptId = req.body.dept || 0;
+  var officeId = req.body.office || 0;
   // console.log('centreId is %d, deptId is %d , officeId is %d', centreId ,deptId , officeId);
   staffModel.update(
     {centreId : centreId, deptId : deptId, officeId: officeId},

@@ -1,6 +1,7 @@
 // $.fn.editable.defaults.mode = 'inline';
 $(function () {
     var $table = $('#table');
+    var deptId = $('#dataSpan').data('deptid');
     window.operator = {
         'click [title=离职]': function (e, value, row, index) {
             $('#dimission').modal('show');
@@ -10,16 +11,14 @@ $(function () {
             $('#change').modal('show');
             $('#change form input.sid').val(row.sid);
             $('select[name=centre]').val('');
-            $('select[name=dept] option:gt(0)').remove();
-            $('select[name=office] option:gt(0)').remove();
         },
         'click [title=更改]': function (e, value, row, index) {
             alert('你点了「更改」，但是功能还没有完成');
         }
     };
     $table.bootstrapTable({
-        url: '/user/fom/bootstrapTable',
-        height: window.innerHeight - 130,
+        url: '/fom/bootstrapTable',
+        height: window.innerHeight - 70,
         // height: 300,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {
@@ -34,7 +33,7 @@ $(function () {
         },
         pageNumber: 1,
         pageSize: 20,
-        pageList: '[30, 50, ALL]',
+        pageList: '[20, 50, 100, ALL]',
         pagination: true,
         paginationLoopz: true,
         search: true,
@@ -46,8 +45,8 @@ $(function () {
         cache: false,
         detailView: true,
         detailFormatter: function (value, row , index) {
-            return '<p><b>' + row.postType + '</b></p>' +
-            '<p>' + row.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>'; // 将从excel导入的数据换行
+             return '<p><b>' + row.postType + '</b></p>' +
+            '<p>' + row.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>';
         },
         columns: [{
             field: 'rid',
@@ -60,7 +59,7 @@ $(function () {
             title: '部门',
             align: 'center',
             valign: 'middle',
-            visible: false
+            // visible: false
         }, {
             field: 'office',
             title: '科室',
@@ -107,18 +106,14 @@ $(function () {
             title: '岗位描述',
             align: 'center',
             valign: 'middle',
-            visible: false,
-            // editable: {
-            //     type: 'textarea',
-            //     url: '/todo/update'
-            // }
+            visible: false
         },{
             field: 'state',
             title: '状态',
             align: 'center',
             valign: 'middle'
         },{  
-            field: 'sbz',
+            field: 'bz',
             title: '备注',
             visible: false,
             align: 'center',
@@ -127,13 +122,14 @@ $(function () {
             //     type: 'textarea',
             //     url: '/todo/update'
             // }
-        }, {
+        },{
             field: 'operator',
             title: '操作',
             events: operator,
             align: 'center',
             valign: 'middle',
-            width: '12%',
+            width: '10%',
+            // visible: false,
             formatter: function (value, row, index) {
                 return '<div class="btn-group" role="btn-group">' +
                     '<button class="op btn btn-default btn-sm" title="离职">' +
@@ -152,7 +148,8 @@ $(function () {
         var staffNum = $table.bootstrapTable('getData').length;
         $('#staffNum').html(staffNum);
     });
-
+    
+    // --------------------- datepicker -------------------
     // 日期选择框
     $('input.date').datepicker({
         format: "yyyy-mm-dd",
@@ -170,7 +167,21 @@ $(function () {
     }).on('hide', function (e) {
         e.stopPropagation(); // 禁止触发父元素事件
     });
-
+    // 日期选择
+    $table.on('editable-shown.bs.table', function (editable, field, row, $el) {
+        $('.selfDate .editable-input input').datepicker({
+            format: "yyyy-mm-dd",
+            weekStart: 7,
+            maxViewMode: 1,
+            language: "zh-CN",
+            // daysOfWeekDisabled: "0,6",
+            // daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            todayHighlight: true,
+            // startDate: new Date()
+        });
+    });
+    
     // 根据中心获取部门
     $('#change').on('shown.bs.modal', function () {
         $('select[name=centre]').change(function(){

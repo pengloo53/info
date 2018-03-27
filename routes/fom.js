@@ -16,22 +16,40 @@ var dbGet = require('../dbController/db-index-get.js');
 var checkLogin = require('../libs/middle/checkLogin.js').checkLogin;
 var isCentreManager = require('../libs/middle/checkLogin.js').isCentreManager;
 
-// var centreId = 1;
-// 获取部门列表，中心信息
-router.use(checkLogin, isCentreManager, function(req,res,next){
+// 获取部门列表
+function getDeptList(req,res,next){
   var centreId = 1; 
-  res.locals.page = 'fom';
-  centreModel.findOne({where: {id: centreId }}).then(function(p1){
-    res.locals.centreInfo = p1;
-    deptModel.findAll({where: {centreId: centreId}}).then(function(p2){
-      res.locals.deptList = p2;
-      next();
-    });
+  deptModel.findAll({where: {centreId: centreId}}).then(function(p){
+    res.locals.deptList = p;
+    next();
   });
+};
+
+// 获取中心信息
+function getCentreInfo(req,res,next){
+  var centreId = 1; 
+  centreModel.findOne({where: {id: centreId }}).then(function(p){
+    res.locals.centreInfo = p;
+    next();
+  });
+}
+
+// 获取中心List
+function getCentreList(req,res,next){
+  centreModel.findAll().then(function(p){
+    res.locals.centreList = p;
+    next();
+  });
+}
+
+// 权限控制
+router.use(checkLogin, isCentreManager, function(req,res,next){
+  res.locals.page = 'fom';
+  next();
 });
 
 // 获取FOM首页
-router.get('/', function(req,res,next){
+router.get('/', getCentreInfo, function(req,res,next){
   var centreId = 1;
   staffModel.findAll({
     attributes: ['mainPost',[sequelize.fn('COUNT',sequelize.col('mainPost')),'countMainPost']],
@@ -47,50 +65,37 @@ router.get('/', function(req,res,next){
   });
 });
 
-// 获取各部门首页
-router.get('/dept', function(req,res,next){
-    var dept = req.query.dept;
-    res.locals.dept = dept;
-    deptModel.findOne({where: {dept: dept}}).then(function(p1){  // 根据部门名称查部门信息
-      res.locals.deptInfo = p1;
-      var deptId = p1.id;
-      officeModel.findAll({where: {deptId: deptId}}).then(function(p2){
-        res.locals.officeList = p2;
-        next();
-      });
-    });
-  }, function(req,res,next){
-    res.render('pages/fom.ejs',{
-      title: 'FOM详情页',
-    });
+// page: 详表页面
+router.get('/table',getDeptList,getCentreList, function(req,res,next){
+  res.render('pages/fom-table.ejs',{
+    title: 'FOM详表页'
+  });
 });
 
+// 获取各部门首页
+// router.get('/dept', function(req,res,next){
+//     var dept = req.query.dept;
+//     res.locals.dept = dept;
+//     deptModel.findOne({where: {dept: dept}}).then(function(p1){  // 根据部门名称查部门信息
+//       res.locals.deptInfo = p1;
+//       var deptId = p1.id;
+//       officeModel.findAll({where: {deptId: deptId}}).then(function(p2){
+//         res.locals.officeList = p2;
+//         next();
+//       });
+//     });
+//   }, function(req,res,next){
+//     res.render('pages/fom.ejs',{
+//       title: 'FOM详情页',
+//     });
+// });
+
 // 获取FOM dept table数据
-router.get('/bootstrapTable/:whichDept',function(req,res,next){
-  var whichDept = req.params.whichDept;
-  if(whichDept && whichDept == 'dept'){
-    var deptId = req.query.deptId;
-    dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
-      res.send(rows);
-    });
-  }else if(whichDept && whichDept == 'centre'){
+router.get('/bootstrapTable', function(req,res,next){
     var centreId = 1;
     dbGet.findStaffByCentreId(centreId, function(err,rows,fields){
       res.send(rows);
     });
-  }
-});
-
-// 添加 FOM 人员
-router.post('/add', function(req,res,next){
-  var delId = req.body.id;
-  res.send(delId);
-});
-
-// 删除 FOM 人员
-router.post('/delete', function(req,res,next){
-  var id = req.body.id;
-  res.send(id);
 });
 
 // 获取月报人员变动格式：
