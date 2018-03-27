@@ -60,10 +60,11 @@ span.label{
   margin-top: 6em;
 }
 #message{
-  width: 200px;
+  width: 16%;
   /*float: right;*/
   position: absolute;
-  right: 0;
+  left: 42%;
+  z-index: 100;
 }
 
 /* bootstrap navbar 样式改变 */

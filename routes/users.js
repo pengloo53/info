@@ -16,8 +16,8 @@ var checkLogin = require('../libs/middle/checkLogin.js').checkLogin;
 
 // 获取中心，部门信息，科室列表
 function getData(req,res,next){
-  // var deptId = req.session.user.deptId;
-  var deptId = 2;    //  便于测试，暂时禁止权限控制
+  var deptId = req.session.user.deptId;
+  // var deptId = 2;    //  便于测试，暂时禁止权限控制
   deptModel.findOne({where: {id: deptId}}).then(function(p1){
     res.locals.deptInfo = p1;
     var centreId = p1.centreId;
@@ -55,7 +55,7 @@ function getCentreList(req,res,next){
 }
 
 // 权限控制
-// router.use(checkLogin);
+router.use(checkLogin);
 
 // page: users index.
 router.get('/', function(req, res, next) {
@@ -71,8 +71,8 @@ router.get('/fom', getData,getCentreList, function(req,res,next){
 
 // data: 获取FOM dept table数据
 router.get('/fom/bootstrapTable',function(req,res,next){
-  // var deptId = req.session.user.deptId;
-  var deptId = 2;    //  便于测试，暂时禁止权限控制
+  var deptId = req.session.user.deptId;
+  // var deptId = 2;    //  便于测试，暂时禁止权限控制
   dbGet.findStaffByDeptId(deptId, function(err,rows,fields){
     res.send(rows);
   });
@@ -122,7 +122,7 @@ router.post('/fom/add', function(req,res,next){
   var mainPost = req.body.mainPost || '';
   var state = req.body.state;
   var bz = req.body.bz;
-  if(centreId){
+  if(centreId && deptId && officeId && name && userid && gender && state && mainPost && grade){
     staffModel.create({
       centreId : centreId,
       deptId : deptId,
@@ -146,12 +146,15 @@ router.post('/fom/add', function(req,res,next){
     }).then(function (p) {
       console.log('created.' + JSON.stringify(p));
       // 添加log
-
+      
       req.flash('success', '添加成功');
       res.redirect('/user/fom');
     }).catch(function (err) {
       console.log('failed: ' + err);
     });
+  }else{
+    req.flash('error','请填写完整再提交');
+    res.redirect('/user/fom/add');
   }
 });
 

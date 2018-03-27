@@ -3,21 +3,38 @@
   <!-- <link href="/bootstrap4/dist/css/bootstrap.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
   <!-- Custom styles for this template -->
-  <link href="/stylesheets/login/signin.css" rel="stylesheet">
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <script src="/javascripts/self.js"></script> 
+  <style>
+    form{
+      width: 28%;
+      margin: 15% auto;
+    }
+  </style>
   </head>
   <body class="text-center">
-    <% include ../layout/alertMessage.ejs %>
-    <form class="form-signin" method="POST" action="/login">
-      <img class="mb-4" src="/images/boe.png" alt="" height="72">
-      <!-- <h1 class="h3 mb-3 font-weight-normal">管理员登陆</h1> -->
-      <label for="inputEmail" class="sr-only">userid</label>
-      <input type="text" id="userid" name="userid" class="form-control" placeholder="员工号" required autofocus>
-      <label for="inputPassword" class="sr-only">password</label>
-      <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
-      <p><button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button></p>
-      <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
-    </form>
+    <div class="container">
+        <% include ../layout/alertMessage.ejs %>
+      <form method="POST" action="/login">
+        <div class="form-group">
+          <img class="mb-4" src="/images/boe.png" alt="" height="72">
+          <!-- <h1 class="h3 mb-3 font-weight-normal">管理员登陆</h1> -->
+        </div>        
+        <div class="form-group">
+          <label for="inputEmail" class="sr-only">username</label>
+          <input type="text" id="username" name="username" class="form-control input-lg" placeholder="员工号" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="sr-only">password</label>
+          <input type="password" id="password" name="password" class="form-control input-lg" placeholder="密码" required>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
+        </div>
+        <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
+      </form>
+    </div>
+    <script src="/jquery/dist/jquery.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/javascripts/self.js"></script> 
   </body>
 </html>

@@ -2,8 +2,8 @@
 <!-- special css -->
 <!-- bootstrap -->
 <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
-<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
-<link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css">
+<!-- <link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css"> -->
+<!-- <link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css"> -->
 <link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
 <!-- 自定义 -->
 <link rel="stylesheet" href="/stylesheets/style.css">
@@ -192,9 +192,11 @@
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
 <script src="/javascripts/user/fom.js"></script>
+
+<!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script> -->
 <script>
     $(function(){
-        // --------------------- datepicker -------------------
+        // --------------------- datepicker ------------------- 
         // 日期选择框
         $('input.date').datepicker({
             format: "yyyy-mm-dd",
@@ -213,6 +215,48 @@
             e.stopPropagation(); // 禁止触发父元素事件
         });
         
+        // 表单验证
+        var $centre = $('form select[name=centre]');
+        var $dept = $('form select[name=dept]');
+        var $office = $('form select[name=office]');
+        var $gender = $('form select[name=gender]');
+        var $name = $('form input[name=name]');
+        var $userid = $('form input[name=userid]');
+        var $school = $('form input[name=school]');
+        var $major = $('form input[name=major]');
+        var $education = $('form select[name=education]');
+        var $mainPost = $('form select[name=mainPost]');
+        var $grade = $('form select[name=grade]');
+        var $state = $('form select[name=state]');
+        var formList = [$centre,$dept,$office,$gender,$name,$userid,$school,$major,$education,$mainPost,$grade,$state];
+        $('form').submit(function(e){
+            for(var i = 0 ; i < formList.length ; i++){
+                if (formList[i].val() == '') {
+                    formList[i].parent().addClass('has-error');
+                    e.preventDefault();
+                }else{
+                    formList[i].parent().removeClass('has-error');
+                }
+            }
+        });
+        
+        // $centre.parent().addClass('has-error');
+        // $('form').validate({
+        //     rules: {
+        //         centre: "required",
+        //         dept: "required",
+        //         office: "required",
+        //         name: "required",
+        //         userid: "required",
+        //         gender: "required",
+        //         school: "required",
+        //         major: "required",
+        //         education: "required",
+        //         mainPost: "required",
+        //         grade: "required",
+        //         state: "required",
+        //     }
+        // });
     });
 </script>
 <% include ../layout/foot.ejs %>

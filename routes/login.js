@@ -17,9 +17,9 @@ router.get('/', function(req, res, next) {
 
 // 登陆动作
 router.post('/', function(req,res,next){
-  var userid = req.body.userid; 
+  var username = req.body.username; 
   var password = req.body.password;
-  userModel.findOne({where: {userid: userid}}).then(function(user){
+  userModel.findOne({where: {username: username}}).then(function(user){
     // console.log(user);
     if(!user){
       req.flash('error','not exist user!');
