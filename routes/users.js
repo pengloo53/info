@@ -12,24 +12,16 @@ var postModel = require('../models/fom/post.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
+// 检查登陆中间件
 var checkLogin = require('../libs/middle/checkLogin.js').checkLogin;
 
-// 获取中心，部门信息，科室列表
-function getData(req,res,next){
-  var deptId = req.session.user.deptId;
-  // var deptId = 2;    //  便于测试，暂时禁止权限控制
-  deptModel.findOne({where: {id: deptId}}).then(function(p1){
-    res.locals.deptInfo = p1;
-    var centreId = p1.centreId;
-    officeModel.findAll({where: {deptId: deptId}}).then(function(p2){
-      res.locals.officeList = p2;
-      centreModel.findOne({where: {id: centreId}}).then(function(p3){
-        res.locals.centreInfo = p3;
-        next();
-      });
-    });
-  });
-}
+// 获取数据中间件
+var getCentreInfo = require('../libs/middle/getData.js').getCentreInfo;
+var getDeptInfo = require('../libs/middle/getData.js').getDeptInfo;
+var getCentreList = require('../libs/middle/getData.js').getCentreList;
+var getDeptList = require('../libs/middle/getData.js').getDeptList;
+var getOfficeList = require('../libs/middle/getData.js').getOfficeList;
+
 // 获取状态选项
 function getState(req,res,next){
   var page = 'fom';
@@ -37,7 +29,7 @@ function getState(req,res,next){
     res.locals.stateList = p;
     next();
   });
-}
+};
 // 获取岗位类别选项
 function getPost(req,res,next){
   postModel.findAll().then(function(p){
@@ -45,14 +37,6 @@ function getPost(req,res,next){
     next();
   });
 };
-
-// 获取中心List
-function getCentreList(req,res,next){
-  centreModel.findAll().then(function(p){
-    res.locals.centreList = p;
-    next();
-  });
-}
 
 // 权限控制
 router.use(checkLogin);
@@ -63,7 +47,7 @@ router.get('/', function(req, res, next) {
 });
 
 // page: FOM表格页面
-router.get('/fom', getData,getCentreList, function(req,res,next){
+router.get('/fom', getOfficeList, getDeptInfo, getCentreList, function(req,res,next){
 	res.render('user/fom.ejs',{
 		title: '更新人员FOM表'
 	});
@@ -95,7 +79,7 @@ router.get('/fom/get/officeList', function(req,res,next){
 });
 
 // page: 获取添加人员表单
-router.get('/fom/add',getData, getState, getPost, function(req,res,next){
+router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getState, getPost, function(req,res,next){
   res.render('user/fom-add.ejs', {
     title: '添加新入职员工'
   });
@@ -157,6 +141,29 @@ router.post('/fom/add', function(req,res,next){
     res.redirect('/user/fom/add');
   }
 });
+
+// action: update grade 更新职级
+router.post('/fom/update/grade', function(req,res,next){
+  var id = req.body.pk;
+  var grade = req.body.value || '';
+  staffModel.update(
+    {grade: grade},
+    {where: {sid: id}},
+    {fields: [grade]}
+  ).then(function(){
+    res.send('更新职级成功');
+  });
+});
+
+// data: 
+router.get('/fom/get/postList', function(req,res,next){
+  postModel.findAll().then(function(p){
+    res.send(p);
+  });
+});
+
+// action: update post 更新岗位
+
 
 // action: 离职
 router.post('/fom/dimission', function(req,res,next){

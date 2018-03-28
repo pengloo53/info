@@ -231,7 +231,7 @@
         var formList = [$centre,$dept,$office,$gender,$name,$userid,$school,$major,$education,$mainPost,$grade,$state];
         $('form').submit(function(e){
             for(var i = 0 ; i < formList.length ; i++){
-                if (formList[i].val() == '') {
+                if (formList[i].val().trim() == '') {
                     formList[i].parent().addClass('has-error');
                     e.preventDefault();
                 }else{
@@ -240,7 +240,7 @@
             }
         });
         
-        // $centre.parent().addClass('has-error');
+        // 表单验证插件
         // $('form').validate({
         //     rules: {
         //         centre: "required",

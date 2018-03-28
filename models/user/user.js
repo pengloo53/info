@@ -14,6 +14,7 @@ var user = sequelize.define('user', {
     password: Sequelize.STRING(500),  // 密码
     userid: Sequelize.STRING, // 员工号
     email: Sequelize.STRING, // 邮箱
+    centreId: Sequelize.BIGINT, // 中心id
     deptId: Sequelize.BIGINT, // 部门id
     role: Sequelize.STRING,     // A: 超级管理员 B：中心管理员 C：部门管理员
 },{

@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production supervisor --harmony -i views/ ./bin/www",
-    "test": "NODE_ENV=test supervisor --harmony -i views/ ./bin/www",
-    "winStart": "SET NODE_ENV=production&&supervisor --harmony -i views/ ./bin/www",
-    "winTest": "SET NODE_ENV=test&&supervisor --harmony -i views/ ./bin/www",
+    "start": "NODE_ENV=production supervisor --harmony -i views/,public/ ./bin/www",
+    "test": "NODE_ENV=test supervisor --harmony -i views/,public/ ./bin/www",
+    "winStart": "SET NODE_ENV=production&&supervisor --harmony -i views/,public/ ./bin/www",
+    "winTest": "SET NODE_ENV=test&&supervisor --harmony -i views/,public/ ./bin/www",
     "syncDB": "NODE_ENV=test node libs/util/syncTable.js",
     "testDB": "NODE_ENV=test node libs/util/testDB.js"
   },

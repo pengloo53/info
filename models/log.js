@@ -9,9 +9,9 @@ var state = sequelize.define('state',{
         autoIncrement: true
     },
     page: Sequelize.STRING,
-    action: Sequelize.STRING,
-    data: Sequelize.STRING,
-    state: Sequelize.STRING,
+    action: Sequelize.STRING,   // insert,update,delete
+    oldData: Sequelize.STRING,
+    newData: Sequelize.STRING
 },{
     timestamps: true,
     tableName: 'state',

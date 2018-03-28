@@ -173,4 +173,72 @@
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
 <script src="/javascripts/user/fom.js"></script>
+
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script>
+    $(function(){
+        // 日期选择框
+        $('input.date').datepicker({
+            format: "yyyy-mm-dd",
+            weekStart: 7,
+            maxViewMode: 1,
+            language: "zh-CN",
+            // daysOfWeekDisabled: "0,6",
+            // daysOfWeekHighlighted: "0,6",
+            autoclose: true,
+            todayHighlight: true,
+            // startDate: new Date()
+        }).on('show', function (e) {
+            e.preventDefault();
+            e.stopPropagation(); // 禁止触发父元素事件
+        }).on('hide', function (e) {
+            e.stopPropagation(); // 禁止触发父元素事件
+        });
+
+        // 根据中心获取部门
+        $('#change').on('shown.bs.modal', function () {
+            $('select[name=centre]').change(function(){
+                var centreId = $(this).val();
+                $.ajax({
+                    url: '/user/fom/get/deptList?centreId=' + centreId,
+                    success: function(result){
+                        $('select[name=dept] option:gt(0)').remove();
+                        for(var i = 0 ; i< result.length; i++){
+                            var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].dept + '</option>');
+                            $('select[name=dept]').append($optionHtml);
+                        }
+                    }
+                });
+            });
+            $('select[name=dept]').change(function(){
+                var deptId = $(this).val();
+                $.ajax({
+                    url: '/user/fom/get/officeList?deptId=' + deptId,
+                    success: function(result){
+                        $('select[name=office] option:gt(0)').remove();
+                        for(var i = 0 ; i< result.length; i++){
+                            var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].office + '</option>');
+                            $('select[name=office]').append($optionHtml);
+                        }
+                    }
+                });
+            });
+        });
+        // 表单验证
+        $('#change form').validate({
+            rules: {
+                centre: "required",
+                dept: "required",
+                office: "required"
+            },
+            errorClass: 'text-danger'
+        });
+        $('#dimission form').validate({
+            rules: {
+                leave_date: 'required'
+            },
+            errorClass: 'text-danger'
+        });
+    });
+</script>
 <% include ../layout/foot.ejs %>

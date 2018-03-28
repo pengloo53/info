@@ -14,7 +14,8 @@ $(function () {
             $('select[name=office] option:gt(0)').remove();
         },
         'click [title=更改]': function (e, value, row, index) {
-            alert('你点了「更改」，但是功能还没有完成');
+            // alert('你点了「更改」，但是功能还没有完成');
+
         }
     };
     $table.bootstrapTable({
@@ -32,6 +33,7 @@ $(function () {
                 uid: 1
             };
         },
+        striped: true,
         pageNumber: 1,
         pageSize: 20,
         pageList: '[30, 50, ALL]',
@@ -54,6 +56,7 @@ $(function () {
             title: '#',
             align: 'center',
             valign: 'middle',
+            width: '5',
             // visible: false
         }, {
             field: 'dept',
@@ -85,17 +88,53 @@ $(function () {
             field: 'grade',
             title: '职级',
             align: 'center',
-            valign: 'middle'
+            valign: 'middle',
+            editable: {
+                type: 'select',
+                title: '职级',
+                source: [
+                    {value: '专家', text: '专家'},
+                    {value: '资深', text: '资深'},
+                    {value: '高级', text: '高级'},
+                    {value: '中级', text: '中级'},
+                    {value: '初级', text: '初级'},
+                    {value: '助理', text: '助理'},
+                ],
+                url: '/user/fom/update/grade'
+            }
         }, {
             field: 'mainPost',
             title: '主岗',
             align: 'center',
-            valign: 'middle'
+            valign: 'middle',
+            // editable: {
+            //     type: 'select',
+            //     source: function () {
+            //             var result = [];
+            //             $.ajax({
+            //                 url: '/user/fom/get/postList',
+            //                 async: false,
+            //                 type: "get",
+            //                 data: {},
+            //                 success: function (data, status) {
+            //                     $.each(data, function (key, value) {
+            //                         result.push({ value: value.post, text: value.post });
+            //                     });
+            //                 }
+            //             });
+            //             return result;
+            //         }
+            //     // url: '/todo/update'
+            // }
         },{
             field: 'subPost',
             title: '次岗',
             align: 'center',
-            valign: 'middle'
+            valign: 'middle',
+            // editable: {
+            //     type: 'text',
+            //     // url: '/todo/update'
+            // }
         },{
             field: 'postType',
             title: '岗位类别',
@@ -133,7 +172,7 @@ $(function () {
             events: operator,
             align: 'center',
             valign: 'middle',
-            width: '12%',
+            width: '100',
             formatter: function (value, row, index) {
                 return '<div class="btn-group" role="btn-group">' +
                     '<button class="op btn btn-default btn-sm" title="离职">' +
@@ -141,8 +180,8 @@ $(function () {
                     '<button class="op btn btn-default btn-sm" title="调转" ' +
                     'data-target="#editModal" data-toggle="modal">' +
                     '<i class="glyphicon glyphicon-repeat"></i></button>' +
-                    '<button class="op btn btn-default btn-sm" title="更改">' +
-                    '<i class="glyphicon glyphicon-pencil"></i></button>' +
+                    // '<button class="op btn btn-default btn-sm" title="更改">' +
+                    // '<i class="glyphicon glyphicon-pencil"></i></button>' +
                     '</div>';
             }
         }]
@@ -151,53 +190,5 @@ $(function () {
     $table.on('load-success.bs.table', function(){
         var staffNum = $table.bootstrapTable('getData').length;
         $('#staffNum').html(staffNum);
-    });
-
-    // 日期选择框
-    $('input.date').datepicker({
-        format: "yyyy-mm-dd",
-        weekStart: 7,
-        maxViewMode: 1,
-        language: "zh-CN",
-        // daysOfWeekDisabled: "0,6",
-        // daysOfWeekHighlighted: "0,6",
-        autoclose: true,
-        todayHighlight: true,
-        // startDate: new Date()
-    }).on('show', function (e) {
-        e.preventDefault();
-        e.stopPropagation(); // 禁止触发父元素事件
-    }).on('hide', function (e) {
-        e.stopPropagation(); // 禁止触发父元素事件
-    });
-
-    // 根据中心获取部门
-    $('#change').on('shown.bs.modal', function () {
-        $('select[name=centre]').change(function(){
-            var centreId = $(this).val();
-            $.ajax({
-                url: '/user/fom/get/deptList?centreId=' + centreId,
-                success: function(result){
-                    $('select[name=dept] option:gt(0)').remove();
-                    for(var i = 0 ; i< result.length; i++){
-                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].dept + '</option>');
-                        $('select[name=dept]').append($optionHtml);
-                    }
-                }
-            });
-        });
-        $('select[name=dept]').change(function(){
-            var deptId = $(this).val();
-            $.ajax({
-                url: '/user/fom/get/officeList?deptId=' + deptId,
-                success: function(result){
-                    $('select[name=office] option:gt(0)').remove();
-                    for(var i = 0 ; i< result.length; i++){
-                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].office + '</option>');
-                        $('select[name=office]').append($optionHtml);
-                    }
-                }
-            });
-        });
     });
 });
