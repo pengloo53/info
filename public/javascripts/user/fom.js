@@ -79,6 +79,9 @@ $(function () {
             title: '员工号',
             align: 'center',
             valign: 'middle',
+            formatter: function(value, row, index){
+                return '<a href="/user/fom/show?userid=' + row.userid + '">' + value + '</a>';
+            }
         },{
             field: 'gender',
             title: '性别',
