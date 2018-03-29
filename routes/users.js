@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+var Sequelize = require('sequelize');
 var sequelize = require('../models/util/dbConnect.js');
 
 var staffModel = require('../models/fom/staff.js');
@@ -37,6 +38,18 @@ function getPost(req,res,next){
     next();
   });
 };
+// 获取岗位类型选项
+function getPostType(req,res,next){
+  postModel.findAll({attributes: [Sequelize.literal('DISTINCT `postType`'), 'postType']}).then(function(p){
+    res.locals.postTypeList = p;
+    next();
+  });
+}
+
+// 获取职级选项
+function getGrade(req,res,next){
+  // gradeModel.findAll();
+}
 
 // 权限控制
 router.use(checkLogin);
@@ -87,13 +100,36 @@ router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getState, getP
 
 // page: 获取显示人员页面
 router.get('/fom/show',getDeptInfo, function(req,res,next){
-  var userid = req.query.userid | '';
+  var userid = req.query.userid || '';
   staffModel.findOne({where: {userid: userid}}).then(function(p){
     res.render('user/show.ejs', {
       title: '显示员工信息',
       staffInfo: p
     });
   });
+});
+
+// page: 编辑岗位信息页面
+router.get('/fom/edit',getDeptInfo, getState, getPost,getPostType, function(req,res,next){
+  var userid = req.query.userid || '';
+  staffModel.findOne({where: {userid: userid}}).then(function(p){
+    res.render('user/edit.ejs', {
+      title: '编辑员工岗位信息',
+      staffInfo: p
+    });
+  });
+});
+
+// action: 更新岗位信息
+router.post('/fom/edit', function(req,res,next){
+  var userid = req.body.userid;
+  var duty = req.body.duty || '';
+  var grade = req.body.grade || '';
+  var mainPost = req.body.mainPost;
+  var subPost = req.body.subPost;
+  var postType = req.body.postType;
+  var state = req.body.state;
+  res.redirect('/user/fom/show?userid='+userid);
 });
 
 // action: 新入职
@@ -172,9 +208,6 @@ router.get('/fom/get/postList', function(req,res,next){
     res.send(p);
   });
 });
-
-// action: update post 更新岗位
-
 
 // action: 离职
 router.post('/fom/dimission', function(req,res,next){

@@ -109,6 +109,11 @@ $(function () {
                 ],
                 url: '/user/fom/update/grade'
             }
+        },{
+            field: 'duty',
+            title: '职务',
+            align: 'center',
+            valign: 'middle',
         }, {
             field: 'mainPost',
             title: '主岗',

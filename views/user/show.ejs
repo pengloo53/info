@@ -59,8 +59,8 @@
         </div>
         <div class="row">
 	        <div class="col-lg-10">
-	        	<table class="table table-bordered table-striped">
-							<tr>
+	        	<table class="table table-bordered">
+							<tr class="active">
 								<td colspan="7" style="line-height: 2em"><b class="text-primary">基本信息</b></td>
 							</tr>
 							<tr>
@@ -69,7 +69,7 @@
 								<td>员工号</td>
 								<td><u><%= staffInfo.userid %></u></td>
 								<!-- <td rowspan="3"></td> -->
-								<td rowspan="3" colspan="2" width="15%" class="text-center"><img src="" alt="photo" class="img-rounded"></td>
+								<td rowspan="6" colspan="2" width="18%" class="text-center"><img src="" alt="photo" class="img-rounded"></td>
 							</tr>
 							<tr>
 								<td>性别</td>
@@ -82,11 +82,6 @@
 								<td><u><%= staffInfo.birth_place %></u></td>
 								<td>户籍地</td>
 								<td><u><%= staffInfo.domicile_place %></u></td>
-							</tr>
-							<tr>
-								<td colspan="7" style="line-height: 2em"><b class="text-primary">毕业信息</b>
-									<a class="btn btn-danger btn-sm pull-right" href="/user/fom/edit">编辑</a>
-								</td>
 							</tr>
 							<tr>
 								<td>毕业学校</td>
@@ -106,27 +101,31 @@
 								<td>入BOE日期</td>
 								<td><u><%= staffInfo.enter_date %></u></td>
 							</tr>
-							<tr>
+							<tr class="active">
 								<td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b>
-									<a class="btn btn-danger btn-sm pull-right" href="/user/fom/edit">编辑</a>
+									<a class="btn btn-danger btn-sm pull-right" href="/user/fom/edit?userid=<%= staffInfo.userid %>">编辑</a>
 								</td>
 							</tr>
 							<tr>
 								<td>职级</td>
 								<td><u><%= staffInfo.grade %></u></td>
+								<td>职务</td>
+								<td><u><%= staffInfo.duty %></u></td>
+							</tr>
+							<tr>
 								<td>主要岗位</td>
 								<td><u><%= staffInfo.mainPost %></u></td>
+								<td>次要岗位</td>
+								<td><u><%= staffInfo.subPost %></u></td>
 							</tr>
 							<tr>
 								<td>岗位类型</td>
 								<td><u><%= staffInfo.postType %></u></td>
-								<td>次要岗位</td>
-								<td><u><%= staffInfo.subPost %></u></td>
 								<td>状态</td>
 								<td><u><%= staffInfo.state %></u></td>
 							</tr>
 							<tr>
-								<td colspan="7">岗位描述</td>
+								<td colspan="7">岗位描述（职责）</td>
 								<!-- <td><%= staffInfo.postDescribe %></td> -->
 							</tr>
 							<tr>
