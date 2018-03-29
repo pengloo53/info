@@ -85,6 +85,17 @@ router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getState, getP
   });
 });
 
+// page: 获取显示人员页面
+router.get('/fom/show',getDeptInfo, function(req,res,next){
+  var userid = req.query.userid | '';
+  staffModel.findOne({where: {userid: userid}}).then(function(p){
+    res.render('user/show.ejs', {
+      title: '显示员工信息',
+      staffInfo: p
+    });
+  });
+});
+
 // action: 新入职
 router.post('/fom/add', function(req,res,next){
   var centreId = req.body.centre || 0;

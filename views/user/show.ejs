@@ -1,0 +1,164 @@
+<% include ../layout/head.ejs %>
+<!-- special css -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+<!-- <link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css"> -->
+<!-- <link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css"> -->
+<link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<!-- 自定义 -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+<body>
+    <div class="layout-head">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/user/fom"><%= deptInfo.dept %></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/user/fom">人员管理</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">个人中心 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">操作明细</a></li>
+                                <li><a href="#">个人资料</a></li>
+<!--                                 <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li> -->
+                            </ul>
+                        </li>
+                        <li><a href="/login/out">登出</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <!-- <% include ../layout/alertMessage.ejs %> -->
+    </div>
+    <div class="container">
+        <!-- <div class="content"> -->
+        	
+<!--             <ol class="breadcrumb">
+              <li><a href="/user/fom">FOM管理</a></li>
+              <li class="active">显示人员信息</li>
+            </ol> -->
+        <div style="margin-bottom:20px">
+        	<h3>显示人员信息<small> - <%= staffInfo.name %></small></h3>
+        	<!-- <a class="btn btn-danger btn-sm pull-right" style="margin-bottom: 20px" href="/user/fom/edit">编辑</a> -->
+        </div>
+        <div class="row">
+	        <div class="col-lg-10">
+	        	<table class="table table-bordered table-striped">
+							<tr>
+								<td colspan="7" style="line-height: 2em"><b class="text-primary">基本信息</b></td>
+							</tr>
+							<tr>
+								<td>姓名</td>
+								<td><u><%= staffInfo.name %></u></td>
+								<td>员工号</td>
+								<td><u><%= staffInfo.userid %></u></td>
+								<!-- <td rowspan="3"></td> -->
+								<td rowspan="3" colspan="2" width="15%" class="text-center"><img src="" alt="photo" class="img-rounded"></td>
+							</tr>
+							<tr>
+								<td>性别</td>
+								<td><u><%= staffInfo.gender %></u></td>
+								<td>出生日期</td>
+								<td><u><%= staffInfo.birthday %></u></td>
+							</tr>
+							<tr>
+								<td>出生地</td>
+								<td><u><%= staffInfo.birth_place %></u></td>
+								<td>户籍地</td>
+								<td><u><%= staffInfo.domicile_place %></u></td>
+							</tr>
+							<tr>
+								<td colspan="7" style="line-height: 2em"><b class="text-primary">毕业信息</b>
+									<a class="btn btn-danger btn-sm pull-right" href="/user/fom/edit">编辑</a>
+								</td>
+							</tr>
+							<tr>
+								<td>毕业学校</td>
+								<td><u><%= staffInfo.school %></u></td>
+								<td>毕业专业</td>
+								<td><u><%= staffInfo.major %></u></td>
+							</tr>
+							<tr>
+								<td>学历</td>
+								<td><u><%= staffInfo.education %></u></td>
+								<td>毕业日期</td>
+								<td><u><%= staffInfo.education_date %></u></td>
+							</tr>
+							<tr>
+								<td>工作日期</td>
+								<td><u><%= staffInfo.work_date %></u></td>
+								<td>入BOE日期</td>
+								<td><u><%= staffInfo.enter_date %></u></td>
+							</tr>
+							<tr>
+								<td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b>
+									<a class="btn btn-danger btn-sm pull-right" href="/user/fom/edit">编辑</a>
+								</td>
+							</tr>
+							<tr>
+								<td>职级</td>
+								<td><u><%= staffInfo.grade %></u></td>
+								<td>主要岗位</td>
+								<td><u><%= staffInfo.mainPost %></u></td>
+							</tr>
+							<tr>
+								<td>岗位类型</td>
+								<td><u><%= staffInfo.postType %></u></td>
+								<td>次要岗位</td>
+								<td><u><%= staffInfo.subPost %></u></td>
+								<td>状态</td>
+								<td><u><%= staffInfo.state %></u></td>
+							</tr>
+							<tr>
+								<td colspan="7">岗位描述</td>
+								<!-- <td><%= staffInfo.postDescribe %></td> -->
+							</tr>
+							<tr>
+								<td colspan="7">
+									<u>
+										<% if(staffInfo.postDescribe){ %>
+											<%- staffInfo.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>' %>
+										<% } %>
+									</u>
+								</td>
+							</tr>
+						</table>
+	        </div>
+        </div>
+        
+        <!-- </div>   -->
+    </div>    
+<!-- special script -->
+<!-- bootstrap-table -->
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- personal -->
+<script src="/javascripts/self.js"></script> 
+<!-- <script src="/javascripts/user/fom.js"></script> -->
+
+<!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script> -->
+<script>
+    $(function(){
+    	$('u').addClass('data');
+    	$('.data').css('font-size','0.9em');
+    });
+</script>
+<% include ../layout/foot.ejs %>

@@ -80,7 +80,11 @@ $(function () {
             align: 'center',
             valign: 'middle',
             formatter: function(value, row, index){
-                return '<a href="/user/fom/show?userid=' + row.userid + '">' + value + '</a>';
+                if(value){
+                    return '<a href="/user/fom/show?userid=' + row.userid + '">' + value + '</a>';
+                }else{
+                    return value;
+                }
             }
         },{
             field: 'gender',
@@ -110,7 +114,7 @@ $(function () {
             title: '主岗',
             align: 'center',
             valign: 'middle',
-            // editable: {
+            // editable: {    // 问题：当加载列数据的时候，每一行都会触发一次该请求，N行就触发N次
             //     type: 'select',
             //     source: function () {
             //             var result = [];
