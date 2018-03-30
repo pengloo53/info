@@ -12,10 +12,6 @@ $(function () {
             $('select[name=centre]').val('');
             $('select[name=dept] option:gt(0)').remove();
             $('select[name=office] option:gt(0)').remove();
-        },
-        'click [title=更改]': function (e, value, row, index) {
-            // alert('你点了「更改」，但是功能还没有完成');
-
         }
     };
     $table.bootstrapTable({
@@ -96,19 +92,19 @@ $(function () {
             title: '职级',
             align: 'center',
             valign: 'middle',
-            editable: {
-                type: 'select',
-                title: '职级',
-                source: [
-                    {value: '专家', text: '专家'},
-                    {value: '资深', text: '资深'},
-                    {value: '高级', text: '高级'},
-                    {value: '中级', text: '中级'},
-                    {value: '初级', text: '初级'},
-                    {value: '助理', text: '助理'},
-                ],
-                url: '/user/fom/update/grade'
-            }
+            // editable: {
+            //     type: 'select',
+            //     title: '职级',
+            //     source: [
+            //         {value: '专家', text: '专家'},
+            //         {value: '资深', text: '资深'},
+            //         {value: '高级', text: '高级'},
+            //         {value: '中级', text: '中级'},
+            //         {value: '初级', text: '初级'},
+            //         {value: '助理', text: '助理'},
+            //     ],
+            //     url: '/user/fom/update/grade'
+            // }
         },{
             field: 'duty',
             title: '职务',

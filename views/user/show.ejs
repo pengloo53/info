@@ -65,41 +65,41 @@
 							</tr>
 							<tr>
 								<td>姓名</td>
-								<td><u><%= staffInfo.name %></u></td>
+								<td><span class="data"><%= staffInfo.name %></span></td>
 								<td>员工号</td>
-								<td><u><%= staffInfo.userid %></u></td>
+								<td><span class="data"><%= staffInfo.userid %></span></td>
 								<!-- <td rowspan="3"></td> -->
 								<td rowspan="6" colspan="2" width="18%" class="text-center"><img src="" alt="photo" class="img-rounded"></td>
 							</tr>
 							<tr>
 								<td>性别</td>
-								<td><u><%= staffInfo.gender %></u></td>
+								<td><span class="data"><%= staffInfo.gender %></span></td>
 								<td>出生日期</td>
-								<td><u><%= staffInfo.birthday %></u></td>
+								<td><span class="data"><%= staffInfo.birthday %></span></td>
 							</tr>
 							<tr>
 								<td>出生地</td>
-								<td><u><%= staffInfo.birth_place %></u></td>
+								<td><span class="data"><%= staffInfo.birth_place %></span></td>
 								<td>户籍地</td>
-								<td><u><%= staffInfo.domicile_place %></u></td>
+								<td><span class="data"><%= staffInfo.domicile_place %></span></td>
 							</tr>
 							<tr>
 								<td>毕业学校</td>
-								<td><u><%= staffInfo.school %></u></td>
+								<td><span class="data"><%= staffInfo.school %></span></td>
 								<td>毕业专业</td>
-								<td><u><%= staffInfo.major %></u></td>
+								<td><span class="data"><%= staffInfo.major %></span></td>
 							</tr>
 							<tr>
 								<td>学历</td>
-								<td><u><%= staffInfo.education %></u></td>
+								<td><span class="data"><%= staffInfo.education %></span></td>
 								<td>毕业日期</td>
-								<td><u><%= staffInfo.education_date %></u></td>
+								<td><span class="data"><%= staffInfo.education_date %></span></td>
 							</tr>
 							<tr>
 								<td>工作日期</td>
-								<td><u><%= staffInfo.work_date %></u></td>
+								<td><span class="data"><%= staffInfo.work_date %></span></td>
 								<td>入BOE日期</td>
-								<td><u><%= staffInfo.enter_date %></u></td>
+								<td><span class="data"><%= staffInfo.enter_date %></span></td>
 							</tr>
 							<tr class="active">
 								<td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b>
@@ -108,21 +108,21 @@
 							</tr>
 							<tr>
 								<td>职级</td>
-								<td><u><%= staffInfo.grade %></u></td>
+								<td><span class="data"><%= staffInfo.grade %></span></td>
 								<td>职务</td>
-								<td><u><%= staffInfo.duty %></u></td>
+								<td><span class="data"><%= staffInfo.duty %></span></td>
 							</tr>
 							<tr>
 								<td>主要岗位</td>
-								<td><u><%= staffInfo.mainPost %></u></td>
+								<td><span class="data"><%= staffInfo.mainPost %></span></td>
 								<td>次要岗位</td>
-								<td><u><%= staffInfo.subPost %></u></td>
+								<td><span class="data"><%= staffInfo.subPost %></span></td>
 							</tr>
 							<tr>
 								<td>岗位类型</td>
-								<td><u><%= staffInfo.postType %></u></td>
+								<td><span class="data"><%= staffInfo.postType %></span></td>
 								<td>状态</td>
-								<td><u><%= staffInfo.state %></u></td>
+								<td><span class="data"><%= staffInfo.state %></span></td>
 							</tr>
 							<tr>
 								<td colspan="7">岗位描述（职责）</td>
@@ -130,11 +130,11 @@
 							</tr>
 							<tr>
 								<td colspan="7">
-									<u>
+									<span class="data">
 										<% if(staffInfo.postDescribe){ %>
 											<%- staffInfo.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>' %>
 										<% } %>
-									</u>
+									</span>
 								</td>
 							</tr>
 						</table>
@@ -156,8 +156,7 @@
 <!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script> -->
 <script>
     $(function(){
-    	$('u').addClass('data');
-    	$('.data').css('font-size','0.9em');
+    	// $('.data').css('font-size','0.9em');
     });
 </script>
 <% include ../layout/foot.ejs %>

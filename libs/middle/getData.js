@@ -1,6 +1,13 @@
+var Sequelize = require('sequelize');
+
 var centreModel = require('../../models/fom/centre.js');
 var deptModel = require('../../models/fom/dept.js');
 var officeModel = require('../../models/fom/office.js');
+
+var dutyModel = require('../../models/fom/duty.js');
+var gradeModel = require('../../models/fom/grade.js');
+var postModel = require('../../models/fom/post.js');
+var stateModel = require('../../models/state.js');
 
 module.exports = {
   // 获取中心List
@@ -41,8 +48,40 @@ module.exports = {
       next();
     });
   },
-  // // 获取科室信息
-  // getOfficeInfo: function(req,res,next){
-  //   var officeId = req.session.user.officeId;
-  // }
+  // 获取职务列表
+  getDutyList: function(req,res,next){
+    dutyModel.findAll().then(function(p){
+      res.locals.dutyList = p;
+      next();
+    });
+  },
+  // 获取职级列表
+  getGradeList: function(req,res,next){
+    gradeModel.findAll().then(function(p){
+      res.locals.gradeList = p;
+      next();
+    });
+  },
+  // 获取状态列表
+  getStateList: function(req,res,next){
+    var page = 'fom';
+    stateModel.findAll({where:{page: page}}).then(function(p){
+      res.locals.stateList = p;
+      next();
+    });
+  },
+  // 获取岗位选项
+  getPostList: function(req,res,next){
+    postModel.findAll().then(function(p){
+      res.locals.postList = p;
+      next();
+    });
+  },
+  // 获取岗位类型选项
+  getPostTypeList: function (req,res,next){
+    postModel.findAll({attributes: [Sequelize.literal('DISTINCT `postType`'), 'postType']}).then(function(p){
+      res.locals.postTypeList = p;
+      next();
+    });
+  }
 }

@@ -1,15 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var Sequelize = require('sequelize');
 var sequelize = require('../models/util/dbConnect.js');
 
 var staffModel = require('../models/fom/staff.js');
 var centreModel = require('../models/fom/centre.js');
 var deptModel = require('../models/fom/dept.js');
 var officeModel = require('../models/fom/office.js');
-var stateModel = require('../models/state.js');
-var postModel = require('../models/fom/post.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
@@ -23,33 +20,11 @@ var getCentreList = require('../libs/middle/getData.js').getCentreList;
 var getDeptList = require('../libs/middle/getData.js').getDeptList;
 var getOfficeList = require('../libs/middle/getData.js').getOfficeList;
 
-// 获取状态选项
-function getState(req,res,next){
-  var page = 'fom';
-  stateModel.findAll({where:{page: page}}).then(function(p){
-    res.locals.stateList = p;
-    next();
-  });
-};
-// 获取岗位类别选项
-function getPost(req,res,next){
-  postModel.findAll().then(function(p){
-    res.locals.postList = p;
-    next();
-  });
-};
-// 获取岗位类型选项
-function getPostType(req,res,next){
-  postModel.findAll({attributes: [Sequelize.literal('DISTINCT `postType`'), 'postType']}).then(function(p){
-    res.locals.postTypeList = p;
-    next();
-  });
-}
-
-// 获取职级选项
-function getGrade(req,res,next){
-  // gradeModel.findAll();
-}
+var getStateList = require('../libs/middle/getData.js').getStateList;
+var getDutyList = require('../libs/middle/getData.js').getDutyList;
+var getPostList = require('../libs/middle/getData.js').getPostList;
+var getPostTypeList = require('../libs/middle/getData.js').getPostTypeList;
+var getGradeList = require('../libs/middle/getData.js').getGradeList;
 
 // 权限控制
 router.use(checkLogin);
@@ -66,7 +41,7 @@ router.get('/fom', getOfficeList, getDeptInfo, getCentreList, function(req,res,n
 	});
 });
 
-// data: 获取FOM dept table数据
+// data: 获取FOM dept table数据 - bootstrap-table 数据
 router.get('/fom/bootstrapTable',function(req,res,next){
   var deptId = req.session.user.deptId;
   // var deptId = 2;    //  便于测试，暂时禁止权限控制
@@ -75,7 +50,7 @@ router.get('/fom/bootstrapTable',function(req,res,next){
   });
 });
 
-// data: 根据centreId异步获取部门列表deptList
+// data: 根据centreId异步获取部门列表deptList - 调转功能ajax前台获取
 router.get('/fom/get/deptList', function(req,res,next){
   var centreId = req.query.centreId;
   deptModel.findAll({where: {centreId : centreId}}).then(function(p){
@@ -83,7 +58,7 @@ router.get('/fom/get/deptList', function(req,res,next){
   });
 });
 
-// data: 根据deptId异步获取科室列表officeList
+// data: 根据deptId异步获取科室列表officeList - 调转功能ajax前台获取
 router.get('/fom/get/officeList', function(req,res,next){
   var deptId = req.query.deptId;
   officeModel.findAll({where: {deptId : deptId}}).then(function(p){
@@ -92,8 +67,8 @@ router.get('/fom/get/officeList', function(req,res,next){
 });
 
 // page: 获取添加人员表单
-router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getState, getPost, function(req,res,next){
-  res.render('user/fom-add.ejs', {
+router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getStateList, getPostList,getGradeList, function(req,res,next){
+  res.render('user/add.ejs', {
     title: '添加新入职员工'
   });
 });
@@ -109,8 +84,8 @@ router.get('/fom/show',getDeptInfo, function(req,res,next){
   });
 });
 
-// page: 编辑岗位信息页面
-router.get('/fom/edit',getDeptInfo, getState, getPost,getPostType, function(req,res,next){
+// page: 编辑岗位信息页面 - edit.ejs
+router.get('/fom/edit',getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList, function(req,res,next){
   var userid = req.query.userid || '';
   staffModel.findOne({where: {userid: userid}}).then(function(p){
     res.render('user/edit.ejs', {
@@ -120,7 +95,7 @@ router.get('/fom/edit',getDeptInfo, getState, getPost,getPostType, function(req,
   });
 });
 
-// action: 更新岗位信息
+// action: 更新岗位信息 - edit page
 router.post('/fom/edit', function(req,res,next){
   var userid = req.body.userid;
   var duty = req.body.duty || '';
@@ -129,7 +104,7 @@ router.post('/fom/edit', function(req,res,next){
   var subPost = req.body.subPost;
   var postType = req.body.postType;
   var state = req.body.state;
-  res.redirect('/user/fom/show?userid='+userid);
+  res.redirect('/user/fom/show?userid='+ userid);
 });
 
 // action: 新入职
@@ -189,25 +164,18 @@ router.post('/fom/add', function(req,res,next){
   }
 });
 
-// action: update grade 更新职级
-router.post('/fom/update/grade', function(req,res,next){
-  var id = req.body.pk;
-  var grade = req.body.value || '';
-  staffModel.update(
-    {grade: grade},
-    {where: {sid: id}},
-    {fields: [grade]}
-  ).then(function(){
-    res.send('更新职级成功');
-  });
-});
-
-// data: 
-router.get('/fom/get/postList', function(req,res,next){
-  postModel.findAll().then(function(p){
-    res.send(p);
-  });
-});
+// action: update grade 更新职级 - 取消在table上直接更新
+// router.post('/fom/update/grade', function(req,res,next){
+//   var id = req.body.pk;
+//   var grade = req.body.value || '';
+//   staffModel.update(
+//     {grade: grade},
+//     {where: {sid: id}},
+//     {fields: [grade]}
+//   ).then(function(){
+//     res.send('更新职级成功');
+//   });
+// });
 
 // action: 离职
 router.post('/fom/dimission', function(req,res,next){

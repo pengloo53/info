@@ -5,6 +5,7 @@
 <!-- <link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css"> -->
 <!-- <link rel="stylesheet" href="/bootstrap3-editable/css/bootstrap-editable.css"> -->
 <link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
+<!-- <link rel="stylesheet" href="/bootstrapZip/bootstrap-tagsinput/bootstrap-tagsinput.css"> -->
 <!-- 自定义 -->
 <link rel="stylesheet" href="/stylesheets/style.css">
 <body>
@@ -62,18 +63,20 @@
 							<div class="row">
 								<div class="form-group col-lg-6">
 							    <label for="duty">职务</label>
-							    <input type="text" class="form-control" name="duty" placeholder="" value="<%= staffInfo.duty %>">
+							    <select type="text" name="grade" class="form-control">
+                      <option value="">选择级别</option>
+                      <% for(var i = 0 ; i< dutyList.length ; i++){ %>
+                          <option value="<%= dutyList[i].duty %>" <%= dutyList[i].duty == staffInfo.duty ? 'selected': '' %>><%= dutyList[i].duty %></option>
+                      <% } %>
+                  </select>
 							  </div>
 							  <div class="form-group col-lg-6">
 							    <label for="duty">职级</label>
 							    <select type="text" name="grade" class="form-control">
                       <option value="">选择级别</option>
-                      <option value="专家" <%= staffInfo.grade =='专家' ? 'selected':'' %>>专家</option>
-                      <option value="资深" <%= staffInfo.grade =='资深' ? 'selected':'' %>>资深</option>
-                      <option value="高级" <%= staffInfo.grade =='高级' ? 'selected':'' %>>高级</option>
-                      <option value="中级" <%= staffInfo.grade =='中级' ? 'selected':'' %>>中级</option>
-                      <option value="初级" <%= staffInfo.grade =='初级' ? 'selected':'' %>>初级</option>
-                      <option value="助理" <%= staffInfo.grade =='助理' ? 'selected':'' %>>助理</option>
+                      <% for(var i = 0 ; i< gradeList.length ; i++){ %>
+                          <option value="<%= gradeList[i].grade %>" <%= gradeList[i].grade == staffInfo.grade ? 'selected': '' %>><%= gradeList[i].grade %></option>
+                      <% } %>
                   </select>
 							  </div>
 							</div>
@@ -89,13 +92,13 @@
 							  </div>
 							  <div class="form-group col-lg-6">
 							    <label for="">次要岗位</label>
-							    <input type="text" class="form-control" name="mainPost" placeholder="" value="<%= staffInfo.subPost %>">
+							    <input type="text" class="form-control" name="subPost" placeholder="" value="<%= staffInfo.subPost %>">
 							  </div>
 							</div>
 							 <div class="row">
 							 	<div class="form-group col-lg-6">
 							    <label for="">岗位类型</label>
-							    <select type="text" name="mainPost" class="form-control">
+							    <select type="text" name="postType" class="form-control">
                       <option value="">岗位类型</option>
                       <% for(var i = 0 ; i< postTypeList.length ; i++){ %>
                           <option value="<%= postTypeList[i].postType %>" <%= postTypeList[i].postType == staffInfo.postType ? 'selected': '' %>><%= postTypeList[i].postType %></option>
@@ -131,6 +134,7 @@
 <script src="/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 <script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- <script scr="/bootstrapZip/bootstrap-tagsinput/bootstrap-tagsinput.js"></script> -->
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
 <!-- <script src="/javascripts/user/fom.js"></script> -->

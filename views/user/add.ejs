@@ -140,15 +140,9 @@
                         <div class="col-lg-3 col-md-4 col-sm-4">
                             <select type="text" name="grade" class="form-control">
                                 <option value="">选择级别</option>
-<!--                                 <option value="初级">初级</option>
-                                <option value="初级">初级</option>
-                                <option value="初级">初级</option> -->
-                                <option value="专家">专家</option>
-                                <option value="资深">资深</option>
-                                <option value="高级">高级</option>
-                                <option value="中级">中级</option>
-                                <option value="初级">初级</option>
-                                <option value="助理">助理</option>
+                                <% for(var i = 0 ; i< gradeList.length ; i++){ %>
+                                    <option value="<%= gradeList[i].grade %>"><%= gradeList[i].grade %></option>
+                                <% } %>
                             </select>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-4">
