@@ -63,7 +63,7 @@
 							<div class="row">
 								<div class="form-group col-lg-6">
 							    <label for="duty">职务</label>
-							    <select type="text" name="grade" class="form-control">
+							    <select type="text" name="duty" class="form-control">
                       <option value="">选择级别</option>
                       <% for(var i = 0 ; i< dutyList.length ; i++){ %>
                           <option value="<%= dutyList[i].duty %>" <%= dutyList[i].duty == staffInfo.duty ? 'selected': '' %>><%= dutyList[i].duty %></option>
@@ -118,7 +118,7 @@
 <!-- 							  <div class="row"> -->
 							  	<div class="form-group">
 								    <label for="">岗位描述（职责）</label>
-								    <textarea rows="10" name="bz" class="form-control" placeholder="" style="width:100%;"><%= staffInfo.postDescribe %></textarea>
+								    <textarea rows="10" name="postDescribe" class="form-control" placeholder="" style="width:100%;"><%= staffInfo.postDescribe %></textarea>
 								  </div>
 								  <button type="submit" class="btn btn-primary">保存</button>
 							  <!-- </div> -->

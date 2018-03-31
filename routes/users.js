@@ -67,7 +67,7 @@ router.get('/fom/get/officeList', function(req,res,next){
 });
 
 // page: 获取添加人员表单
-router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getStateList, getPostList,getGradeList, function(req,res,next){
+router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getStateList, getPostTypeList,getGradeList, function(req,res,next){
   res.render('user/add.ejs', {
     title: '添加新入职员工'
   });
@@ -76,35 +76,54 @@ router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getStateList, 
 // page: 获取显示人员页面
 router.get('/fom/show',getDeptInfo, function(req,res,next){
   var userid = req.query.userid || '';
-  staffModel.findOne({where: {userid: userid}}).then(function(p){
-    res.render('user/show.ejs', {
-      title: '显示员工信息',
-      staffInfo: p
+  if(userid){
+    staffModel.findOne({where: {userid: userid}}).then(function(p){
+      res.render('user/show.ejs', {
+        title: '显示员工信息',
+        staffInfo: p
+      });
     });
-  });
+  }else{
+    res.redirect('/user/fom');
+  }
 });
 
 // page: 编辑岗位信息页面 - edit.ejs
 router.get('/fom/edit',getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList, function(req,res,next){
   var userid = req.query.userid || '';
-  staffModel.findOne({where: {userid: userid}}).then(function(p){
-    res.render('user/edit.ejs', {
-      title: '编辑员工岗位信息',
-      staffInfo: p
+  if (userid){
+    staffModel.findOne({where: {userid: userid}}).then(function(p){
+      res.render('user/edit.ejs', {
+        title: '编辑员工岗位信息',
+        staffInfo: p
+      });
     });
-  });
+  }else{
+    res.redirect('/user/fom');
+  }
 });
 
 // action: 更新岗位信息 - edit page
 router.post('/fom/edit', function(req,res,next){
-  var userid = req.body.userid;
+  var userid = req.body.userid || '';
   var duty = req.body.duty || '';
   var grade = req.body.grade || '';
-  var mainPost = req.body.mainPost;
-  var subPost = req.body.subPost;
-  var postType = req.body.postType;
-  var state = req.body.state;
-  res.redirect('/user/fom/show?userid='+ userid);
+  var mainPost = req.body.mainPost || '';
+  var subPost = req.body.subPost || '';
+  var postType = req.body.postType || '';
+  var state = req.body.state || '';
+  var postDescribe = req.body.postDescribe || '';
+  if(userid){
+    staffModel.update(
+      {duty: duty,grade:grade,mainPost:mainPost,subPost:subPost,postType:postType,state:state,postDescribe:postDescribe},
+      {where: {userid: userid}},
+      {fields: [duty,grade,mainPost,subPost,postType,state,postDescribe]}
+    ).then(function(){
+      req.flash('success','成功更新岗位信息');
+      res.redirect('/user/fom/show?userid='+ userid);
+    });
+  }
+  // console.log('userid is %s, duty is %s, grade is %s' , userid, duty, grade);
 });
 
 // action: 新入职
@@ -125,10 +144,10 @@ router.post('/fom/add', function(req,res,next){
   var birth_place = req.body.birth_place || '';
   var domicile_place = req.body.domicile_place || '';
   var grade = req.body.grade || '';
-  var mainPost = req.body.mainPost || '';
+  var postType = req.body.postType || '';
   var state = req.body.state;
   var bz = req.body.bz;
-  if(centreId && deptId && officeId && name && userid && gender && state && mainPost && grade){
+  if(centreId && deptId && officeId && name && userid && gender && state && postType && grade){
     staffModel.create({
       centreId : centreId,
       deptId : deptId,
@@ -146,7 +165,7 @@ router.post('/fom/add', function(req,res,next){
       birth_place: birth_place,
       domicile_place: domicile_place,
       grade: grade,
-      mainPost: mainPost,
+      postType: postType,
       state: state,
       bz: bz
     }).then(function (p) {

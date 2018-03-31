@@ -44,7 +44,7 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <!-- <% include ../layout/alertMessage.ejs %> -->
+        <% include ../layout/alertMessage.ejs %>
     </div>
     <div class="container">
         <!-- <div class="content"> -->
@@ -133,7 +133,9 @@
 									<span class="data">
 										<% if(staffInfo.postDescribe){ %>
 											<%- staffInfo.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>' %>
-										<% } %>
+										<% }else{ %>
+                                            （空）
+                                        <% } %>
 									</span>
 								</td>
 							</tr>
