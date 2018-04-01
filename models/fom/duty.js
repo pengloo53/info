@@ -19,6 +19,4 @@ var duty = sequelize.define('duty',{
     collate: 'utf8_general_ci'
 });
 
-duty.sync();
-
 module.exports = duty;

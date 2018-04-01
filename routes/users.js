@@ -7,6 +7,7 @@ var staffModel = require('../models/fom/staff.js');
 var centreModel = require('../models/fom/centre.js');
 var deptModel = require('../models/fom/dept.js');
 var officeModel = require('../models/fom/office.js');
+var logModel = require('../models/log.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
@@ -25,6 +26,20 @@ var getDutyList = require('../libs/middle/getData.js').getDutyList;
 var getPostList = require('../libs/middle/getData.js').getPostList;
 var getPostTypeList = require('../libs/middle/getData.js').getPostTypeList;
 var getGradeList = require('../libs/middle/getData.js').getGradeList;
+
+// 工具类
+var getIp = require('../libs/util/myUtil.js').getIp;
+
+// add log
+function addLog(req, action, name, oldData, newData){
+  var username = req.session.user.username;
+  var ip = getIp(req);
+  logModel.create({page: 'fom', username: username,action: action, name: name, oldData: oldData, newData: newData, ip: ip}).then(function(p){
+    console.log('created.' + JSON.stringify(p));
+  }).catch(function(err){
+    console.log('failed: ' + err);
+  });
+}
 
 // 权限控制
 router.use(checkLogin);
@@ -113,17 +128,21 @@ router.post('/fom/edit', function(req,res,next){
   var postType = req.body.postType || '';
   var state = req.body.state || '';
   var postDescribe = req.body.postDescribe || '';
+  var name = req.body.name;
+  var username = req.session.user.username;
   if(userid){
     staffModel.update(
       {duty: duty,grade:grade,mainPost:mainPost,subPost:subPost,postType:postType,state:state,postDescribe:postDescribe},
       {where: {userid: userid}},
       {fields: [duty,grade,mainPost,subPost,postType,state,postDescribe]}
     ).then(function(){
+      addLog(req, '更新岗位', name, JSON.stringify({}), JSON.stringify({}));
       req.flash('success','成功更新岗位信息');
       res.redirect('/user/fom/show?userid='+ userid);
     });
+  }else{
+    next();
   }
-  // console.log('userid is %s, duty is %s, grade is %s' , userid, duty, grade);
 });
 
 // action: 新入职
@@ -147,31 +166,33 @@ router.post('/fom/add', function(req,res,next){
   var postType = req.body.postType || '';
   var state = req.body.state;
   var bz = req.body.bz;
+  var username = req.session.user.username;
+  var data = {
+    centreId : centreId,
+    deptId : deptId,
+    officeId: officeId,
+    name : name,
+    userid: userid,
+    gender: gender,
+    school: school,
+    major: major,
+    education: education,
+    graduation_date: graduation_date,
+    work_date: work_date,
+    enter_date: enter_date,
+    birthday: birthday,
+    birth_place: birth_place,
+    domicile_place: domicile_place,
+    grade: grade,
+    postType: postType,
+    state: state,
+    bz: bz
+  };
   if(centreId && deptId && officeId && name && userid && gender && state && postType && grade){
-    staffModel.create({
-      centreId : centreId,
-      deptId : deptId,
-      officeId: officeId,
-      name : name,
-      userid: userid,
-      gender: gender,
-      school: school,
-      major: major,
-      education: education,
-      graduation_date: graduation_date,
-      work_date: work_date,
-      enter_date: enter_date,
-      birthday: birthday,
-      birth_place: birth_place,
-      domicile_place: domicile_place,
-      grade: grade,
-      postType: postType,
-      state: state,
-      bz: bz
-    }).then(function (p) {
+    staffModel.create(data).then(function (p) {
       console.log('created.' + JSON.stringify(p));
       // 添加log
-      
+      addLog(req, '新入职', name, '', JSON.stringify({员工号: userid, 姓名: name}));
       req.flash('success', '添加成功');
       res.redirect('/user/fom');
     }).catch(function (err) {
@@ -198,15 +219,20 @@ router.post('/fom/add', function(req,res,next){
 
 // action: 离职
 router.post('/fom/dimission', function(req,res,next){
-  var id = req.body.id;
+  var sid = req.body.sid;
+  var userid = req.body.userid;
+  var name = req.body.name;
   var leave_date = req.body.leave_date || '';
   var bz = req.body.bz || '';
+  var username = req.session.user.username;
   staffModel.update(
     {'sbz': bz,'leave_date': leave_date},
-    {'where': {sid: id}},
+    {'where': {sid: sid}},
     {'fields': ['leave_date','sbz']}
   ).then(function(){
-    staffModel.destroy({where:{sid: id}}).then(function(){
+    staffModel.destroy({where:{sid: sid}}).then(function(){
+      // add log
+      addLog(req, '离职', name, JSON.stringify({员工号: userid, 姓名: name}), '');
       req.flash('success', '离职操作成功');
       res.redirect('/user/fom');
     });
@@ -219,14 +245,37 @@ router.post('/fom/change', function(req,res,next){
   var centreId = req.body.centre || 0;
   var deptId = req.body.dept || 0;
   var officeId = req.body.office || 0;
-  // console.log('centreId is %d, deptId is %d , officeId is %d', centreId ,deptId , officeId);
+  var name = req.body.name;
+  var oldDept = req.body.oldDept;
+  var username = req.session.user.username;
   staffModel.update(
     {centreId : centreId, deptId : deptId, officeId: officeId},
     {where: {sid: id}},
     {fields: [centreId,deptId,officeId]}
   ).then(function(){
-      req.flash('success', '调转操作成功');
-      res.redirect('/user/fom');
+      deptModel.findOne({attributes:['dept']},{where: {id: deptId}}).then(function(p){
+        // add log
+        addLog(req, '调出', name, oldDept, p.dept);
+        req.flash('success', '调转操作成功');
+        res.redirect('/user/fom');
+      }); 
+  });
+});
+
+// page: log页面
+router.get('/fom/log', getDeptInfo, function(req,res,next){
+  var page = 'fom';
+  var username = req.session.user.username;
+  logModel.findAll(
+    // {order: [sequelize.col('id'),'DESC']},
+    {limit: 15},
+    {where: {page: page,username: username}}
+  ).then(function(p){
+    res.render('user/log.ejs',{
+      title: '操作明细',
+      log: p,
+      username: username,
+    });
   });
 });
 

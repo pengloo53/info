@@ -9,9 +9,12 @@ var log = sequelize.define('log',{
         autoIncrement: true
     },
     page: Sequelize.STRING,     // fom,project
-    action: Sequelize.STRING,   // add,update,delete
-    oldData: Sequelize.STRING,
-    newData: Sequelize.STRING
+    username: Sequelize.STRING,   // 用户
+    action: Sequelize.STRING,   // 操作动作：add,update,delete
+    name: Sequelize.STRING,     // 操作对象
+    oldData: Sequelize.STRING,  // 旧数据
+    newData: Sequelize.STRING,  // 更新数据
+    ip: Sequelize.STRING        // IP地址
 },{
     timestamps: true,
     tableName: 'log',

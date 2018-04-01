@@ -5,10 +5,13 @@ $(function () {
         'click [title=离职]': function (e, value, row, index) {
             $('#dimission').modal('show');
             $('#dimission form input.sid').val(row.sid);
+            $('#dimission form input.name').val(row.name);
+            $('#dimission form input.userid').val(row.userid); 
         },
         'click [title=调转]': function (e, value, row, index) {
             $('#change').modal('show');
             $('#change form input.sid').val(row.sid);
+            $('#change form input.name').val(row.name);
             $('select[name=centre]').val('');
             $('select[name=dept] option:gt(0)').remove();
             $('select[name=office] option:gt(0)').remove();
