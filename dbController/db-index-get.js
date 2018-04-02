@@ -16,9 +16,13 @@ function findStaffByDeptId(deptId, callback){
   });
 }
 
-// findStaffByDeptId(1, function(err,rows,fields){
-//   console.log(rows);
-// })
+function getLog(username,page,callback){
+	var sql = 'select * from log where page = "' + page + '" and username="'+ username + '" order by id desc limit 13';
+	querySQL(sql, function(err,rows,fields){
+		callback(err,rows,fields);
+	});
+}
 
 exports.findStaffByDeptId = findStaffByDeptId;
 exports.findStaffByCentreId = findStaffByCentreId;
+exports.getLog = getLog;

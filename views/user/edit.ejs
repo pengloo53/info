@@ -33,8 +33,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">个人中心 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/user/fom/log">操作明细</a></li>
-                                <li><a href="#">个人资料</a></li>
+                                <!-- <li><a href="/user/fom/log">操作明细</a></li> -->
+                                <li><a href="/user/c/passwd">修改密码</a></li>
 <!--                                 <li><a href="#">Something else here</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">Separated link</a></li> -->
@@ -140,10 +140,21 @@
 <script src="/javascripts/self.js"></script> 
 <!-- <script src="/javascripts/user/fom.js"></script> -->
 
-<!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script> -->
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 <script>
     $(function(){
-
+      // 表单验证
+        $('form').validate({
+            rules: {
+                subPost: {
+                    maxlength: 50,
+                },
+                postDescribe: {
+                    maxlength: 400,
+                },
+            },
+            errorClass: 'text-danger'
+        });
     });
 </script>
 <% include ../layout/foot.ejs %>

@@ -54,103 +54,37 @@
               <li class="active">显示人员信息</li>
             </ol> -->
         <div style="margin-bottom:20px">
-        	<h3>显示人员信息<small> - <%= staffInfo.name %></small></h3>
-        	<!-- <a class="btn btn-danger btn-sm pull-right" style="margin-bottom: 20px" href="/user/fom/edit">编辑</a> -->
+        	<h3>账号信息<small> - 登陆名：<%= user.username %></small></h3>
         </div>
         <div class="row">
-	        <div class="col-lg-10">
-	        	<table class="table table-bordered">
-							<tr class="active">
-								<td colspan="7" style="line-height: 2em"><b class="text-primary">基本信息</b></td>
-							</tr>
-							<tr>
-								<td>姓名</td>
-								<td><span class="data"><%= staffInfo.name %></span></td>
-								<td>员工号</td>
-								<td><span class="data"><%= staffInfo.userid %></span></td>
-								<!-- <td rowspan="3"></td> -->
-								<td rowspan="6" colspan="2" width="18%" class="text-center"><img src="" alt="photo" class="img-rounded"></td>
-							</tr>
-							<tr>
-								<td>性别</td>
-								<td><span class="data"><%= staffInfo.gender %></span></td>
-								<td>出生日期</td>
-								<td><span class="data"><%= staffInfo.birthday %></span></td>
-							</tr>
-							<tr>
-								<td>出生地</td>
-								<td><span class="data"><%= staffInfo.birth_place %></span></td>
-								<td>户籍地</td>
-								<td><span class="data"><%= staffInfo.domicile_place %></span></td>
-							</tr>
-							<tr>
-								<td>毕业学校</td>
-								<td><span class="data"><%= staffInfo.school %></span></td>
-								<td>毕业专业</td>
-								<td><span class="data"><%= staffInfo.major %></span></td>
-							</tr>
-							<tr>
-								<td>学历</td>
-								<td><span class="data"><%= staffInfo.education %></span></td>
-								<td>毕业日期</td>
-								<td><span class="data"><%= staffInfo.education_date %></span></td>
-							</tr>
-							<tr>
-								<td>工作日期</td>
-								<td><span class="data"><%= staffInfo.work_date %></span></td>
-								<td>入BOE日期</td>
-								<td><span class="data"><%= staffInfo.enter_date %></span></td>
-							</tr>
-							<tr class="active">
-								<td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b>
-									<a class="btn btn-danger btn-sm pull-right" href="/user/fom/edit?userid=<%= staffInfo.userid %>">编辑</a>
-								</td>
-							</tr>
-							<tr>
-								<td>职级</td>
-								<td><span class="data"><%= staffInfo.grade %></span></td>
-								<td>职务</td>
-								<td><span class="data"><%= staffInfo.duty %></span></td>
-							</tr>
-							<tr>
-								<td>主要岗位</td>
-								<td><span class="data"><%= staffInfo.mainPost %></span></td>
-								<td>次要岗位</td>
-								<td><span class="data"><%= staffInfo.subPost %></span></td>
-							</tr>
-							<tr>
-								<td>岗位类型</td>
-								<td><span class="data"><%= staffInfo.postType %></span></td>
-								<td>状态</td>
-								<td><span class="data"><%= staffInfo.state %></span></td>
-							</tr>
-							<tr>
-								<td colspan="7">岗位描述（职责）</td>
-								<!-- <td><%= staffInfo.postDescribe %></td> -->
-							</tr>
-							<tr>
-								<td colspan="7">
-									<span class="data">
-										<% if(staffInfo.postDescribe){ %>
-											<%- staffInfo.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>' %>
-										<% }else{ %>
-                                            （空）
-                                        <% } %>
-									</span>
-								</td>
-							</tr>
-						</table>
+	        <div class="col-lg-4">
+	        	<form action="/user/c/passwd" method="POST" style="padding: 10px 0 ">
+                    <div class="form-group">
+                        <label for="" class="control-label">原密码</label>
+                        <input type="passwd" class="form-control" name="password" placeholder="输入原密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">新密码</label>
+                        <input type="passwd" class="form-control" name="newPassword" placeholder="输入新密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">重复新密码</label>
+                        <input type="passwd" class="form-control" name="rePassword" placeholder="再次输入新密码">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </form>
 	        </div>
         </div>
-        
         <!-- </div>   -->
     </div>    
 <!-- special script -->
 <!-- bootstrap-table -->
 <script src="/jquery/dist/jquery.js"></script>
 <script src="/bootstrap/dist/js/bootstrap.js"></script>
-<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- <script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script> -->
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
 <!-- <script src="/javascripts/user/fom.js"></script> -->

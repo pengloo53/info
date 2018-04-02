@@ -34,7 +34,7 @@ var getIp = require('../libs/util/myUtil.js').getIp;
 function addLog(req, action, name, oldData, newData){
   var username = req.session.user.username;
   var ip = getIp(req);
-  logModel.create({page: 'fom', username: username,action: action, name: name, oldData: oldData, newData: newData, ip: ip}).then(function(p){
+  logModel.create({page: 'fom', username: username,action: action, name: name, oldData: oldData, newData: newData,ip:ip}).then(function(p){
     console.log('created.' + JSON.stringify(p));
   }).catch(function(err){
     console.log('failed: ' + err);
@@ -46,7 +46,23 @@ router.use(checkLogin);
 
 // page: users index.
 router.get('/', function(req, res, next) {
+  // addLog(req, 'test',req.session.user.username,'','');
   res.send('respond with a resource');
+});
+
+// page: 用户中心-修改密码
+router.get('/c/passwd', getDeptInfo, function(req,res,next){
+  var user = req.session.user;
+  res.render('user/setting.ejs',{
+    title: '个人中心设置页',
+    user: user,
+  });
+});
+
+// action: update password
+router.post('/c/passwd', function(req,res,next){
+  req.flash('success','更新密码成功');
+  res.redirect('/login/out');
 });
 
 // page: FOM表格页面
@@ -253,7 +269,7 @@ router.post('/fom/change', function(req,res,next){
     {where: {sid: id}},
     {fields: [centreId,deptId,officeId]}
   ).then(function(){
-      deptModel.findOne({attributes:['dept']},{where: {id: deptId}}).then(function(p){
+      deptModel.findOne({where: {id: deptId}}).then(function(p){
         // add log
         addLog(req, '调出', name, oldDept, p.dept);
         req.flash('success', '调转操作成功');
@@ -266,17 +282,13 @@ router.post('/fom/change', function(req,res,next){
 router.get('/fom/log', getDeptInfo, function(req,res,next){
   var page = 'fom';
   var username = req.session.user.username;
-  logModel.findAll(
-    // {order: [sequelize.col('id'),'DESC']},
-    {limit: 15},
-    {where: {page: page,username: username}}
-  ).then(function(p){
+  dbGet.getLog(username, page , function(err,rows,fields){
     res.render('user/log.ejs',{
       title: '操作明细',
-      log: p,
+      log: rows,
       username: username,
     });
-  });
+  });   
 });
 
 module.exports = router;

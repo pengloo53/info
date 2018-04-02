@@ -32,8 +32,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                aria-expanded="false">个人中心 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/user/fom/log">操作明细</a></li>
-                                <li><a href="#">个人资料</a></li>
+                                <!-- <li><a href="/user/fom/log">操作明细</a></li> -->
+                                <li><a href="/user/c/passwd">修改密码</a></li>
 <!--                                 <li><a href="#">Something else here</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">Separated link</a></li> -->
@@ -211,7 +211,7 @@
 <script src="/javascripts/self.js"></script> 
 <script src="/javascripts/user/fom.js"></script>
 
-<!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script> -->
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 <script>
     $(function(){
         // --------------------- datepicker ------------------- 
@@ -234,47 +234,65 @@
         });
         
         // 表单验证
-        var $centre = $('form select[name=centre]');
-        var $dept = $('form select[name=dept]');
-        var $office = $('form select[name=office]');
-        var $gender = $('form select[name=gender]');
-        var $name = $('form input[name=name]');
-        var $userid = $('form input[name=userid]');
-        var $school = $('form input[name=school]');
-        var $major = $('form input[name=major]');
-        var $education = $('form select[name=education]');
-        var $mainPost = $('form select[name=mainPost]');
-        var $grade = $('form select[name=grade]');
-        var $state = $('form select[name=state]');
-        var formList = [$centre,$dept,$office,$gender,$name,$userid,$school,$major,$education,$mainPost,$grade,$state];
-        $('form').submit(function(e){
-            for(var i = 0 ; i < formList.length ; i++){
-                if (formList[i].val().trim() == '') {
-                    formList[i].parent().addClass('has-error');
-                    e.preventDefault();
-                }else{
-                    formList[i].parent().removeClass('has-error');
-                }
-            }
-        });
-        
-        // 表单验证插件
-        // $('form').validate({
-        //     rules: {
-        //         centre: "required",
-        //         dept: "required",
-        //         office: "required",
-        //         name: "required",
-        //         userid: "required",
-        //         gender: "required",
-        //         school: "required",
-        //         major: "required",
-        //         education: "required",
-        //         mainPost: "required",
-        //         grade: "required",
-        //         state: "required",
+        // var $centre = $('form select[name=centre]');
+        // var $dept = $('form select[name=dept]');
+        // var $office = $('form select[name=office]');
+        // var $gender = $('form select[name=gender]');
+        // var $name = $('form input[name=name]');
+        // var $userid = $('form input[name=userid]');
+        // var $school = $('form input[name=school]');
+        // var $major = $('form input[name=major]');
+        // var $education = $('form select[name=education]');
+        // var $mainPost = $('form select[name=mainPost]');
+        // var $grade = $('form select[name=grade]');
+        // var $state = $('form select[name=state]');
+        // var formList = [$centre,$dept,$office,$gender,$name,$userid,$school,$major,$education,$mainPost,$grade,$state];
+        // $('form').submit(function(e){
+        //     for(var i = 0 ; i < formList.length ; i++){
+        //         if (formList[i].val().trim() == '') {
+        //             formList[i].parent().addClass('has-error');
+        //             e.preventDefault();
+        //         }else{
+        //             formList[i].parent().removeClass('has-error');
+        //         }
         //     }
         // });
+        
+        // 表单验证插件
+        $('form').validate({
+            rules: {
+                centre: "required",
+                dept: "required",
+                office: "required",
+                name: {
+                    required: true,
+                    maxlength: 6,
+                    minlength: 2,
+                },
+                userid: {
+                    required: true,
+                    maxlength: 20,
+                    minlength: 3,
+                },
+                gender: "required",
+                school: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2,
+                },
+                major: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2,
+                },
+                education: "required",
+                postType: "required",
+                grade: "required",
+                state: "required",
+            },
+            errorClass: 'text-danger',
+            errorElement: 'em'
+        });
     });
 </script>
 <% include ../layout/foot.ejs %>
