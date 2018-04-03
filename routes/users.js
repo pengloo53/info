@@ -8,6 +8,7 @@ var centreModel = require('../models/fom/centre.js');
 var deptModel = require('../models/fom/dept.js');
 var officeModel = require('../models/fom/office.js');
 var logModel = require('../models/log.js');
+var userModel = require('../models/user/user.js');
 
 var dbGet = require('../dbController/db-index-get.js');
 
@@ -61,8 +62,26 @@ router.get('/c/passwd', getDeptInfo, function(req,res,next){
 
 // action: update password
 router.post('/c/passwd', function(req,res,next){
-  req.flash('success','更新密码成功');
-  res.redirect('/login/out');
+  var username = req.body.username;
+  var newPasswd = req.body.newPasswd;
+  var rePasswd = req.body.rePasswd;
+  if(!newPasswd || !rePasswd){
+    req.flash('error','输入完整再提交');
+    res.redirect('/user/c/passwd');
+  }
+  if(newPasswd !== rePasswd){
+    req.flash('error','两次密码输入不同');
+    res.redirect('/user/c/passwd');
+  }
+  userModel.update(
+    {password: rePasswd},
+    {where: {username: username}},
+    {fields: ['password']}
+  ).then(function(p){
+    addLog(req, '修改密码', '','','');
+    req.flash('success','更新密码成功');
+    res.redirect('/login/out');
+  });
 });
 
 // page: FOM表格页面
