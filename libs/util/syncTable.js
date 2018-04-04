@@ -10,6 +10,7 @@ var todolist = require('../../models/todo/todolist.js');
 var centre = require('../../models/fom/centre.js');
 var dept = require('../../models/fom/dept.js');
 var office = require('../../models/fom/office.js');
+var duty = require('../../models/fom/duty.js');
 var grade = require('../../models/fom/grade.js');
 var post = require('../../models/fom/post.js');
 var staff = require('../../models/fom/staff.js');
@@ -28,6 +29,7 @@ dept.sync();
 office.sync();
 
 // 岗位相关
+duty.sync();
 grade.sync();
 post.sync();
 staff.sync();
