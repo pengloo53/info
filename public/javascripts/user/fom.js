@@ -185,14 +185,15 @@ $(function () {
             valign: 'middle',
             width: '100',
             formatter: function (value, row, index) {
+                // if(row.duty == '科长' || row.duty == '部长' || row.duty == '中心长'){
+                //     return '<em class="label label-primary">统一管理</em>'
+                // }
                 return '<div class="btn-group" role="btn-group">' +
                     '<button class="op btn btn-default btn-sm" title="离职">' +
                     '<i class="glyphicon glyphicon-remove"></i></button>' +
                     '<button class="op btn btn-default btn-sm" title="调转" ' +
                     'data-target="#editModal" data-toggle="modal">' +
                     '<i class="glyphicon glyphicon-repeat"></i></button>' +
-                    // '<button class="op btn btn-default btn-sm" title="更改">' +
-                    // '<i class="glyphicon glyphicon-pencil"></i></button>' +
                     '</div>';
             }
         }]
