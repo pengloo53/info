@@ -67,11 +67,11 @@ router.post('/c/passwd', function(req,res,next){
   var rePasswd = req.body.rePasswd;
   if(!newPasswd || !rePasswd || newPasswd == '' || rePasswd == ''){
     req.flash('error','输入完整再提交');
-    res.redirect('/user/c/passwd');
+    return res.redirect('/user/c/passwd');
   }
   if(newPasswd !== rePasswd){
     req.flash('error','两次密码输入不同');
-    res.redirect('/user/c/passwd');
+    return res.redirect('/user/c/passwd');
   }
   userModel.update(
     {password: rePasswd},
