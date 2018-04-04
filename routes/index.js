@@ -11,4 +11,5 @@ module.exports = function(app){
   app.use('/fom',require('./fom'));         // 2. FOM人员管理
   app.use('/project',require('./project')); // 3. 重点项目管理
   app.use('/user', require('./users'));     // 用户页
+  app.use('/admin', require('./admin'));    // 管理员页
 }
