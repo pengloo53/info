@@ -221,7 +221,7 @@ router.post('/fom/add', function(req,res,next){
     grade: grade,
     postType: postType,
     state: state,
-    bz: bz
+    sbz: bz
   };
   if(centreId && deptId && officeId && name && userid && gender && state && postType && grade){
     staffModel.create(data).then(function (p) {
