@@ -65,7 +65,7 @@ router.post('/c/passwd', function(req,res,next){
   var username = req.body.username;
   var newPasswd = req.body.newPasswd;
   var rePasswd = req.body.rePasswd;
-  if(!newPasswd || !rePasswd){
+  if(!newPasswd || !rePasswd || newPasswd == '' || rePasswd == ''){
     req.flash('error','输入完整再提交');
     res.redirect('/user/c/passwd');
   }
