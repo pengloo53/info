@@ -32,7 +32,7 @@ router.post('/', function(req,res,next){
     req.flash('success','Login Success!');
     req.session.user = user;
     if(user.role == 'B'){  // 中心管理员
-      res.redirect('/fom');
+      res.redirect('/admin');
     }else if(user.role == 'C'){  // 部门管理员
       res.redirect('/user/fom');
     }

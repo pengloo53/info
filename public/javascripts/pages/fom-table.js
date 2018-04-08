@@ -129,7 +129,7 @@ $(function () {
             align: 'center',
             valign: 'middle',
             // width: '10%',
-            // visible: false,
+            visible: false,
             formatter: function (value, row, index) {
                 return '<div class="btn-group" role="btn-group">' +
                     '<button class="op btn btn-default btn-sm" title="离职">' +

@@ -9,7 +9,17 @@ var gradeModel = require('../../models/fom/grade.js');
 var postModel = require('../../models/fom/post.js');
 var stateModel = require('../../models/state.js');
 
+var dbGet = require('../../dbController/db-index-get.js');
+
 module.exports = {
+  // 根据中心id获取员工List
+  getStaffListByCentreId: function(req,res,next){
+    var centreId = req.session.user?req.session.user.centreId : 1; 
+    dbGet.findStaffByCentreId(centreId, function(err,rows,fields){
+      res.locals.staffList = rows;
+      next();
+    });
+  },
   // 获取中心List
   getCentreList: function(req,res,next){
     centreModel.findAll().then(function(p){
@@ -17,8 +27,9 @@ module.exports = {
       next();
     });
   },
+  // 获取部门List
   getDeptList: function(req,res,next){
-    var centreId = req.session.user.centreId;
+    var centreId = req.session.user?req.session.user.centreId : 1;
     deptModel.findAll({where: {centreId : centreId}}).then(function(p){
       res.locals.deptList = p;
       next();
@@ -34,7 +45,7 @@ module.exports = {
   },
   // 获取中心信息
   getCentreInfo: function(req,res,next){
-    var centreId = req.session.user.centreId;
+    var centreId = req.session.user?req.session.user.centreId : 1;
     centreModel.findOne({where:{id: centreId}}).then(function(p){
       res.locals.centreInfo = p;
       next();
