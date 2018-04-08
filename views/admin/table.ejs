@@ -119,6 +119,7 @@
       var deptId = $('#dataSpan').data('deptid');
       window.operator = {
           'click [title=离职]': function (e, value, row, index) {
+              alert('you click dimission');
               $('#dimission').modal('show');
               $('#dimission form input.sid').val(row.sid);
           },
@@ -139,11 +140,6 @@
                   res[i].rid = i + 1;
               }
               return res;
-          },
-          queryParams: function (params) {
-              return {
-                  uid: 1
-              };
           },
           pageNumber: 1,
           pageSize: 12,
@@ -221,7 +217,7 @@
               title: '岗位类别',
               align: 'center',
               valign: 'middle',
-              visible: false
+              // visible: false
           },{
               field: 'postDescribe',
               title: '岗位描述',
@@ -246,14 +242,21 @@
               align: 'center',
               valign: 'middle',
               // width: '10%',
-              visible: false,
+              // visible: false,
               formatter: function (value, row, index) {
                   return '<div class="btn-group" role="btn-group">' +
-                      '<button class="op btn btn-default btn-sm" title="离职">' +
-                      '<i class="glyphicon glyphicon-remove"></i></button>' +
-                      '<button class="op btn btn-default btn-sm" title="调转" ' +
-                      'data-target="#editModal" data-toggle="modal">' +
-                      '<i class="glyphicon glyphicon-repeat"></i></button>' +
+                      // '<button class="op btn btn-default btn-sm" title="离职">' +
+                      '<i class="glyphicon glyphicon-remove" title="离职"></i> ' + 
+                      // '</button>' +
+                      // '<button class="op btn btn-default btn-sm" title="调转">' +
+                      '<i class="glyphicon glyphicon-repeat" title="调转"></i> ' +
+                      // '</button>' +
+                      '<a href="/admin/staff/show?userid=' + row.userid + '">' + 
+                      '<i class="glyphicon glyphicon-eye-open" title="显示"></i> ' + 
+                      '</a>'+ 
+                      '<a href="/admin/staff/edit?userid=' + row.userid + '">' + 
+                      '<i class="glyphicon glyphicon-pencil" title="修改"></i> ' + 
+                      '</a>'+ 
                       '</div>';
               }
           }]

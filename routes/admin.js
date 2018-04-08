@@ -27,6 +27,7 @@ var getDutyList = require('../libs/middle/getData.js').getDutyList;
 var getPostList = require('../libs/middle/getData.js').getPostList;
 var getPostTypeList = require('../libs/middle/getData.js').getPostTypeList;
 var getGradeList = require('../libs/middle/getData.js').getGradeList;
+var getStaffInfo = require('../libs/middle/getData.js').getStaffInfo;
 
 var getStaffListByCentreId = require('../libs/middle/getData.js').getStaffListByCentreId;
 
@@ -83,30 +84,33 @@ router.get('/staff/show',getDeptInfo, function(req,res,next){
   }
 });
 
-// page: edit staff basic info
-router.get('/staff/editA', function(req,res,next){
-    var userid = req.query.userid || '';
-    next();
-});
-
-// page: edit staff post info 
-router.get('/staff/editB',getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList, function(req,res,next){
-  var userid = req.query.userid || '';
-  if (userid){
-    staffModel.findOne({where: {userid: userid}}).then(function(p){
-      res.render('admin/editPost.ejs', {
-        title: '编辑员工岗位信息',
-        staffInfo: p
-      });
-    });
-  }else{
-    res.redirect('/admin/table');
-  }
+// page: edit staff 
+router.get('/staff/edit', getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList,getStaffInfo, 
+    function(req,res,next){
+      var userid = req.query.userid || '';
+      if(userid){
+        res.render('admin/edit.ejs', {
+          title: '编辑员工信息'
+        });
+      }else{
+        res.redirect('/admin/table');
+      }
 });
 
 // action: 更新岗位信息 - edit page
-router.post('/staff/editB', function(req,res,next){
+router.post('/staff/edit', function(req,res,next){
   var userid = req.body.userid || '';
+  var name = req.body.name;
+  var gender = req.body.gender;
+  var school = req.body.school || '';
+  var major = req.body.major || '';
+  var education = req.body.education || '';
+  var graduation_date = req.body.graduation_date || '';
+  var work_date = req.body.work_date || '';
+  var enter_date = req.body.enter_date || '';
+  var birthday = req.body.birthday || '';
+  var birth_place = req.body.birth_place || '';
+  var domicile_place = req.body.domicile_place || '';
   var duty = req.body.duty || '';
   var grade = req.body.grade || '';
   var mainPost = req.body.mainPost || '';
@@ -114,15 +118,19 @@ router.post('/staff/editB', function(req,res,next){
   var postType = req.body.postType || '';
   var state = req.body.state || '';
   var postDescribe = req.body.postDescribe || '';
-  var name = req.body.name;
+  // 用户名
   var username = req.session.user.username;
   if(userid){
     staffModel.update(
-      {duty: duty,grade:grade,mainPost:mainPost,subPost:subPost,postType:postType,state:state,postDescribe:postDescribe},
+      {gender: gender, school:school,major:major,education: education,
+        graduation_date: graduation_date,work_date:work_date,enter_date:enter_date,
+        birthday:birthday,birth_place:birth_place,domicile_place:domicile_place,
+        duty: duty,grade:grade,mainPost:mainPost,subPost:subPost,postType:postType,state:state,
+        postDescribe:postDescribe},
       {where: {userid: userid}},
       {fields: [duty,grade,mainPost,subPost,postType,state,postDescribe]}
     ).then(function(){
-      addLog(req, '更新岗位', name, JSON.stringify({}), JSON.stringify({}));
+      addLog(req, '更新信息', name, JSON.stringify({}), JSON.stringify({}));
       // req.flash('success','成功更新岗位信息');
       res.redirect('/admin/staff/show?userid='+ userid);
     });

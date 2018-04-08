@@ -8,10 +8,19 @@ var dutyModel = require('../../models/fom/duty.js');
 var gradeModel = require('../../models/fom/grade.js');
 var postModel = require('../../models/fom/post.js');
 var stateModel = require('../../models/state.js');
+var staffModel = require('../../models/fom/staff.js');
 
 var dbGet = require('../../dbController/db-index-get.js');
 
 module.exports = {
+  // 获取员工信息，根据useid
+  getStaffInfo: function(req,res,next){
+    var userid = req.query.userid || '';
+    staffModel.findOne({where: {userid: userid}}).then(function(p){
+      res.locals.staffInfo = p;
+      next();
+    });
+  },
   // 根据中心id获取员工List
   getStaffListByCentreId: function(req,res,next){
     var centreId = req.session.user?req.session.user.centreId : 1; 

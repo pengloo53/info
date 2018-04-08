@@ -39,7 +39,7 @@
         <div class="right_col" role="main">
           <div style="margin-bottom:20px">
             <h3>显示人员信息<small> - <%= staffInfo.name %></small></h3>
-            <!-- <a class="btn btn-danger btn-sm pull-right" style="margin-bottom: 20px" href="/user/fom/edit">编辑</a> -->
+            <a class="btn btn-danger btn-sm pull-right" href="/admin/staff/edit?userid=<%= staffInfo.userid %>">编辑</a>
           </div>
           <div class="row">
           <div class="col-lg-12">
@@ -77,7 +77,7 @@
                 <td>学历</td>
                 <td><span class="data"><%= staffInfo.education %></span></td>
                 <td>毕业日期</td>
-                <td><span class="data"><%= staffInfo.education_date %></span></td>
+                <td><span class="data"><%= staffInfo.graduation_date %></span></td>
               </tr>
               <tr>
                 <td>工作日期</td>
@@ -86,9 +86,7 @@
                 <td><span class="data"><%= staffInfo.enter_date %></span></td>
               </tr>
               <tr class="active">
-                <td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b>
-                  <a class="btn btn-danger btn-sm pull-right" href="/admin/staff/editB?userid=<%= staffInfo.userid %>">编辑</a>
-                </td>
+                <td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b></td>
               </tr>
               <tr>
                 <td>职级</td>
