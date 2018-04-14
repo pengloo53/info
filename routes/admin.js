@@ -1,4 +1,5 @@
 var express = require('express');
+var crypto = require('crypto');
 var router = express.Router();
 
 var sequelize = require('../models/util/dbConnect.js');
@@ -27,12 +28,15 @@ var getDutyList = require('../libs/middle/getData.js').getDutyList;
 var getPostList = require('../libs/middle/getData.js').getPostList;
 var getPostTypeList = require('../libs/middle/getData.js').getPostTypeList;
 var getGradeList = require('../libs/middle/getData.js').getGradeList;
-var getStaffInfo = require('../libs/middle/getData.js').getStaffInfo;
 
 var getStaffListByCentreId = require('../libs/middle/getData.js').getStaffListByCentreId;
 
 // 工具类
 var getIp = require('../libs/util/myUtil.js').getIp;
+// var getAes = require('../libs/util/crypto-aes.js').getAes;
+// var getDAes = require('../libs/util/crypto-aes.js').getDAes;
+var base64encode = require('../libs/util/base64.js').base64encode;
+var base64decode = require('../libs/util/base64.js').base64decode;
 
 // add log
 function addLog(req, action, name, oldData, newData){
@@ -42,6 +46,19 @@ function addLog(req, action, name, oldData, newData){
     console.log('created.' + JSON.stringify(p));
   }).catch(function(err){
     console.log('failed: ' + err);
+  });
+}
+
+// 获取员工信息，根据sid
+function getStaffInfo(req,res,next){
+  var sid_code = req.query.sid_code;
+  if(!sid_code){ return res.redirect('/admin/table');}
+  var sid = base64decode(sid_code);  // 解密
+  staffModel.findOne({where: {sid: sid}}).then(function(p){
+    if(!p){return res.redirect('/admin/table');}
+    res.locals.staffInfo = p;
+    res.locals.sid_code = sid_code;
+    next();
   });
 }
 
@@ -70,35 +87,23 @@ router.get('/table', getCentreInfo , getDeptList, getStaffListByCentreId, functi
 });
 
 // page: show staff
-router.get('/staff/show',getDeptInfo, function(req,res,next){
-  var userid = req.query.userid || '';
-  if(userid){
-    staffModel.findOne({where: {userid: userid}}).then(function(p){
-      res.render('admin/show.ejs', {
-        title: '显示员工信息',
-        staffInfo: p
-      });
-    });
-  }else{
-    res.redirect('/admin/table');
-  }
+router.get('/staff/show', getStaffInfo, function(req,res,next){
+  res.render('admin/show.ejs', {
+    title: '显示员工信息'
+  });
 });
 
 // page: edit staff 
-router.get('/staff/edit', getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList,getStaffInfo, 
-    function(req,res,next){
-      var userid = req.query.userid || '';
-      if(userid){
-        res.render('admin/edit.ejs', {
-          title: '编辑员工信息'
-        });
-      }else{
-        res.redirect('/admin/table');
-      }
+router.get('/staff/edit',getStaffInfo, getGradeList,getDutyList, getStateList, getPostList, getPostTypeList,function(req,res,next){
+  res.render('admin/edit.ejs', {
+    title: '编辑员工信息'
+  });
 });
 
-// action: 更新岗位信息 - edit page
+// action: 更新信息 - edit page
 router.post('/staff/edit', function(req,res,next){
+  var sid_code = req.body.sid_code;
+  var sid = base64decode(sid_code);
   var userid = req.body.userid || '';
   var name = req.body.name;
   var gender = req.body.gender;
@@ -120,24 +125,22 @@ router.post('/staff/edit', function(req,res,next){
   var postDescribe = req.body.postDescribe || '';
   // 用户名
   var username = req.session.user.username;
-  if(userid){
+  if(sid_code){
     staffModel.update(
-      {gender: gender, school:school,major:major,education: education,
+      {userid: userid,gender: gender, school:school,major:major,education: education,
         graduation_date: graduation_date,work_date:work_date,enter_date:enter_date,
         birthday:birthday,birth_place:birth_place,domicile_place:domicile_place,
         duty: duty,grade:grade,mainPost:mainPost,subPost:subPost,postType:postType,state:state,
         postDescribe:postDescribe},
-      {where: {userid: userid}},
-      {fields: [duty,grade,mainPost,subPost,postType,state,postDescribe]}
+      {where: {sid: sid}}
     ).then(function(){
       addLog(req, '更新信息', name, JSON.stringify({}), JSON.stringify({}));
       // req.flash('success','成功更新岗位信息');
-      res.redirect('/admin/staff/show?userid='+ userid);
+      res.redirect('/admin/staff/show?sid_code='+ sid_code);
     });
   }else{
     next();
   }
 });
-
 
 module.exports = router;

@@ -46,6 +46,7 @@
         <div class="row">
 	        <div class="col-lg-8">
 						<form action="/user/fom/edit" method="POST" style="padding: 10px 0 ">
+              <input type="hidden" value="<%= sid_code %>" name="sid_code">
 							<input type="hidden" value="<%= staffInfo.userid %>" name="userid">
               <input type="hidden" value="<%= staffInfo.name %>" name="name">
 							<div class="row">

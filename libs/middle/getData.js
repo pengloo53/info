@@ -12,15 +12,10 @@ var staffModel = require('../../models/fom/staff.js');
 
 var dbGet = require('../../dbController/db-index-get.js');
 
+var getAes = require('../../libs/util/crypto-aes.js').getAes;
+var getDAes = require('../../libs/util/crypto-aes.js').getDAes;
+
 module.exports = {
-  // 获取员工信息，根据useid
-  getStaffInfo: function(req,res,next){
-    var userid = req.query.userid || '';
-    staffModel.findOne({where: {userid: userid}}).then(function(p){
-      res.locals.staffInfo = p;
-      next();
-    });
-  },
   // 根据中心id获取员工List
   getStaffListByCentreId: function(req,res,next){
     var centreId = req.session.user?req.session.user.centreId : 1; 

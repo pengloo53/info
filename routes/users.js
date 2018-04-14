@@ -30,6 +30,11 @@ var getGradeList = require('../libs/middle/getData.js').getGradeList;
 
 // 工具类
 var getIp = require('../libs/util/myUtil.js').getIp;
+// var getAes = require('../libs/util/crypto-aes.js').getAes;
+// var getDAes = require('../libs/util/crypto-aes.js').getDAes;
+var base64encode = require('../libs/util/base64.js').base64encode;
+var base64decode = require('../libs/util/base64.js').base64decode;
+
 
 // add log
 function addLog(req, action, name, oldData, newData){
@@ -39,6 +44,19 @@ function addLog(req, action, name, oldData, newData){
     console.log('created.' + JSON.stringify(p));
   }).catch(function(err){
     console.log('failed: ' + err);
+  });
+}
+// 获取员工信息，根据sid
+function getStaffInfo(req,res,next){
+  var sid_code = req.query.sid_code;
+  console.log(sid_code);
+  if(!sid_code){ return res.redirect('/user/fom');}
+  var sid = base64decode(sid_code);  // 解密
+  staffModel.findOne({where: {sid: sid}}).then(function(p){
+    if(!p){return res.redirect('/user/fom');}
+    res.locals.staffInfo = p;
+    res.locals.sid_code = sid_code;
+    next();
   });
 }
 
@@ -124,37 +142,23 @@ router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getStateList, 
 });
 
 // page: 获取显示人员页面
-router.get('/fom/show',getDeptInfo, function(req,res,next){
-  var userid = req.query.userid || '';
-  if(userid){
-    staffModel.findOne({where: {userid: userid}}).then(function(p){
-      res.render('user/show.ejs', {
-        title: '显示员工信息',
-        staffInfo: p
-      });
-    });
-  }else{
-    res.redirect('/user/fom');
-  }
+router.get('/fom/show',getStaffInfo, getDeptInfo, function(req,res,next){
+  res.render('user/show.ejs', {
+    title: '显示员工信息'
+  });
 });
 
 // page: 编辑岗位信息页面 - edit.ejs
-router.get('/fom/edit',getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList, function(req,res,next){
-  var userid = req.query.userid || '';
-  if (userid){
-    staffModel.findOne({where: {userid: userid}}).then(function(p){
-      res.render('user/edit.ejs', {
-        title: '编辑员工岗位信息',
-        staffInfo: p
-      });
-    });
-  }else{
-    res.redirect('/user/fom');
-  }
+router.get('/fom/edit',getStaffInfo, getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList, function(req,res,next){
+  res.render('user/edit.ejs', {
+    title: '编辑员工岗位信息'
+  });
 });
 
 // action: 更新岗位信息 - edit page
 router.post('/fom/edit', function(req,res,next){
+  var sid_code = req.body.sid_code || '';
+  var sid = base64decode(sid_code);
   var userid = req.body.userid || '';
   var duty = req.body.duty || '';
   var grade = req.body.grade || '';
@@ -165,15 +169,15 @@ router.post('/fom/edit', function(req,res,next){
   var postDescribe = req.body.postDescribe || '';
   var name = req.body.name;
   var username = req.session.user.username;
-  if(userid){
+  if(sid_code){
     staffModel.update(
       {duty: duty,grade:grade,mainPost:mainPost,subPost:subPost,postType:postType,state:state,postDescribe:postDescribe},
-      {where: {userid: userid}},
+      {where: {sid: sid}},
       {fields: [duty,grade,mainPost,subPost,postType,state,postDescribe]}
     ).then(function(){
       addLog(req, '更新岗位', name, JSON.stringify({}), JSON.stringify({}));
       req.flash('success','成功更新岗位信息');
-      res.redirect('/user/fom/show?userid='+ userid);
+      res.redirect('/user/fom/show?sid_code='+ sid_code);
     });
   }else{
     next();
@@ -239,18 +243,18 @@ router.post('/fom/add', function(req,res,next){
   }
 });
 
-// action: update grade 更新职级 - 取消在table上直接更新
-// router.post('/fom/update/grade', function(req,res,next){
-//   var id = req.body.pk;
-//   var grade = req.body.value || '';
-//   staffModel.update(
-//     {grade: grade},
-//     {where: {sid: id}},
-//     {fields: [grade]}
-//   ).then(function(){
-//     res.send('更新职级成功');
-//   });
-// });
+// action: update userid 填补员工号
+router.post('/fom/update/userid', function(req,res,next){
+  var id = req.body.pk;
+  var userid = req.body.value || '';
+  staffModel.update(
+    {userid: userid.trim()},
+    {where: {sid: id}},
+    {fields: [userid]}
+  ).then(function(){
+    res.send('更新成功');
+  });
+});
 
 // action: 离职
 router.post('/fom/dimission', function(req,res,next){
