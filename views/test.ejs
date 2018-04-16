@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="">
+      <input type="text" placeholder="test" name='test'>
+      <button type="submit">提交</button>
+      <p>code(前台加密): <span id="value"></span></p>
+      <p>code(后台解密): <span id="returnValue"></span></p>
+    </form>
+    
+  </body>
+  <script src="/jquery/dist/jquery.js"></script>
+  <script src="/crypto-js.js"></script>
+  <script src="/javascripts/crypto-aes.js"></script>
+  <script>
+    $(function(){
+      $('button').click(function(e){
+        e.preventDefault();
+        var value = $('input[name=test]').val(); 
+        var code = getAes(value);
+        $('#value').text(code);
+        $.ajax({
+          url: '/test',
+          method: 'POST',
+          data: {
+            value: value,
+            code: code
+          },
+          success: function(r){
+            // alert(r);
+            $('#returnValue').text(r);
+          }
+        });
+      });
+    })
+  </script>
+</html>
