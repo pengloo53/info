@@ -72,6 +72,9 @@
 
           </div>
         </div>
+        <!-- modals -->
+        <% include ../user/modal-change.ejs %>
+        <% include ../user/modal-dismiss.ejs %>
         <!-- /page content -->
         <footer></footer>
       </div>
@@ -104,17 +107,21 @@
       var $table = $('#table');
       var deptId = $('#dataSpan').data('deptid');
       window.operator = {
-          'click [title=离职]': function (e, value, row, index) {
-              alert('you click dimission');
-              $('#dimission').modal('show');
-              $('#dimission form input.sid').val(row.sid);
-          },
-          'click [title=调转]': function (e, value, row, index) {
-              $('#change').modal('show');
-              $('#change form input.sid').val(row.sid);
-              $('select[name=centre]').val('');
-          }
-      };
+        'click [title=离职]': function (e, value, row, index) {
+            $('#dimission').modal('show');
+            $('#dimission form input.sid').val(row.sid);
+            $('#dimission form input.name').val(row.name);
+            $('#dimission form input.userid').val(row.userid); 
+        },
+        'click [title=调转]': function (e, value, row, index) {
+            $('#change').modal('show');
+            $('#change form input.sid').val(row.sid);
+            $('#change form input.name').val(row.name);
+            $('select[name=centre]').val('');
+            $('select[name=dept] option:gt(0)').remove();
+            $('select[name=office] option:gt(0)').remove();
+        }
+    };
       // $table.on('post-header.bs.table',function(){
       //   $('.fixed-table-header').css('display','none');
       // });
@@ -236,6 +243,53 @@
               }
           }]
       });
+      // 根据中心获取部门
+    $('#change').on('shown.bs.modal', function () {
+        $('select[name=centre]').change(function(){
+            var centreId = $(this).val();
+            $.ajax({
+                url: '/user/fom/get/deptList?centreId=' + centreId,
+                success: function(result){
+                    $('select[name=dept] option:gt(0)').remove();
+                    for(var i = 0 ; i< result.length; i++){
+                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].dept + '</option>');
+                        $('select[name=dept]').append($optionHtml);
+                    }
+                }
+            });
+        });
+        $('select[name=dept]').change(function(){
+            var deptId = $(this).val();
+            $.ajax({
+                url: '/user/fom/get/officeList?deptId=' + deptId,
+                success: function(result){
+                    $('select[name=office] option:gt(0)').remove();
+                    for(var i = 0 ; i< result.length; i++){
+                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].office + '</option>');
+                        $('select[name=office]').append($optionHtml);
+                    }
+                }
+            });
+        });
+    });
+    // 表单验证
+    $('#change form').validate({
+        rules: {
+            centre: "required",
+            dept: "required",
+            // office: "required"
+        },
+        errorClass: 'text-danger'
+    });
+    $('#dimission form').validate({
+        rules: {
+            leave_date: 'required',
+            bz: {
+                maxlength: 20
+            }
+        },
+        errorClass: 'text-danger'
+    });
     </script>
   </body>
 </html>

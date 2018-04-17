@@ -80,7 +80,7 @@ router.get('/', getCentreInfo,function(req,res,next){
 });
 
 // page: table
-router.get('/table', getCentreInfo , getDeptList, getStaffListByCentreId, function(req,res,next){
+router.get('/table', getCentreInfo , getCentreList, getDeptList, getStaffListByCentreId, function(req,res,next){
     res.render('admin/table.ejs',{
         title: '总表'
     });
