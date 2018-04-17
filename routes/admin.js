@@ -100,6 +100,13 @@ router.get('/staff/edit',getStaffInfo, getGradeList,getDutyList, getStateList, g
   });
 });
 
+// page: add staff
+router.get('/staff/add', getCentreInfo, getDeptList,getDeptInfo, getOfficeList, getStateList, getPostTypeList,getGradeList,function(req,res,next){
+  res.render('admin/add.ejs', {
+    title: '添加新入职员工'
+  });
+});
+
 // action: 更新信息 - edit page
 router.post('/staff/edit', function(req,res,next){
   var sid_code = req.body.sid_code;

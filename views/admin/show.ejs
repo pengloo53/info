@@ -37,93 +37,106 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <div style="margin-bottom:20px">
-            <h3>显示人员信息<small></small></h3>
-            <a class="btn btn-danger btn-sm pull-right" href="/admin/staff/edit?sid_code=<%= sid_code %>">编辑</a>
-          </div>
           <div class="row">
-          <div class="col-lg-12">
-            <table class="table table-bordered">
-              <tr class="active">
-                <td colspan="7" style="line-height: 2em"><b class="text-primary">基本信息</b></td>
-              </tr>
-              <tr>
-                <td>姓名</td>
-                <td><span class="data"><%= staffInfo.name %></span></td>
-                <td>员工号</td>
-                <td><span class="data"><%= staffInfo.userid %></span></td>
-                <!-- <td rowspan="3"></td> -->
-                <td rowspan="6" colspan="2" width="18%" class="text-center"><img src="" alt="photo" class="img-rounded"></td>
-              </tr>
-              <tr>
-                <td>性别</td>
-                <td><span class="data"><%= staffInfo.gender %></span></td>
-                <td>出生日期</td>
-                <td><span class="data"><%= staffInfo.birthday %></span></td>
-              </tr>
-              <tr>
-                <td>出生地</td>
-                <td><span class="data"><%= staffInfo.birth_place %></span></td>
-                <td>户籍地</td>
-                <td><span class="data"><%= staffInfo.domicile_place %></span></td>
-              </tr>
-              <tr>
-                <td>毕业学校</td>
-                <td><span class="data"><%= staffInfo.school %></span></td>
-                <td>毕业专业</td>
-                <td><span class="data"><%= staffInfo.major %></span></td>
-              </tr>
-              <tr>
-                <td>学历</td>
-                <td><span class="data"><%= staffInfo.education %></span></td>
-                <td>毕业日期</td>
-                <td><span class="data"><%= staffInfo.graduation_date %></span></td>
-              </tr>
-              <tr>
-                <td>工作日期</td>
-                <td><span class="data"><%= staffInfo.work_date %></span></td>
-                <td>入BOE日期</td>
-                <td><span class="data"><%= staffInfo.enter_date %></span></td>
-              </tr>
-              <tr class="active">
-                <td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b></td>
-              </tr>
-              <tr>
-                <td>职级</td>
-                <td><span class="data"><%= staffInfo.grade %></span></td>
-                <td>职务</td>
-                <td><span class="data"><%= staffInfo.duty %></span></td>
-              </tr>
-              <tr>
-                <td>主要岗位</td>
-                <td><span class="data"><%= staffInfo.mainPost %></span></td>
-                <td>次要岗位</td>
-                <td><span class="data"><%= staffInfo.subPost %></span></td>
-              </tr>
-              <tr>
-                <td>岗位类型</td>
-                <td><span class="data"><%= staffInfo.postType %></span></td>
-                <td>状态</td>
-                <td><span class="data"><%= staffInfo.state %></span></td>
-              </tr>
-              <tr>
-                <td colspan="7">岗位描述（职责）</td>
-                <!-- <td><%= staffInfo.postDescribe %></td> -->
-              </tr>
-              <tr>
-                <td colspan="7">
-                  <span class="data">
-                    <% if(staffInfo.postDescribe){ %>
-                      <%- staffInfo.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>' %>
-                    <% }else{ %>
-                    （空）
-                    <% } %>
-                  </span>
-                </td>
-              </tr>
-            </table>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><%= title %> <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                      <li><a class="" href="/admin/staff/edit?sid_code=<%= sid_code %>"><i class="fa fa-pencil text-danger"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <table class="table table-bordered">
+                      <tr class="active">
+                        <td colspan="7" style="line-height: 2em"><b class="text-primary">基本信息</b></td>
+                      </tr>
+                      <tr>
+                        <td>姓名</td>
+                        <td><span class="data"><%= staffInfo.name %></span></td>
+                        <td>员工号</td>
+                        <td><span class="data"><%= staffInfo.userid %></span></td>
+                        <!-- <td rowspan="3"></td> -->
+                        <td rowspan="6" colspan="2" width="18%" class="text-center"><img src="" alt="photo" class="img-rounded"></td>
+                      </tr>
+                      <tr>
+                        <td>性别</td>
+                        <td><span class="data"><%= staffInfo.gender %></span></td>
+                        <td>出生日期</td>
+                        <td><span class="data"><%= staffInfo.birthday %></span></td>
+                      </tr>
+                      <tr>
+                        <td>出生地</td>
+                        <td><span class="data"><%= staffInfo.birth_place %></span></td>
+                        <td>户籍地</td>
+                        <td><span class="data"><%= staffInfo.domicile_place %></span></td>
+                      </tr>
+                      <tr>
+                        <td>毕业学校</td>
+                        <td><span class="data"><%= staffInfo.school %></span></td>
+                        <td>毕业专业</td>
+                        <td><span class="data"><%= staffInfo.major %></span></td>
+                      </tr>
+                      <tr>
+                        <td>学历</td>
+                        <td><span class="data"><%= staffInfo.education %></span></td>
+                        <td>毕业日期</td>
+                        <td><span class="data"><%= staffInfo.graduation_date %></span></td>
+                      </tr>
+                      <tr>
+                        <td>工作日期</td>
+                        <td><span class="data"><%= staffInfo.work_date %></span></td>
+                        <td>入BOE日期</td>
+                        <td><span class="data"><%= staffInfo.enter_date %></span></td>
+                      </tr>
+                      <tr class="active">
+                        <td colspan="7" style="line-height: 2em"><b class="text-primary">岗位信息</b></td>
+                      </tr>
+                      <tr>
+                        <td>职级</td>
+                        <td><span class="data"><%= staffInfo.grade %></span></td>
+                        <td>职务</td>
+                        <td><span class="data"><%= staffInfo.duty %></span></td>
+                      </tr>
+                      <tr>
+                        <td>主要岗位</td>
+                        <td><span class="data"><%= staffInfo.mainPost %></span></td>
+                        <td>次要岗位</td>
+                        <td><span class="data"><%= staffInfo.subPost %></span></td>
+                      </tr>
+                      <tr>
+                        <td>岗位类型</td>
+                        <td><span class="data"><%= staffInfo.postType %></span></td>
+                        <td>状态</td>
+                        <td><span class="data"><%= staffInfo.state %></span></td>
+                      </tr>
+                      <tr>
+                        <td colspan="7">岗位描述（职责）</td>
+                        <!-- <td><%= staffInfo.postDescribe %></td> -->
+                      </tr>
+                      <tr>
+                        <td colspan="7">
+                          <span class="data">
+                            <% if(staffInfo.postDescribe){ %>
+                              <%- staffInfo.postDescribe.replace(new RegExp('\n','gm'),'<br/>') + '</p>' %>
+                            <% }else{ %>
+                            （空）
+                            <% } %>
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                </div>
+              </div>
           </div>
-        </div>
         </div>
         <!-- /page content -->
         <footer></footer>

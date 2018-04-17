@@ -18,6 +18,7 @@
 
     <!-- Custom Theme Style -->
     <link href="/build/css/custom.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
     <style>
       .pagination{
         margin: 0;
@@ -46,7 +47,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>人员总表 <small><%= centreInfo.centre %></small></h2>
+                    <h2><%= title %> <small><%= centreInfo.centre %></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -64,6 +65,9 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+                    <div id="toolbar">
+                      <a class="btn btn-sm btn-primary" href="/admin/staff/add">新入职</a>
+                    </div>
                     <table id="table"></table>
                   </div>
                 </div>
@@ -72,10 +76,10 @@
 
           </div>
         </div>
-        <!-- modals -->
-        <% include ../user/modal-change.ejs %>
-        <% include ../user/modal-dismiss.ejs %>
         <!-- /page content -->
+        <!-- modals -->
+        <% include ./modal-fom-change.ejs %>
+        <% include ./modal-fom-dismiss.ejs %>
         <footer></footer>
       </div>
     </div>
@@ -94,6 +98,10 @@
     <script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
     <script src="/bootstrap-table/lib/tableExport.js"></script>
+
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="/build/js/custom.min.js"></script>
@@ -144,7 +152,7 @@
           showColumns: true,
           showExport: true,
           showRefresh: true,
-          // toolbar: '#toolbar',
+          toolbar: '#toolbar',
           cache: false,
           // detailView: true,
           // detailFormatter: function (value, row , index) {
@@ -243,6 +251,25 @@
               }
           }]
       });
+
+      // 日期选择框
+    $('input.date').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 7,
+        maxViewMode: 1,
+        language: "zh-CN",
+        // daysOfWeekDisabled: "0,6",
+        // daysOfWeekHighlighted: "0,6",
+        autoclose: true,
+        todayHighlight: true,
+        // startDate: new Date()
+    }).on('show', function (e) {
+        e.preventDefault();
+        e.stopPropagation(); // 禁止触发父元素事件
+    }).on('hide', function (e) {
+        e.stopPropagation(); // 禁止触发父元素事件
+    });
+
       // 根据中心获取部门
     $('#change').on('shown.bs.modal', function () {
         $('select[name=centre]').change(function(){
@@ -276,7 +303,7 @@
     $('#change form').validate({
         rules: {
             centre: "required",
-            dept: "required",
+            // dept: "required",
             // office: "required"
         },
         errorClass: 'text-danger'
