@@ -82,7 +82,7 @@ router.get('/', getCentreInfo,function(req,res,next){
 // page: table
 router.get('/table', getCentreInfo , getCentreList, getDeptList, getStaffListByCentreId, function(req,res,next){
     res.render('admin/table.ejs',{
-        title: '总表'
+        title: '人员总表'
     });
 });
 
@@ -101,7 +101,7 @@ router.get('/staff/edit',getStaffInfo, getGradeList,getDutyList, getStateList, g
 });
 
 // page: add staff
-router.get('/staff/add', getCentreInfo, getDeptList,getDeptInfo, getOfficeList, getStateList, getPostTypeList,getGradeList,function(req,res,next){
+router.get('/staff/add', getCentreInfo, getDeptList, getDutyList, getStateList, getPostTypeList,getGradeList,function(req,res,next){
   res.render('admin/add.ejs', {
     title: '添加新入职员工'
   });
