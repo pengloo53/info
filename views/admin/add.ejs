@@ -59,6 +59,8 @@
                       </li> -->
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
+                      <li><a class="" href="/admin/table"><i class="fa fa-home text-danger" title="返回总表"></i></a>
+                      </li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -67,7 +69,7 @@
                     <div class="row">
                         <div class="form-group col-lg-4">
                             <label for="" class="control-label">中心 <span class="text-danger">(*)</span></label>
-                            <select type="text" name="centre" class="form-control">
+                            <select type="text" name="centre" class="form-control" disabled>
                                 <option value="">选择中心</option>
                                 <option value="<%= centreInfo.id %>" selected><%= centreInfo.centre %></option>
                             </select>
@@ -76,16 +78,17 @@
                             <label for="" class="control-label">部门 <span class="text-danger">(*)</span></label>
                             <select type="text" name="dept" class="form-control">
                                 <option value="">选择部门</option>
-                                <option value="<%= deptInfo.id %>" selected><%= deptInfo.dept %></option>
+                                <% for(var i = 0; i < deptList.length ; i++){ %>
+                                    <option value="<%= deptList[i].id %>"><%= deptList[i].dept %></option>
+
+                                <% } %>
                             </select>
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="" class="control-label">科室 <span class="text-danger">(*)</span></label>
                             <select type="text" name="office" class="form-control">
                                 <option value="">选择科室</option>
-                                <% for(var i = 0 ; i< officeList.length ; i++){ %>
-                                    <option value="<%= officeList[i].id %>"><%= officeList[i].office %></option>
-                                <% } %>
+                                
                             </select>
                         </div>
                     </div>
@@ -264,34 +267,33 @@
 			    });
 
 			     // 根据中心获取部门
-			    $('#change').on('shown.bs.modal', function () {
-			        $('select[name=centre]').change(function(){
-			            var centreId = $(this).val();
-			            $.ajax({
-			                url: '/user/fom/get/deptList?centreId=' + centreId,
-			                success: function(result){
-			                    $('select[name=dept] option:gt(0)').remove();
-			                    for(var i = 0 ; i< result.length; i++){
-			                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].dept + '</option>');
-			                        $('select[name=dept]').append($optionHtml);
-			                    }
-			                }
-			            });
-			        });
-			        $('select[name=dept]').change(function(){
-			            var deptId = $(this).val();
-			            $.ajax({
-			                url: '/user/fom/get/officeList?deptId=' + deptId,
-			                success: function(result){
-			                    $('select[name=office] option:gt(0)').remove();
-			                    for(var i = 0 ; i< result.length; i++){
-			                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].office + '</option>');
-			                        $('select[name=office]').append($optionHtml);
-			                    }
-			                }
-			            });
-			        });
-			    });
+
+		        $('select[name=centre]').change(function(){
+		            var centreId = $(this).val();
+		            $.ajax({
+		                url: '/user/fom/get/deptList?centreId=' + centreId,
+		                success: function(result){
+		                    $('select[name=dept] option:gt(0)').remove();
+		                    for(var i = 0 ; i< result.length; i++){
+		                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].dept + '</option>');
+		                        $('select[name=dept]').append($optionHtml);
+		                    }
+		                }
+		            });
+		        });
+		        $('select[name=dept]').change(function(){
+		            var deptId = $(this).val();
+		            $.ajax({
+		                url: '/user/fom/get/officeList?deptId=' + deptId,
+		                success: function(result){
+		                    $('select[name=office] option:gt(0)').remove();
+		                    for(var i = 0 ; i< result.length; i++){
+		                        var $optionHtml = $('<option value="' + result[i].id + '">' + result[i].office + '</option>');
+		                        $('select[name=office]').append($optionHtml);
+		                    }
+		                }
+		            });
+		        });
 			    // 表单验证
 			    $('form').validate({
             rules: {
