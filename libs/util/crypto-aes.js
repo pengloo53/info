@@ -1,11 +1,12 @@
 var CryptoJS = require('crypto-js');
 
-var key  = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';  //密钥
-var iv   = '1234567812345678';
+// var key  = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';  // 32位密钥
+// var iv   = '1234567812345678';  // 16位
 
-function getAesString(data,key,iv){//加密
-    var key  = CryptoJS.enc.Utf8.parse(key);
-    var iv   = CryptoJS.enc.Utf8.parse(iv);
+var key  = CryptoJS.enc.Utf8.parse('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+var iv   = CryptoJS.enc.Utf8.parse('1234567812345678');
+
+function getAes(data){ //加密
     var encrypted =CryptoJS.AES.encrypt(data,key,
         {
             iv:iv,
@@ -14,35 +15,22 @@ function getAesString(data,key,iv){//加密
         });
     return encrypted.toString();    //返回的是base64格式的密文
 }
-function getDAesString(encrypted,key,iv){//解密
-    var key  = CryptoJS.enc.Utf8.parse(key);
-    var iv   = CryptoJS.enc.Utf8.parse(iv);
+
+function getDAes(data){//解密
     var decrypted =CryptoJS.AES.decrypt(encrypted,key,
         {
             iv:iv,
             mode:CryptoJS.mode.CBC,
             padding:CryptoJS.pad.Pkcs7
         });
-    return decrypted.toString(CryptoJS.enc.Utf8);     
+    return decrypted.toString(CryptoJS.enc.Utf8);    
 }
 
+var encrypted = getAes('lupeng');
+console.log('加密后：' + encrypted);
 
-function getAes(data){ //加密
-    var encrypted =getAesString(data,key,iv); //密文
-    // var encrypted1 =CryptoJS.enc.Utf8.parse(encrypted);
-    return encrypted;
-}
-
-function getDAes(data){//解密
-    var decryptedStr =getDAesString(data,key,iv);
-    return decryptedStr;
-}
-
-// var encrypted = getAes('lupeng');
-// console.log('加密后：' + encrypted);
-
-// var data = getDAes(encrypted);
-// console.log('解密后：' + data);
+var data = getDAes(encrypted);
+console.log('解密后：' + data);
 
 exports.getAes = getAes;
 exports.getDAes = getDAes;
