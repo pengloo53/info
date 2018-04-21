@@ -37,127 +37,153 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-
-            <div class="row">
-              <div class="col-lg-12">
-                  <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">DBG 信管中心</div>
-                    <div class="panel-body">
-                         <label for="">中心长：</label><b><span class="text-primary"><%= centreInfo.owner %></span></b>
-                         ，<label for="">当前编制人数：</label><i><b><%= centreInfo.preparation %></b></i>
-                         ，<label for="">现有人数：</label><i><b><u><a href="/admin/table" id='staffNum'>199</a></u></b></i>
+          <div class="x_panel">
+            <div class="x_title">
+              <h2><%= centreInfo.centre %>
+                <small> 中心长：<%= centreInfo.owner %></small>
+              </h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">本月</a>
+                    </li>
+                    <li><a href="#">本年</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <!-- top tiles -->
+              <div class="row tile_count">
+                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                  <span class="count_top"><i class="fa fa-user"></i> 总人数</span>
+                  <div class="count"><a href="/admin/table">188</a></div>
+                  <span class="count_bottom"><i class="green">67% </i> 达编百分比</span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                  <span class="count_top"><i class="fa fa-clock-o"></i> 总编制</span>
+                  <div class="count"><%= centreInfo.preparation %></div>
+                  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>23 </i> 较去年</span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                  <span class="count_top"><i class="fa fa-user"></i> 新入职人数</span>
+                  <div class="count green">160</div>
+                  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> 入职</span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                  <span class="count_top"><i class="fa fa-user"></i> 主动离职人数</span>
+                  <div class="count red">45</div>
+                  <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> 离职率</span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                  <span class="count_top"><i class="fa fa-user"></i> 试用期</span>
+                  <div class="count">14</div>
+                  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> 占比</span>
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                  <span class="count_top"><i class="fa fa-user"></i> 实习期</span>
+                  <div class="count">25</div>
+                  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> 占比</span>
+                </div>
+              </div>
+              <!-- /top tiles -->
+              <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_title">
+                      <h2>职务占比情况</h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
                     </div>
-                    <!-- Table -->
-                    <table class="table table-hover table-bordered">
-                       <tr>
-                           <td>部长：<i><b>14</b></i></td>
-                           <td>科长：<i><b>24</b></i></td>
-                           <td>男：<i><b>128</b></i></td>
-                           <td>女：<i><b>53</b></i></td>
-                           <td>试用期：<i><b>128</b></i></td>
-                           <td>实习期：<i><b>53</b></i></td>
-                       </tr>
-                       <tr>
-                          <td>资深以上：<i><b>12</b></i></td>
-                           <td>资深：<i><b>12</b></i></td>
-                           <td>高级：<i><b>12</b></i></td>
-                           <td>中级：<i><b>12</b></i></td>
-                           <td>初级：<i><b>12</b></i></td>
-                           <td>初级以下：<i><b>12</b></i></td>
-                       </tr>
-                    </table>
+                    <div class="x_content">
+
+                      <div id="echart_pie" style="height:350px;"></div>
+
+                    </div>
                   </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_title">
+                      <h2>职级占比情况</h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                      <div id="echart_pie2" style="height:350px;"></div>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_title">
+                      <h2>男女比例</h2>
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                      <div id="echart_donut" style="height:350px;"></div>
+
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>职务占比情况</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-
-                    <div id="echart_pie" style="height:350px;"></div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>职级占比情况</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-
-                    <div id="echart_pie2" style="height:350px;"></div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>男女比例</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-
-                    <div id="echart_donut" style="height:350px;"></div>
-
-                  </div>
-                </div>
-              </div>
-            </div> 
+          </div>
         </div>
         <!-- /page content -->
         <footer></footer>
