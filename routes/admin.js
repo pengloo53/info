@@ -32,22 +32,12 @@ var getGradeList = require('../libs/middle/getData.js').getGradeList;
 var getStaffListByCentreId = require('../libs/middle/getData.js').getStaffListByCentreId;
 
 // 工具类
-var getIp = require('../libs/util/myUtil.js').getIp;
+// var getIp = require('../libs/util/myUtil.js').getIp;
 // var getAes = require('../libs/util/crypto-aes.js').getAes;
 // var getDAes = require('../libs/util/crypto-aes.js').getDAes;
 var base64encode = require('../libs/util/base64.js').base64encode;
 var base64decode = require('../libs/util/base64.js').base64decode;
-
-// add log
-function addLog(req, action, name, oldData, newData){
-  var username = req.session.user.username;
-  var ip = getIp(req);
-  logModel.create({page: 'fom', username: username,action: action, name: name, oldData: oldData, newData: newData,ip:ip}).then(function(p){
-    console.log('created.' + JSON.stringify(p));
-  }).catch(function(err){
-    console.log('failed: ' + err);
-  });
-}
+var addLog = require('../libs/util/log.js').addLog;
 
 // 获取员工信息，根据sid
 function getStaffInfo(req,res,next){
@@ -141,7 +131,7 @@ router.post('/staff/edit', function(req,res,next){
         postDescribe:postDescribe},
       {where: {sid: sid}}
     ).then(function(){
-      addLog(req, '更新信息', name, JSON.stringify({}), JSON.stringify({}));
+      addLog(req, 'fom', '更新信息', name, JSON.stringify({}), JSON.stringify({}));
       // req.flash('success','成功更新岗位信息');
       res.redirect('/admin/staff/show?sid_code='+ sid_code);
     });

@@ -26,11 +26,11 @@ function getDAes(data){//解密
     return decrypted.toString(CryptoJS.enc.Utf8);    
 }
 
-var encrypted = getAes('lupeng');
-console.log('加密后：' + encrypted);
+// var encrypted = getAes('lupeng');
+// console.log('加密后：' + encrypted);
 
-var data = getDAes(encrypted);
-console.log('解密后：' + data);
+// var data = getDAes(encrypted);
+// console.log('解密后：' + data);
 
 exports.getAes = getAes;
 exports.getDAes = getDAes;

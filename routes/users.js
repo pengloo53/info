@@ -29,23 +29,13 @@ var getPostTypeList = require('../libs/middle/getData.js').getPostTypeList;
 var getGradeList = require('../libs/middle/getData.js').getGradeList;
 
 // 工具类
-var getIp = require('../libs/util/myUtil.js').getIp;
+// var getIp = require('../libs/util/myUtil.js').getIp;
 // var getAes = require('../libs/util/crypto-aes.js').getAes;
 // var getDAes = require('../libs/util/crypto-aes.js').getDAes;
 var base64encode = require('../libs/util/base64.js').base64encode;
 var base64decode = require('../libs/util/base64.js').base64decode;
+var addLog = require('../libs/util/log.js').addLog;
 
-
-// add log
-function addLog(req, action, name, oldData, newData){
-  var username = req.session.user.username;
-  var ip = getIp(req);
-  logModel.create({page: 'fom', username: username,action: action, name: name, oldData: oldData, newData: newData,ip:ip}).then(function(p){
-    console.log('created.' + JSON.stringify(p));
-  }).catch(function(err){
-    console.log('failed: ' + err);
-  });
-}
 // 获取员工信息，根据sid
 function getStaffInfo(req,res,next){
   var sid_code = req.query.sid_code;
@@ -96,7 +86,7 @@ router.post('/c/passwd', function(req,res,next){
     {where: {username: username}},
     {fields: ['password']}
   ).then(function(p){
-    addLog(req, '修改密码', '','','');
+    addLog(req, 'user', '修改密码', '','','');
     req.flash('success','更新密码成功');
     res.redirect('/login/out');
   });
@@ -175,7 +165,7 @@ router.post('/fom/edit', function(req,res,next){
       {where: {sid: sid}},
       {fields: [duty,grade,mainPost,subPost,postType,state,postDescribe]}
     ).then(function(){
-      addLog(req, '更新岗位', name, JSON.stringify({}), JSON.stringify({}));
+      addLog(req, 'fom', '更新岗位', name, JSON.stringify({}), JSON.stringify({}));
       req.flash('success','成功更新岗位信息');
       res.redirect('/user/fom/show?sid_code='+ sid_code);
     });
@@ -231,7 +221,7 @@ router.post('/fom/add', function(req,res,next){
     staffModel.create(data).then(function (p) {
       console.log('created.' + JSON.stringify(p));
       // 添加log
-      addLog(req, '新入职', name, '', JSON.stringify({员工号: userid, 姓名: name}));
+      addLog(req, 'fom', '新入职', name, '', JSON.stringify({员工号: userid, 姓名: name}));
       req.flash('success', '添加成功');
       res.redirect('/user/fom');
     }).catch(function (err) {
@@ -271,7 +261,7 @@ router.post('/fom/dimission', function(req,res,next){
   ).then(function(){
     staffModel.destroy({where:{sid: sid}}).then(function(){
       // add log
-      addLog(req, '离职', name, JSON.stringify({员工号: userid, 姓名: name}), '');
+      addLog(req, 'fom', '离职', name, JSON.stringify({员工号: userid, 姓名: name}), '');
       req.flash('success', '离职操作成功');
       res.redirect('/user/fom');
     });
@@ -294,7 +284,7 @@ router.post('/fom/change', function(req,res,next){
   ).then(function(){
       deptModel.findOne({where: {id: deptId}}).then(function(p){
         // add log
-        addLog(req, '调出', name, oldDept, p.dept);
+        addLog(req, 'fom', '调出', name, oldDept, p.dept);
         req.flash('success', '调转操作成功');
         res.redirect('/user/fom');
       }); 
