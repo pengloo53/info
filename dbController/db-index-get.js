@@ -23,6 +23,24 @@ function getLog(username,page,callback){
 	});
 }
 
+// 用于admin index图表
+function getGroupFromCentre(centreId, group, callback){
+  var sql = 'select ' + group +' name, count(*) value from fom_staff where centreId =' + centreId + ' group by ' + group;
+  querySQL(sql, function(err,rows,fields){
+    callback(err,rows,fields);
+  });
+}
+
+// admin index 获取在岗状态
+function getCountFromCentre(centreId, state, callback){
+  var sql = 'select count(*) total from fom_staff where centreId = ' + centreId + ' and state="' + state + '" deletedAt is null';
+  querySQL(sql, function(err, rows, fields){
+    callback(err,rows,fields);
+  });
+}
+
 exports.findStaffByDeptId = findStaffByDeptId;
 exports.findStaffByCentreId = findStaffByCentreId;
 exports.getLog = getLog;
+exports.getGroupFromCentre = getGroupFromCentre;
+exports.getCountFromCentre = getCountFromCentre;

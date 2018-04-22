@@ -43,7 +43,7 @@ function getCentreList(req,res,next){
 }
 
 // 权限控制
-router.use(checkLogin, isCentreManager);
+router.use(checkLogin);
 
 // 导航active
 router.use(function(req,res,next){

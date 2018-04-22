@@ -64,8 +64,8 @@
               <div class="row tile_count">
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                   <span class="count_top"><i class="fa fa-user"></i> 总人数</span>
-                  <div class="count"><a href="/admin/table">188</a></div>
-                  <span class="count_bottom"><i class="green">67% </i> 达编百分比</span>
+                  <div class="count"><a href="/admin/table" id="total"></a></div>
+                  <span class="count_bottom"><i class="green"></i> 达编百分比</span>
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                   <span class="count_top"><i class="fa fa-clock-o"></i> 总编制</span>
@@ -84,13 +84,13 @@
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                   <span class="count_top"><i class="fa fa-user"></i> 试用期</span>
-                  <div class="count">14</div>
-                  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> 占比</span>
+                  <div class="count" id="shiyong"></div>
+                  <span class="count_bottom"><i class="green">34% </i> 占比</span>
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                   <span class="count_top"><i class="fa fa-user"></i> 实习期</span>
-                  <div class="count">25</div>
-                  <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> 占比</span>
+                  <div class="count" id="shixi"></div>
+                  <span class="count_bottom"><i class="green">34% </i> 占比</span>
                 </div>
               </div>
               <!-- /top tiles -->
@@ -175,9 +175,7 @@
                       <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
                       <div id="echart_donut" style="height:350px;"></div>
-
                     </div>
                   </div>
                 </div>
@@ -206,469 +204,936 @@
     <script src="/build/js/custom.js"></script>
 
     <script>
-      function init_echarts() {
-        var data_duty = ['专家','资深','高级','中级','初级'];
-        var data_duty_value = [
-          {
-            value: 335,
-            name: '中级'
-          }, {
-            value: 310,
-            name: '高级'
-          }, {
-            value: 234,
-            name: '资深'
-          }, {
-            value: 135,
-            name: '专家'
-          }, {
-            value: 1548,
-            name: '初级'
-        }];
-
-        var data_grade = ['部长','科长','工程师']; 
-        var data_grade_value = [
-          {
-            value: 14,
-            name: '部长'
-          }, {
-            value: 24,
-            name: '科长'
-          }, {
-            value: 160,
-            name: '其他'
-          }];
-
-        var data_gender = ['男','女'];
-        var data_gender_value = [
-          {
-            value: 335,
-            name: '男'
-          }, {
-            value: 310,
-            name: '女'
-          }, {
-            value: 234,
-            name: '未知'
-          }];
-    
-        // 样式定义
-
-        if( typeof (echarts) === 'undefined'){ return; }
-          console.log('init_echarts');
-      
-          var theme = {
-          color: [
-            '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
-            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
-          ],
-
-          title: {
-            itemGap: 8,
-            textStyle: {
-              fontWeight: 'normal',
-              color: '#408829'
-            }
+      $(function(){
+        // 获取试用期，实习期
+        $.ajax({
+          url: '/ajax/fom/getGroupFromCentre',
+          method: 'POST',
+          data: {
+            group: 'state'
           },
-
-          dataRange: {
-            color: ['#1f610a', '#97b58d']
-          },
-
-          toolbox: {
-            color: ['#408829', '#408829', '#408829', '#408829']
-          },
-
-          tooltip: {
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            axisPointer: {
-              type: 'line',
-              lineStyle: {
-                color: '#408829',
-                type: 'dashed'
-              },
-              crossStyle: {
-                color: '#408829'
-              },
-              shadowStyle: {
-                color: 'rgba(200,200,200,0.3)'
+          success: function(r){
+            var $shiyong = $('#shiyong');
+            var $shixi = $('#shixi');
+            for(var i = 0 ; i < r.length ; i++){
+              if(r[i].name == '试用'){
+                $shiyong.html(r[i].value);
+              }
+              if(r[i].name == '实习'){
+                $shixi.html(r[i].value);
               }
             }
-          },
-
-          dataZoom: {
-            dataBackgroundColor: '#eee',
-            fillerColor: 'rgba(64,136,41,0.2)',
-            handleColor: '#408829'
-          },
-          grid: {
-            borderWidth: 0
-          },
-
-          categoryAxis: {
-            axisLine: {
-              lineStyle: {
-                color: '#408829'
-              }
-            },
-            splitLine: {
-              lineStyle: {
-                color: ['#eee']
-              }
-            }
-          },
-
-          valueAxis: {
-            axisLine: {
-              lineStyle: {
-                color: '#408829'
-              }
-            },
-            splitArea: {
-              show: true,
-              areaStyle: {
-                color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
-              }
-            },
-            splitLine: {
-              lineStyle: {
-                color: ['#eee']
-              }
-            }
-          },
-          timeline: {
-            lineStyle: {
-              color: '#408829'
-            },
-            controlStyle: {
-              normal: {color: '#408829'},
-              emphasis: {color: '#408829'}
-            }
-          },
-
-          k: {
-            itemStyle: {
-              normal: {
-                color: '#68a54a',
-                color0: '#a9cba2',
-                lineStyle: {
-                  width: 1,
-                  color: '#408829',
-                  color0: '#86b379'
-                }
-              }
-            }
-          },
-          map: {
-            itemStyle: {
-              normal: {
-                areaStyle: {
-                  color: '#ddd'
-                },
-                label: {
-                  textStyle: {
-                    color: '#c12e34'
-                  }
-                }
-              },
-              emphasis: {
-                areaStyle: {
-                  color: '#99d2dd'
-                },
-                label: {
-                  textStyle: {
-                    color: '#c12e34'
-                  }
-                }
-              }
-            }
-          },
-          force: {
-            itemStyle: {
-              normal: {
-                linkStyle: {
-                  strokeColor: '#408829'
-                }
-              }
-            }
-          },
-          chord: {
-            padding: 4,
-            itemStyle: {
-              normal: {
-                lineStyle: {
-                  width: 1,
-                  color: 'rgba(128, 128, 128, 0.5)'
-                },
-                chordStyle: {
-                  lineStyle: {
-                    width: 1,
-                    color: 'rgba(128, 128, 128, 0.5)'
-                  }
-                }
-              },
-              emphasis: {
-                lineStyle: {
-                  width: 1,
-                  color: 'rgba(128, 128, 128, 0.5)'
-                },
-                chordStyle: {
-                  lineStyle: {
-                    width: 1,
-                    color: 'rgba(128, 128, 128, 0.5)'
-                  }
-                }
-              }
-            }
-          },
-          gauge: {
-            startAngle: 225,
-            endAngle: -45,
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
-                width: 8
-              }
-            },
-            axisTick: {
-              splitNumber: 10,
-              length: 12,
-              lineStyle: {
-                color: 'auto'
-              }
-            },
-            axisLabel: {
-              textStyle: {
-                color: 'auto'
-              }
-            },
-            splitLine: {
-              length: 18,
-              lineStyle: {
-                color: 'auto'
-              }
-            },
-            pointer: {
-              length: '90%',
-              color: 'auto'
-            },
-            title: {
-              textStyle: {
-                color: '#333'
-              }
-            },
-            detail: {
-              textStyle: {
-                color: 'auto'
-              }
-            }
-          },
-          textStyle: {
-            fontFamily: 'Arial, Verdana, sans-serif'
           }
-        }
+        });
+        // function convertBlank(name){
+        //   if(name == '' || name == null){
+        //     return '无'
+        //   }
+        // }
+        // function converBlankFromArray(arr){
+        //   for(var i = 0 ; i< arr.length ; i ++){
+
+        //   }
+        // }
+        // 初始化 duty 图表数据
+        function init_duty(data_duty_value){
+          var data_duty = []; 
+          for(var i = 0 ; i < data_duty_value.length; i++){
+            // convertBlank(data_duty_value[i].name)
+            data_duty.push(data_duty_value[i].name);
+          }
+          // 样式定义
+          if( typeof (echarts) === 'undefined'){ return; }
+            console.log('init_echarts');
         
-        //echart Pie Collapse  -  职务占比
-        
-        if ($('#echart_pie2').length ){ 
-          
-          var echartPieCollapse = echarts.init(document.getElementById('echart_pie2'), theme);
-          
-          echartPieCollapse.setOption({
-          tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-          legend: {
-            x: 'center',
-            y: 'bottom',
-            data: data_duty
-          },
-          toolbox: {
-            show: true,
-            feature: {
-            magicType: {
-              show: true,
-              type: ['pie', 'funnel']
+            var theme = {
+            color: [
+              '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+              '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+            ],
+
+            title: {
+              itemGap: 8,
+              textStyle: {
+                fontWeight: 'normal',
+                color: '#408829'
+              }
             },
-            restore: {
-              show: true,
-              title: "Restore"
+
+            dataRange: {
+              color: ['#1f610a', '#97b58d']
             },
-            saveAsImage: {
+
+            toolbox: {
+              color: ['#408829', '#408829', '#408829', '#408829']
+            },
+
+            tooltip: {
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              axisPointer: {
+                type: 'line',
+                lineStyle: {
+                  color: '#408829',
+                  type: 'dashed'
+                },
+                crossStyle: {
+                  color: '#408829'
+                },
+                shadowStyle: {
+                  color: 'rgba(200,200,200,0.3)'
+                }
+              }
+            },
+
+            dataZoom: {
+              dataBackgroundColor: '#eee',
+              fillerColor: 'rgba(64,136,41,0.2)',
+              handleColor: '#408829'
+            },
+            grid: {
+              borderWidth: 0
+            },
+
+            categoryAxis: {
+              axisLine: {
+                lineStyle: {
+                  color: '#408829'
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  color: ['#eee']
+                }
+              }
+            },
+
+            valueAxis: {
+              axisLine: {
+                lineStyle: {
+                  color: '#408829'
+                }
+              },
+              splitArea: {
+                show: true,
+                areaStyle: {
+                  color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  color: ['#eee']
+                }
+              }
+            },
+            timeline: {
+              lineStyle: {
+                color: '#408829'
+              },
+              controlStyle: {
+                normal: {color: '#408829'},
+                emphasis: {color: '#408829'}
+              }
+            },
+
+            k: {
+              itemStyle: {
+                normal: {
+                  color: '#68a54a',
+                  color0: '#a9cba2',
+                  lineStyle: {
+                    width: 1,
+                    color: '#408829',
+                    color0: '#86b379'
+                  }
+                }
+              }
+            },
+            map: {
+              itemStyle: {
+                normal: {
+                  areaStyle: {
+                    color: '#ddd'
+                  },
+                  label: {
+                    textStyle: {
+                      color: '#c12e34'
+                    }
+                  }
+                },
+                emphasis: {
+                  areaStyle: {
+                    color: '#99d2dd'
+                  },
+                  label: {
+                    textStyle: {
+                      color: '#c12e34'
+                    }
+                  }
+                }
+              }
+            },
+            force: {
+              itemStyle: {
+                normal: {
+                  linkStyle: {
+                    strokeColor: '#408829'
+                  }
+                }
+              }
+            },
+            chord: {
+              padding: 4,
+              itemStyle: {
+                normal: {
+                  lineStyle: {
+                    width: 1,
+                    color: 'rgba(128, 128, 128, 0.5)'
+                  },
+                  chordStyle: {
+                    lineStyle: {
+                      width: 1,
+                      color: 'rgba(128, 128, 128, 0.5)'
+                    }
+                  }
+                },
+                emphasis: {
+                  lineStyle: {
+                    width: 1,
+                    color: 'rgba(128, 128, 128, 0.5)'
+                  },
+                  chordStyle: {
+                    lineStyle: {
+                      width: 1,
+                      color: 'rgba(128, 128, 128, 0.5)'
+                    }
+                  }
+                }
+              }
+            },
+            gauge: {
+              startAngle: 225,
+              endAngle: -45,
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
+                  width: 8
+                }
+              },
+              axisTick: {
+                splitNumber: 10,
+                length: 12,
+                lineStyle: {
+                  color: 'auto'
+                }
+              },
+              axisLabel: {
+                textStyle: {
+                  color: 'auto'
+                }
+              },
+              splitLine: {
+                length: 18,
+                lineStyle: {
+                  color: 'auto'
+                }
+              },
+              pointer: {
+                length: '90%',
+                color: 'auto'
+              },
+              title: {
+                textStyle: {
+                  color: '#333'
+                }
+              },
+              detail: {
+                textStyle: {
+                  color: 'auto'
+                }
+              }
+            },
+            textStyle: {
+              fontFamily: 'Arial, Verdana, sans-serif'
+            }
+          }
+          //echart Pie  -  职级比例
+          if ($('#echart_pie').length ){  
+            
+            var echartPie = echarts.init(document.getElementById('echart_pie'), theme);
+
+            echartPie.setOption({
+            tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+              x: 'center',
+              y: 'bottom',
+              data: data_duty
+            },
+            toolbox: {
               show: true,
-              title: "Save Image"
-            }
-            }
-          },
-          calculable: true,
-          series: [{
+              feature: {
+              magicType: {
+                show: true,
+                type: ['pie', 'funnel'],
+                option: {
+                funnel: {
+                  x: '25%',
+                  width: '50%',
+                  funnelAlign: 'left',
+                  max: 1548
+                }
+                }
+              },
+              restore: {
+                show: true,
+                title: "Restore"
+              },
+              saveAsImage: {
+                show: true,
+                title: "Save Image"
+              }
+              }
+            },
+            calculable: true,
+            series: [{
               name: '员工数',
               type: 'pie',
-              radius: [25, 90],
-              center: ['50%', 170],
-              roseType: 'area',
-              x: '50%',
-              max: 40,
-              sort: 'ascending',
+              radius: '55%',
+              center: ['50%', '48%'],
               data: data_duty_value
             }]
-          });
-        }
-        
-        //echart Donut  - 男女占比
-        
-        if ($('#echart_donut').length ){  
-          
-          var echartDonut = echarts.init(document.getElementById('echart_donut'), theme);
-          
-          echartDonut.setOption({
-          tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-          calculable: true,
-          legend: {
-            x: 'center',
-            y: 'bottom',
-            data: data_gender
-          },
-          toolbox: {
-            show: true,
-            feature: {
-            magicType: {
-              show: true,
-              type: ['pie', 'funnel'],
-              option: {
-              funnel: {
-                x: '25%',
-                width: '50%',
-                funnelAlign: 'center',
-                max: 1548
-              }
-              }
-            },
-            restore: {
-              show: true,
-              title: "Restore"
-            },
-            saveAsImage: {
-              show: true,
-              title: "Save Image"
-            }
-            }
-          },
-          series: [{
-            name: '员工数',
-            type: 'pie',
-            radius: ['35%', '55%'],
-            itemStyle: {
+            });
+
+            var dataStyle = {
             normal: {
               label: {
-              show: true
+              show: false
               },
               labelLine: {
-              show: true
+              show: false
+              }
+            }
+            };
+
+            var placeHolderStyle = {
+            normal: {
+              color: 'rgba(0,0,0,0)',
+              label: {
+              show: false
+              },
+              labelLine: {
+              show: false
               }
             },
             emphasis: {
-              label: {
-              show: true,
-              position: 'center',
-              textStyle: {
-                fontSize: '14',
-                fontWeight: 'normal'
-              }
-              }
+              color: 'rgba(0,0,0,0)'
             }
-            },
-            data: data_gender_value
-            }]
-          });
+            };
+          }           
         }
-          
-        //echart Pie  -  职级比例
-          
-        if ($('#echart_pie').length ){  
-          
-          var echartPie = echarts.init(document.getElementById('echart_pie'), theme);
+        // 初始化 grade 图表数据
+        function init_grade(data_grade_value){
+          //echart Pie Collapse  -  职务占比
+          var data_grade = [];
+          for(var i = 0 ; i < data_grade_value.length; i++){
+            // convertBlank(data_grade_value[i].name)
+            data_grade.push(data_grade_value[i].name);
+          }
+          // 样式定义
+          if( typeof (echarts) === 'undefined'){ return; }
+            console.log('init_echarts');
+        
+            var theme = {
+            color: [
+              '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+              '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+            ],
 
-          echartPie.setOption({
-          tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-          legend: {
-            x: 'center',
-            y: 'bottom',
-            data: data_grade
-          },
-          toolbox: {
-            show: true,
-            feature: {
-            magicType: {
+            title: {
+              itemGap: 8,
+              textStyle: {
+                fontWeight: 'normal',
+                color: '#408829'
+              }
+            },
+
+            dataRange: {
+              color: ['#1f610a', '#97b58d']
+            },
+
+            toolbox: {
+              color: ['#408829', '#408829', '#408829', '#408829']
+            },
+
+            tooltip: {
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              axisPointer: {
+                type: 'line',
+                lineStyle: {
+                  color: '#408829',
+                  type: 'dashed'
+                },
+                crossStyle: {
+                  color: '#408829'
+                },
+                shadowStyle: {
+                  color: 'rgba(200,200,200,0.3)'
+                }
+              }
+            },
+
+            dataZoom: {
+              dataBackgroundColor: '#eee',
+              fillerColor: 'rgba(64,136,41,0.2)',
+              handleColor: '#408829'
+            },
+            grid: {
+              borderWidth: 0
+            },
+
+            categoryAxis: {
+              axisLine: {
+                lineStyle: {
+                  color: '#408829'
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  color: ['#eee']
+                }
+              }
+            },
+
+            valueAxis: {
+              axisLine: {
+                lineStyle: {
+                  color: '#408829'
+                }
+              },
+              splitArea: {
+                show: true,
+                areaStyle: {
+                  color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  color: ['#eee']
+                }
+              }
+            },
+            timeline: {
+              lineStyle: {
+                color: '#408829'
+              },
+              controlStyle: {
+                normal: {color: '#408829'},
+                emphasis: {color: '#408829'}
+              }
+            },
+
+            k: {
+              itemStyle: {
+                normal: {
+                  color: '#68a54a',
+                  color0: '#a9cba2',
+                  lineStyle: {
+                    width: 1,
+                    color: '#408829',
+                    color0: '#86b379'
+                  }
+                }
+              }
+            },
+            map: {
+              itemStyle: {
+                normal: {
+                  areaStyle: {
+                    color: '#ddd'
+                  },
+                  label: {
+                    textStyle: {
+                      color: '#c12e34'
+                    }
+                  }
+                },
+                emphasis: {
+                  areaStyle: {
+                    color: '#99d2dd'
+                  },
+                  label: {
+                    textStyle: {
+                      color: '#c12e34'
+                    }
+                  }
+                }
+              }
+            },
+            force: {
+              itemStyle: {
+                normal: {
+                  linkStyle: {
+                    strokeColor: '#408829'
+                  }
+                }
+              }
+            },
+            chord: {
+              padding: 4,
+              itemStyle: {
+                normal: {
+                  lineStyle: {
+                    width: 1,
+                    color: 'rgba(128, 128, 128, 0.5)'
+                  },
+                  chordStyle: {
+                    lineStyle: {
+                      width: 1,
+                      color: 'rgba(128, 128, 128, 0.5)'
+                    }
+                  }
+                },
+                emphasis: {
+                  lineStyle: {
+                    width: 1,
+                    color: 'rgba(128, 128, 128, 0.5)'
+                  },
+                  chordStyle: {
+                    lineStyle: {
+                      width: 1,
+                      color: 'rgba(128, 128, 128, 0.5)'
+                    }
+                  }
+                }
+              }
+            },
+            gauge: {
+              startAngle: 225,
+              endAngle: -45,
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
+                  width: 8
+                }
+              },
+              axisTick: {
+                splitNumber: 10,
+                length: 12,
+                lineStyle: {
+                  color: 'auto'
+                }
+              },
+              axisLabel: {
+                textStyle: {
+                  color: 'auto'
+                }
+              },
+              splitLine: {
+                length: 18,
+                lineStyle: {
+                  color: 'auto'
+                }
+              },
+              pointer: {
+                length: '90%',
+                color: 'auto'
+              },
+              title: {
+                textStyle: {
+                  color: '#333'
+                }
+              },
+              detail: {
+                textStyle: {
+                  color: 'auto'
+                }
+              }
+            },
+            textStyle: {
+              fontFamily: 'Arial, Verdana, sans-serif'
+            }
+          }
+          if ($('#echart_pie2').length ){ 
+            
+            var echartPieCollapse = echarts.init(document.getElementById('echart_pie2'), theme);
+            
+            echartPieCollapse.setOption({
+            tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+              x: 'center',
+              y: 'bottom',
+              data: data_grade
+            },
+            toolbox: {
               show: true,
-              type: ['pie', 'funnel'],
-              option: {
-              funnel: {
-                x: '25%',
-                width: '50%',
-                funnelAlign: 'left',
-                max: 1548
+              feature: {
+              magicType: {
+                show: true,
+                type: ['pie', 'funnel']
+              },
+              restore: {
+                show: true,
+                title: "Restore"
+              },
+              saveAsImage: {
+                show: true,
+                title: "Save Image"
               }
               }
             },
-            restore: {
-              show: true,
-              title: "Restore"
-            },
-            saveAsImage: {
-              show: true,
-              title: "Save Image"
-            }
-            }
-          },
-          calculable: true,
-          series: [{
-            name: '员工数',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '48%'],
-            data: data_grade_value
-          }]
-          });
+            calculable: true,
+            series: [{
+                name: '员工数',
+                type: 'pie',
+                radius: [25, 90],
+                center: ['50%', 170],
+                roseType: 'area',
+                x: '50%',
+                max: 40,
+                sort: 'ascending',
+                data: data_grade_value
+              }]
+            });
+          }
+        }
+        // 初始化 gender 图表数据
+        function init_gender(data_gender_value){
+          var data_gender = [];
+          for(var i = 0 ; i < data_gender_value.length; i++){
+            // convertBlank(data_gender_value[i].name);
+            data_gender.push(data_gender_value[i].name);
+          }
+          // 样式定义
+          if( typeof (echarts) === 'undefined'){ return; }
+            console.log('init_echarts');
+        
+            var theme = {
+            color: [
+              '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+              '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+            ],
 
-          var dataStyle = {
-          normal: {
-            label: {
-            show: false
+            title: {
+              itemGap: 8,
+              textStyle: {
+                fontWeight: 'normal',
+                color: '#408829'
+              }
             },
-            labelLine: {
-            show: false
+
+            dataRange: {
+              color: ['#1f610a', '#97b58d']
+            },
+
+            toolbox: {
+              color: ['#408829', '#408829', '#408829', '#408829']
+            },
+
+            tooltip: {
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              axisPointer: {
+                type: 'line',
+                lineStyle: {
+                  color: '#408829',
+                  type: 'dashed'
+                },
+                crossStyle: {
+                  color: '#408829'
+                },
+                shadowStyle: {
+                  color: 'rgba(200,200,200,0.3)'
+                }
+              }
+            },
+
+            dataZoom: {
+              dataBackgroundColor: '#eee',
+              fillerColor: 'rgba(64,136,41,0.2)',
+              handleColor: '#408829'
+            },
+            grid: {
+              borderWidth: 0
+            },
+
+            categoryAxis: {
+              axisLine: {
+                lineStyle: {
+                  color: '#408829'
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  color: ['#eee']
+                }
+              }
+            },
+
+            valueAxis: {
+              axisLine: {
+                lineStyle: {
+                  color: '#408829'
+                }
+              },
+              splitArea: {
+                show: true,
+                areaStyle: {
+                  color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+                }
+              },
+              splitLine: {
+                lineStyle: {
+                  color: ['#eee']
+                }
+              }
+            },
+            timeline: {
+              lineStyle: {
+                color: '#408829'
+              },
+              controlStyle: {
+                normal: {color: '#408829'},
+                emphasis: {color: '#408829'}
+              }
+            },
+
+            k: {
+              itemStyle: {
+                normal: {
+                  color: '#68a54a',
+                  color0: '#a9cba2',
+                  lineStyle: {
+                    width: 1,
+                    color: '#408829',
+                    color0: '#86b379'
+                  }
+                }
+              }
+            },
+            map: {
+              itemStyle: {
+                normal: {
+                  areaStyle: {
+                    color: '#ddd'
+                  },
+                  label: {
+                    textStyle: {
+                      color: '#c12e34'
+                    }
+                  }
+                },
+                emphasis: {
+                  areaStyle: {
+                    color: '#99d2dd'
+                  },
+                  label: {
+                    textStyle: {
+                      color: '#c12e34'
+                    }
+                  }
+                }
+              }
+            },
+            force: {
+              itemStyle: {
+                normal: {
+                  linkStyle: {
+                    strokeColor: '#408829'
+                  }
+                }
+              }
+            },
+            chord: {
+              padding: 4,
+              itemStyle: {
+                normal: {
+                  lineStyle: {
+                    width: 1,
+                    color: 'rgba(128, 128, 128, 0.5)'
+                  },
+                  chordStyle: {
+                    lineStyle: {
+                      width: 1,
+                      color: 'rgba(128, 128, 128, 0.5)'
+                    }
+                  }
+                },
+                emphasis: {
+                  lineStyle: {
+                    width: 1,
+                    color: 'rgba(128, 128, 128, 0.5)'
+                  },
+                  chordStyle: {
+                    lineStyle: {
+                      width: 1,
+                      color: 'rgba(128, 128, 128, 0.5)'
+                    }
+                  }
+                }
+              }
+            },
+            gauge: {
+              startAngle: 225,
+              endAngle: -45,
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
+                  width: 8
+                }
+              },
+              axisTick: {
+                splitNumber: 10,
+                length: 12,
+                lineStyle: {
+                  color: 'auto'
+                }
+              },
+              axisLabel: {
+                textStyle: {
+                  color: 'auto'
+                }
+              },
+              splitLine: {
+                length: 18,
+                lineStyle: {
+                  color: 'auto'
+                }
+              },
+              pointer: {
+                length: '90%',
+                color: 'auto'
+              },
+              title: {
+                textStyle: {
+                  color: '#333'
+                }
+              },
+              detail: {
+                textStyle: {
+                  color: 'auto'
+                }
+              }
+            },
+            textStyle: {
+              fontFamily: 'Arial, Verdana, sans-serif'
             }
           }
-          };
-
-          var placeHolderStyle = {
-          normal: {
-            color: 'rgba(0,0,0,0)',
-            label: {
-            show: false
+          //echart Donut  - 男女占比
+          if ($('#echart_donut').length ){  
+            
+            var echartDonut = echarts.init(document.getElementById('echart_donut'), theme);
+            
+            echartDonut.setOption({
+            tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            labelLine: {
-            show: false
-            }
-          },
-          emphasis: {
-            color: 'rgba(0,0,0,0)'
+            calculable: true,
+            legend: {
+              x: 'center',
+              y: 'bottom',
+              data: data_gender
+            },
+            toolbox: {
+              show: true,
+              feature: {
+              magicType: {
+                show: true,
+                type: ['pie', 'funnel'],
+                option: {
+                funnel: {
+                  x: '25%',
+                  width: '50%',
+                  funnelAlign: 'center',
+                  max: 1548
+                }
+                }
+              },
+              restore: {
+                show: true,
+                title: "Restore"
+              },
+              saveAsImage: {
+                show: true,
+                title: "Save Image"
+              }
+              }
+            },
+            series: [{
+              name: '员工数',
+              type: 'pie',
+              radius: ['35%', '55%'],
+              itemStyle: {
+              normal: {
+                label: {
+                show: true
+                },
+                labelLine: {
+                show: true
+                }
+              },
+              emphasis: {
+                label: {
+                show: true,
+                position: 'center',
+                textStyle: {
+                  fontSize: '14',
+                  fontWeight: 'normal'
+                }
+                }
+              }
+              },
+              data: data_gender_value
+              }]
+            });
           }
-          };
-        } 
-      }
-
-      $(function(){
-        init_echarts();
+        }
+        // 职务图表
+        var data_duty_value = [];
+        $.ajax({
+          url: '/ajax/fom/getGroupFromCentre',
+          method: 'POST',
+          data: {
+            group: 'duty'
+          },
+          success: function(r){
+            data_duty_value = r;
+            init_duty(data_duty_value);
+          }
+        });
+        // 职级图表
+        var data_grade_value = [];
+        $.ajax({
+          url: '/ajax/fom/getGroupFromCentre',
+          method: 'POST',
+          data: {
+            group: 'grade'
+          },
+          success: function(r){
+            data_grade_value = r;
+            init_grade(data_grade_value)
+          }
+        });
+        // 性别图表
+        var data_gender_value = [];
+        $.ajax({
+          url: '/ajax/fom/getGroupFromCentre',
+          method: 'POST',
+          data: {
+            group: 'gender'
+          },
+          success: function(r){
+            data_gender_value = r;
+            init_gender(data_gender_value)
+          }
+        });
       });
     </script>
   </body>
