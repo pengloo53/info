@@ -16,6 +16,17 @@ var getAes = require('../../libs/util/crypto-aes.js').getAes;
 var getDAes = require('../../libs/util/crypto-aes.js').getDAes;
 
 module.exports = {
+  // 获取中心总人数
+  getTotalByCentreId: function(req,res,next){
+    var centreId = req.session.user?req.session.user.centreId : 1; 
+    staffModel.findAll({
+      attributes: [[Sequelize.fn('COUNT', Sequelize.col('sid')), 'total']]
+    }).then(function(p){
+      // console.log(p.total);
+      res.locals.total = p;
+      next();
+    });
+  },
   // 根据中心id获取员工List
   getStaffListByCentreId: function(req,res,next){
     var centreId = req.session.user?req.session.user.centreId : 1; 

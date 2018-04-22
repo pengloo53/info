@@ -22,6 +22,7 @@ var getDeptInfo = require('../libs/middle/getData.js').getDeptInfo;
 var getCentreList = require('../libs/middle/getData.js').getCentreList;
 var getDeptList = require('../libs/middle/getData.js').getDeptList;
 var getOfficeList = require('../libs/middle/getData.js').getOfficeList;
+var getTotalByCentreId = require('../libs/middle/getData.js').getTotalByCentreId;
 
 var getStateList = require('../libs/middle/getData.js').getStateList;
 var getDutyList = require('../libs/middle/getData.js').getDutyList;
@@ -63,7 +64,7 @@ router.use(function(req,res,next){
     next();
 });
 // page: index
-router.get('/', getCentreInfo,function(req,res,next){
+router.get('/', getCentreInfo,getTotalByCentreId,function(req,res,next){
     res.render('admin/index.ejs',{
         title: '后台管理总览'
     });
