@@ -14,9 +14,9 @@
           <ul class="dropdown-menu dropdown-usermenu pull-right">
             <li><a href="javascript:;"> 个人信息</a></li>
             <li>
-              <a href="javascript:;">
+              <a href="#changePassword" data-toggle="modal">
                 <!-- <span class="badge bg-red pull-right">50%</span> -->
-                <span>密码修改</span>
+                <span data-modal>密码修改</span>
               </a>
             </li>
             <li><a href="/login/out"><i class="fa fa-sign-out pull-right"></i> 登出</a></li>
@@ -28,4 +28,5 @@
     </nav>
   </div>
 </div>
-<!-- /top navigation
+<!-- /top navigation -->
+<% include modal-changePassword.ejs %>
