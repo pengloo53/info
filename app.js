@@ -49,7 +49,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules/gentelella')));
-app.use(express.static(path.join(__dirname, 'node_modules/crypto-js')));
+app.use(express.static(path.join(__dirname, 'node_modules')));
 
 // 正常请求的日志
 app.use(expressWinston.logger({

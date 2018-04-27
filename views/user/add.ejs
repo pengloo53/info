@@ -118,7 +118,7 @@
                             <input type="text" class="date form-control" name="work_date" placeholder="选择日期">
                         </div>
                         <div class="form-group col-lg-4">
-                            <label for="" class="control-label">入职BOE日期</label>
+                            <label for="" class="control-label">入职BOE日期 <span class="text-danger">(*)</span></label>
                             <input type="text" class="date form-control" name="enter_date" placeholder="选择日期">
                         </div>
                     </div>
@@ -190,14 +190,14 @@
     </div>    
 <!-- special script -->
 <!-- bootstrap-table -->
-<script src="/jquery/dist/jquery.js"></script>
+<script src="/jquery/dist/jquery.min.js"></script>
 <script src="/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
 <script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
 
-<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="/jquery-validation/dist/jquery.validate.min.js"></script>
 <script>
     $(function(){
         // --------------------- datepicker ------------------- 
@@ -218,31 +218,6 @@
         }).on('hide', function (e) {
             e.stopPropagation(); // 禁止触发父元素事件
         });
-        
-        // 表单验证
-        // var $centre = $('form select[name=centre]');
-        // var $dept = $('form select[name=dept]');
-        // var $office = $('form select[name=office]');
-        // var $gender = $('form select[name=gender]');
-        // var $name = $('form input[name=name]');
-        // var $userid = $('form input[name=userid]');
-        // var $school = $('form input[name=school]');
-        // var $major = $('form input[name=major]');
-        // var $education = $('form select[name=education]');
-        // var $mainPost = $('form select[name=mainPost]');
-        // var $grade = $('form select[name=grade]');
-        // var $state = $('form select[name=state]');
-        // var formList = [$centre,$dept,$office,$gender,$name,$userid,$school,$major,$education,$mainPost,$grade,$state];
-        // $('form').submit(function(e){
-        //     for(var i = 0 ; i < formList.length ; i++){
-        //         if (formList[i].val().trim() == '') {
-        //             formList[i].parent().addClass('has-error');
-        //             e.preventDefault();
-        //         }else{
-        //             formList[i].parent().removeClass('has-error');
-        //         }
-        //     }
-        // });
         
         // 表单验证插件
         $('form').validate({

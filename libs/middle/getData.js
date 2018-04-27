@@ -19,11 +19,15 @@ module.exports = {
   // 获取中心总人数
   getTotalByCentreId: function(req,res,next){
     var centreId = req.session.user?req.session.user.centreId : 1; 
-    staffModel.findAll({
-      attributes: [[Sequelize.fn('COUNT', Sequelize.col('sid')), 'total']]
-    }).then(function(p){
-      // console.log(p.total);
-      res.locals.total = p;
+    // staffModel.findAll({
+    //   attributes: [[Sequelize.fn('COUNT', Sequelize.col('sid')), 'total']]
+    // }).then(function(p){
+    //   // console.log(p.total);
+    //   res.locals.total = p;
+    //   next();
+    // });
+    dbGet.getTotalByCentreId(centreId , function(err,rows,fields){
+      res.locals.total = rows[0].total;
       next();
     });
   },

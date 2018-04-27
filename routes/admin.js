@@ -65,16 +65,18 @@ router.use(function(req,res,next){
 });
 // page: index
 router.get('/', getCentreInfo,getTotalByCentreId,function(req,res,next){
-    res.render('admin/index.ejs',{
-        title: '后台管理总览'
-    });
+  // 计算中心人员答编比率
+  res.locals.sumPercent = Math.floor(res.locals.total / res.locals.centreInfo.preparation * 100 * 100) / 100;
+  res.render('admin/index.ejs',{
+      title: '后台管理总览'
+  });
 });
 
 // page: table
 router.get('/table', getCentreInfo , getCentreList, getDeptList, getStaffListByCentreId, function(req,res,next){
-    res.render('admin/table.ejs',{
-        title: '人员总表'
-    });
+  res.render('admin/table.ejs',{
+      title: '人员总表'
+  });
 });
 
 // page: show staff
