@@ -1,7 +1,8 @@
 <% include ../layout/head.ejs %>
 <!-- special css -->
 <link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.css">
-<link rel="stylesheet" href="/bootstrap-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/stylesheets/libs/bootstrap-editable-remove-datepicker.css">
+<!-- <link rel="stylesheet" href="/X-editable/dist/bootstrap3-editable/bootstrap-editable.css"> -->
 <link rel="stylesheet" href="/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css">
 <!-- 自定义 -->
 <link rel="stylesheet" href="/stylesheets/style.css">
@@ -147,20 +148,25 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 <!-- special script -->
-<!-- bootstrap-table -->
+<!-- jquery -->
 <script src="/jquery/dist/jquery.min.js"></script>
+<!-- bootstrap -->
 <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
-<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-<!-- self -->
+<!-- bootstrap-table -->
 <script src="/bootstrap-table/dist/bootstrap-table.js"></script>
 <script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
 <script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
-
 <script src="/javascripts/libs/tableExport.js"></script>
+
+<!-- bootstrap-datepicker -->
+<script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+
+<!-- bootstrap-editable -->
 <script src="/bootstrap-table/dist/extensions/editable/bootstrap-table-editable.js"></script>
 <script src="/bootstrap-editable/js/index.js"></script>
+<!-- X-editable -->
+<!-- <script src="/X-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script> -->
 <!-- personal -->
 <script src="/javascripts/self.js"></script> 
 
@@ -198,11 +204,6 @@ $(function(){
                 res[i].rid = i + 1;
             }
             return res;
-        },
-        queryParams: function (params) {
-            return {
-                uid: 1
-            };
         },
         striped: true,
         pageNumber: 1,
@@ -262,7 +263,7 @@ $(function(){
                 type: 'text',
                 title: '填补员工号',
                 url: '/user/fom/update/userid'
-            }            
+            }
         },{
             field: 'gender',
             title: '性别',
@@ -364,7 +365,8 @@ $(function(){
         var staffNum = $table.bootstrapTable('getData').length;
         $('#staffNum').html(staffNum);
     });
-    // 日期选择框
+
+    // 日期选择框，离职日期
     $('input.date').datepicker({
         format: "yyyy-mm-dd",
         weekStart: 7,
@@ -376,12 +378,14 @@ $(function(){
         todayHighlight: true,
         // startDate: new Date()
     }).on('show', function (e) {
+        console.log('input.date show');
         e.preventDefault();
         e.stopPropagation(); // 禁止触发父元素事件
     }).on('hide', function (e) {
+        console.log('input.date hide');
         e.stopPropagation(); // 禁止触发父元素事件
     });
-
+    
     // 根据中心获取部门
     $('#change').on('shown.bs.modal', function () {
         $('select[name=centre]').change(function(){
@@ -429,6 +433,7 @@ $(function(){
         },
         errorClass: 'text-danger'
     });
+    
 });
 </script>
 <% include ../layout/foot.ejs %>
