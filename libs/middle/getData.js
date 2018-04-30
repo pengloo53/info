@@ -56,7 +56,8 @@ module.exports = {
   },
 	// 获取科室列表
   getOfficeList: function(req,res,next){
-    var deptId = req.session.user.deptId;
+    // 如果是部门管理员，取session；如果非部门管理员，即更高管理员，取query
+    var deptId = req.session.user.deptId || req.query.deptId;  
     officeModel.findAll({where: {deptId: deptId}}).then(function(p){
       res.locals.officeList = p;
       next();
@@ -72,7 +73,8 @@ module.exports = {
   },
   // 获取部门信息
   getDeptInfo: function(req,res,next){
-    var deptId = req.session.user.deptId;
+    // 如果是部门管理员，取session；如果非部门管理员，即更高管理员，取query
+    var deptId = req.session.user.deptId || req.query.deptId;
     deptModel.findOne({where: {id: deptId}}).then(function(p){
       res.locals.deptInfo = p;
       next();

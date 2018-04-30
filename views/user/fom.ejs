@@ -175,7 +175,7 @@
 
 <script src="/javascripts/base64.js"></script>
 
-<script src="/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/jquery-validation/dist/jquery.validate.js"></script>
 <script>
 $(function(){
     var $table = $('#table');
@@ -197,7 +197,7 @@ $(function(){
     };
     $table.bootstrapTable({
         url: '/user/fom/bootstrapTable',
-        height: window.innerHeight - 130,
+        height: window.innerHeight - 135,
         // height: 300,
         responseHandler: function (res) {
             for (var i = 0; i < res.length; i++) {

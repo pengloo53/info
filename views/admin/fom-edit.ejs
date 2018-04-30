@@ -60,7 +60,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <form action="/admin/staff/edit" method="POST" style="padding: 10px 0 ">
+                    <form action="/a/fom/staff/edit" method="POST" style="padding: 10px 0 ">
                       <input type="hidden" value="<%= sid_code %>" name="sid_code">
                       <input type="hidden" value="<%= staffInfo.name %>" name="name">
                       <div class="row">
@@ -187,11 +187,10 @@
         <!--                <div class="row"> -->
                           <div class="form-group">
                             <label for="">岗位描述（职责）</label>
-                            <textarea rows="8" name="postDescribe" class="form-control" placeholder="" style="width:100%;"><%= staffInfo.postDescribe %></textarea>
+                            <textarea rows="6" name="postDescribe" class="form-control" placeholder="" style="width:100%;"><%= staffInfo.postDescribe %></textarea>
                           </div>
                           <button type="submit" class="btn btn-primary">保存</button>
                         <!-- </div> -->
-                        
                     </form>
                   </div>
                 </div>
