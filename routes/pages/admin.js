@@ -74,6 +74,13 @@ router.get('/office', getDeptInfo, getOfficeList, function(req,res,next){
   });
 });
 
+// page: 后台配置 - 岗位管理
+router.get('/post', getPostList,getDutyList,getGradeList,getStateList, function(req,res,next){
+  res.render('admin/post-index.ejs',{
+    title: '岗位配置'
+  });
+});
+
 // page: table
 router.get('/staff/table', getCentreInfo , getCentreList, getDeptList, getStaffListByCentreId, function(req,res,next){
   res.render('admin/fom-table.ejs',{

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Daily information - <%= title %></title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="index.html" class="site_title"><i class="fa fa-info-circle"></i> <span>Daily information</span></a>
+            </div>
+            <div class="clearfix"></div>
+            <% include layout-sidebar.ejs %>
+          </div>
+        </div>
+
+        <% include layout-top-menu.ejs %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="x_panel" id="post_panel">
+                  <div class="x_title">
+                    <h2><%= title %> <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                      <li><a class="" href="#"><i class="fa fa-plus text-danger" title="添加"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title hidden"># </th>
+                            <th class="column-title">岗位 </th>
+                            <th class="column-title">岗位类别 </th>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <% for(var i = 0 ; i < postList.length; i++){ %>
+                          <tr class="even pointer" data-id="<%= postList[i].id %>">
+                            <td class="hidden"><%= postList[i].id %></td>
+                            <td class=" "><%= postList[i].post %></td>
+                            <td class=" "><%= postList[i].postType %></td>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              <div class="x_panel" id="duty_panel">
+                  <div class="x_title">
+                    <h2>职务 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                      <li><a class="" href="#"><i class="fa fa-plus text-danger" title="添加"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title hidden"># </th>
+                            <th class="column-title">职务 </th>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <% for(var i = 0 ; i < dutyList.length; i++){ %>
+                          <tr class="even pointer" data-id="<%= dutyList[i].id %>">
+                            <td class="hidden"><%= dutyList[i].id %></td>
+                            <td class=" "><%= dutyList[i].duty %></td>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              </div>
+              <div class="x_panel" id="duty_panel">
+                  <div class="x_title">
+                    <h2>职级 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                      <li><a class="" href="#"><i class="fa fa-plus text-danger" title="添加"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title hidden"># </th>
+                            <th class="column-title">职级 </th>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <% for(var i = 0 ; i < gradeList.length; i++){ %>
+                          <tr class="even pointer" data-id="<%= gradeList[i].id %>">
+                            <td class="hidden"><%= gradeList[i].id %></td>
+                            <td class=" "><%= gradeList[i].grade %></td>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              </div>
+              <div class="x_panel" id="duty_panel">
+                  <div class="x_title">
+                    <h2>状态 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                      <li><a class="" href="#"><i class="fa fa-plus text-danger" title="添加"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title hidden"># </th>
+                            <th class="column-title">状态 </th>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <% for(var i = 0 ; i < stateList.length; i++){ %>
+                          <tr class="even pointer" data-id="<%= stateList[i].id %>">
+                            <td class="hidden"><%= stateList[i].id %></td>
+                            <td class=" "><%= stateList[i].state %></td>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+        <footer></footer>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/vendors/nprogress/nprogress.js"></script>
+    <!-- ECharts -->
+    <script src="../vendors/echarts/dist/echarts.min.js"></script>
+    <!-- <script src="../vendors/echarts/map/js/world.js"></script> -->
+    
+    <!-- Custom Theme Scripts -->
+    <script src="/build/js/custom.min.js"></script>
+
+    <!-- jquery tabledit -->
+    <script src="/javascripts/libs/jquery.tabledit.js"></script>
+    <script>
+      $(function(){
+        // $('#post_panel table').Tabledit({
+        //   url: '/a/config/ajax/jqueryTabledit/post',
+        //   rowIdentifier: 'data-id',
+        //   // hideIdentifier: true,
+        //   // editButton: false,
+        //   restoreButton: true,
+        //   buttons: {
+        //     edit:{
+        //       class: 'btn btn-xs btn-default',
+        //       html: '<span class="glyphicon glyphicon-pencil"></span>',
+        //       action: 'edit'
+        //     },
+        //     delete: {
+        //       class: 'btn btn-xs btn-default',
+        //       html: '<span class="glyphicon glyphicon-trash"></span>',
+        //       action: 'delete'
+        //     },
+        //     confirm: {
+        //       // class: 'btn btn-xs btn-danger',
+        //       html: '确定?'
+        //     },
+        //     restore: {
+        //       // class: 'btn btn-xs btn-warning',
+        //       html: '取消',
+        //       action: 'restore'
+        //     },
+        //     save: {
+        //       // class: 'btn btn-xs btn-info',
+        //       html: '保存?'
+        //     }
+        //   },
+        //   columns: {
+        //       identifier: [0, 'id'],  //  列从0开始，id是table的第2列
+        //       editable: [[1, 'office'],[2, 'owner'],[3, 'preparation'],[4, 'bz']]
+        //   },
+        //   onDraw: function() {
+        //       console.log('onDraw()');
+        //   },
+        //   onSuccess: function(data, textStatus, jqXHR) {
+        //       console.log('onSuccess(data, textStatus, jqXHR)');
+        //       console.log(data);
+        //       console.log(textStatus);
+        //       console.log(jqXHR);
+        //   },
+        //   onFail: function(jqXHR, textStatus, errorThrown) {
+        //       console.log('onFail(jqXHR, textStatus, errorThrown)');
+        //       console.log(jqXHR);
+        //       console.log(textStatus);
+        //       console.log(errorThrown);
+        //   },
+        //   onAlways: function() {
+        //       console.log('onAlways()');
+        //   },
+        //   onAjax: function(action, serialize) {
+        //       console.log('onAjax(action, serialize)');
+        //       console.log(action);
+        //       console.log(serialize);
+        //       if($('input[name=office]').val() == ''){
+        //         $('input[name=office]').parent().addClass('has-error');
+        //         return false;
+        //       }
+        //   }
+        // });
+      });
+    </script>
+  </body>
+</html>
