@@ -32,9 +32,6 @@ console.log("mysql服务器：" + JSON.stringify(config.mysql));
 app.use(flash());
 app.use(function(req,res,next){
   res.locals.user = req.session.user;
-  // res.locals.project = req.session.project;
-  // res.locals.depts = req.session.depts;
-  // res.locals.deptInfo = req.session.deptInfo;
   res.locals.error = req.flash('error');
   res.locals.success = req.flash('success');
   res.locals.info = req.flash('info');

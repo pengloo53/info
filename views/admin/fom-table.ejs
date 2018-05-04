@@ -110,7 +110,7 @@
 
 <!--     <script src="/crypto-js.js"></script>
     <script src="/javascripts/crypto-aes.js"></script> -->
-    <script src="/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/jquery-validation/dist/jquery.validate.js"></script>
     <script>
       var $table = $('#table');
       var deptId = $('#dataSpan').data('deptid');
@@ -134,7 +134,7 @@
       //   $('.fixed-table-header').css('display','none');
       // });
       $table.bootstrapTable({
-          url: '/fom/bootstrapTable',
+          url: '/d/fom/bootstrapTable',
           // height: window.innerHeight - 70,
           responseHandler: function (res) {
               for (var i = 0; i < res.length; i++) {
@@ -280,7 +280,7 @@
         $('select[name=centre]').change(function(){
             var centreId = $(this).val();
             $.ajax({
-                url: '/user/fom/get/deptList?centreId=' + centreId,
+                url: '/d/fom/ajax/getDeptList?centreId=' + centreId,
                 success: function(result){
                     $('select[name=dept] option:gt(0)').remove();
                     for(var i = 0 ; i< result.length; i++){
@@ -293,7 +293,7 @@
         $('select[name=dept]').change(function(){
             var deptId = $(this).val();
             $.ajax({
-                url: '/user/fom/get/officeList?deptId=' + deptId,
+                url: '/d/fom/ajax/getOfficeList?deptId=' + deptId,
                 success: function(result){
                     $('select[name=office] option:gt(0)').remove();
                     for(var i = 0 ; i< result.length; i++){

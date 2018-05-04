@@ -64,7 +64,7 @@
               <div class="row tile_count">
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                   <span class="count_top"><i class="fa fa-user"></i> 总人数</span>
-                  <div class="count"><a href="/admin/table" id="total"><%= total %></a></div>
+                  <div class="count"><a href="/admin/staff/table" id="total"><%= total %></a></div>
                   <span class="count_bottom"><i class="green"><%= sumPercent %>% </i> 达编率</span>
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -222,7 +222,7 @@
       $(function(){
         // 获取试用期，实习期
         $.ajax({
-          url: '/ajax/fom/getGroupFromCentre',
+          url: '/d/fom/ajax/getGroupFromCentre',
           method: 'POST',
           data: {
             group: 'state'
@@ -244,16 +244,6 @@
             }
           }
         });
-        // function convertBlank(name){ 
-        //   if(name == '' || name == null){
-        //     return '无'
-        //   }
-        // }
-        // function converBlankFromArray(arr){
-        //   for(var i = 0 ; i< arr.length ; i ++){
-
-        //   }
-        // }
         // 初始化 duty 图表数据
         function init_duty(data_duty_value){
           var data_duty = []; 
@@ -1117,7 +1107,7 @@
         // 职务图表
         var data_duty_value = [];
         $.ajax({
-          url: '/ajax/fom/getGroupFromCentre',
+          url: '/d/fom/ajax/getGroupFromCentre',
           method: 'POST',
           data: {
             group: 'duty'
@@ -1130,7 +1120,7 @@
         // 职级图表
         var data_grade_value = [];
         $.ajax({
-          url: '/ajax/fom/getGroupFromCentre',
+          url: '/d/fom/ajax/getGroupFromCentre',
           method: 'POST',
           data: {
             group: 'grade'
@@ -1143,7 +1133,7 @@
         // 性别图表
         var data_gender_value = [];
         $.ajax({
-          url: '/ajax/fom/getGroupFromCentre',
+          url: '/d/fom/ajax/getGroupFromCentre',
           method: 'POST',
           data: {
             group: 'gender'

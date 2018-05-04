@@ -64,8 +64,8 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-                  <div class="x_content">
-					<form method="POST" action="/user/fom/add">
+                  <div class="x_content" id="add">
+					<form method="POST" action="/a/fom/staff/add">
                     <div class="row">
                         <div class="form-group col-lg-4">
                             <label for="" class="control-label">中心 <span class="text-danger">(*)</span></label>
@@ -228,13 +228,9 @@
     <!-- NProgress -->
     <script src="/vendors/nprogress/nprogress.js"></script>
 
-    <!-- self -->
-    <script src="/bootstrap-table/dist/bootstrap-table.js"></script>
-    <script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
-    <script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
-    <script src="/bootstrap-table/lib/tableExport.js"></script>
-
-    <script src="/jquery-validation/dist/jquery.validate.min.js"></script>
+    <!-- jquery.validate -->
+    <script src="/jquery-validation/dist/jquery.validate.js"></script>
+    <!-- boostrap-datepicker -->
     <script src="/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script src="/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 
@@ -294,32 +290,9 @@
 	                }
 	            });
 	        });
-            // 表单验证
-            // var $centre = $('form select[name=centre]');
-            // var $dept = $('form select[name=dept]');
-            // var $office = $('form select[name=office]');
-            // var $gender = $('form select[name=gender]');
-            // var $name = $('form input[name=name]');
-            // var $userid = $('form input[name=userid]');
-            // var $school = $('form input[name=school]');
-            // var $major = $('form input[name=major]');
-            // var $education = $('form select[name=education]');
-            // var $mainPost = $('form select[name=mainPost]');
-            // var $grade = $('form select[name=grade]');
-            // var $state = $('form select[name=state]');
-            // var formList = [$centre,$dept,$office,$gender,$name,$userid,$school,$major,$education,$mainPost,$grade,$state];
-            // $('form').submit(function(e){
-            //     for(var i = 0 ; i < formList.length ; i++){
-            //         if (formList[i].val().trim() == '') {
-            //             formList[i].parent().addClass('has-error');
-            //             e.preventDefault();
-            //         }else{
-            //             formList[i].parent().removeClass('has-error');
-            //         }
-            //     }
-            // });
-		    // 表单验证
-		    $('form').validate({
+
+		    // 表单验证 validate 插件
+		    $('#add form').validate({
                 rules: {
                     centre: "required",
                     dept: "required",

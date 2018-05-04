@@ -29,6 +29,7 @@
     "gentelella": "^1.4.0",
     "i": "^0.3.6",
     "jquery": "^3.3.1",
+    "jquery-tabledit": "^1.0.0",
     "jquery-validation": "^1.14.0",
     "moment": "^2.22.0",
     "morgan": "~1.9.0",
