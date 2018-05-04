@@ -14,9 +14,15 @@ router.get('/', function(req,res,next){
 router.post('/', function(req,res,next){
   var value = req.body.value;
   var code = req.body.code.toString();
-  console.log('----------------------: '+code);
+  console.log('----------------------: '+ code);
   var value2 = getDAes(code);
   res.send(value2);
+});
+
+router.get('/url',function(req,res,next){
+	var userid = req.query.userid;
+	console.log('+++++++++++++++++++++:' +  userid);
+	res.send('后台得到的参数：' + userid);
 });
 
 module.exports = router;

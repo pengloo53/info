@@ -12,7 +12,13 @@
       <p>code(前台加密): <span id="value"></span></p>
       <p>code(后台解密): <span id="returnValue"></span></p>
     </form>
-    
+    <br/>
+    <div>
+      <p>生成测试URL：</p>
+      <ul id="testurl">
+
+      </ul>
+    </div>
   </body>
   <script src="/jquery/dist/jquery.min.js"></script>
   <script src="/crypto-js/crypto-js.js"></script>
@@ -23,6 +29,8 @@
         e.preventDefault();
         var value = $('input[name=test]').val(); 
         var code = getAes(value);
+        var $url1 = $('<li><a href="/test/url?userid=' + code + '">/test/url?userid=' + code + '</a></li>');
+        $url1.appendTo('#testurl');
         $('#value').text(code);
         $.ajax({
           url: '/test',
@@ -32,7 +40,6 @@
             code: code
           },
           success: function(r){
-            // alert(r);
             $('#returnValue').text(r);
           }
         });
