@@ -4,6 +4,7 @@ var router = express.Router();
 var sequelize = require('../../models/util/dbConnect.js');
 
 var staffModel = require('../../models/fom/staff.js');
+var userModel = require('../../models/user/user.js');
 
 var dbGet = require('../../dbController/db-index-get.js');
 
@@ -58,6 +59,18 @@ router.get('/', getCentreInfo,getTotalByCentreId,function(req,res,next){
   res.locals.sumPercent = Math.floor(res.locals.total / res.locals.centreInfo.preparation * 100 * 100) / 100;
   res.render('admin/fom-index.ejs',{
     title: '后台管理总览'
+  });
+});
+
+// page: config 用户管理
+router.get('/user',function(req,res,next){
+  userModel.findAll().then(function(p){
+    res.locals.userList = p;
+    next();
+  });
+}, function(req,res,next){
+  res.render('admin/config-user.ejs',{
+    title: '用户配置'
   });
 });
 
