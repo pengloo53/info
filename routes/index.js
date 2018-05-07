@@ -5,7 +5,7 @@
 module.exports = function(app){
   app.get('/', function(req, res, next){
     res.render('index',{
-      title: 'Hello, express...'
+      title: 'Hello, welcome...'
     });
   });
   app.use('/login', require('./login'));                  // 登陆
