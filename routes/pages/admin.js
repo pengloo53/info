@@ -68,7 +68,7 @@ router.get('/user',function(req,res,next){
     res.locals.userList = p;
     next();
   });
-}, function(req,res,next){
+}, getDeptList, function(req,res,next){
   res.render('admin/config-user.ejs',{
     title: '用户配置'
   });
@@ -89,7 +89,7 @@ router.get('/office', getDeptInfo, getOfficeList, function(req,res,next){
 
 // page: 后台配置 - 岗位管理
 router.get('/post', getPostList,getDutyList,getGradeList,getStateList, function(req,res,next){
-  res.render('admin/post-index.ejs',{
+  res.render('admin/config-post.ejs',{
     title: '岗位配置'
   });
 });

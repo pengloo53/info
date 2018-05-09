@@ -11,9 +11,9 @@ var addLog = require('../libs/util/log.js').addLog;
 
 // action: changePassword admin
 router.post('/changePassword', function(req,res,next){
-  var username = req.body.username;
-  var newPasswd = req.body.newPasswd;
-  var rePasswd = req.body.rePasswd;
+  var username = req.body.username.trim();
+  var newPasswd = req.body.newPasswd.trim();
+  var rePasswd = req.body.rePasswd.trim();
   if(!newPasswd || !rePasswd || newPasswd == '' || rePasswd == ''){
     return res.send('输入完整再提交');
   }
@@ -32,5 +32,29 @@ router.post('/changePassword', function(req,res,next){
   });
 });
 
+// action: add User admin
+router.post('/add', function(req,res,next){
+  var username = req.body.username.trim();
+  var role = req.body.role;
+  var deptId = req.body.deptId;
+  if(username){
+    userModel.create({username: username,role:role,deptId:deptId}).then(function(p){
+      res.redirect('/admin/user');
+    });
+  }else{
+    res.send('填写完整再提交');
+  }
+});
+
+// ajax: jquery-tabledit update user
+router.post('/ajax/jqueryTabledit', function(req,res,next){
+  var action = req.body.action;
+  var username = req.body.username;
+  var id = req.body.id;
+  if(action === 'delete'){
+    userModel.destrod
+  }
+
+});
 
 module.exports = router;

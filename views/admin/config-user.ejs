@@ -47,7 +47,7 @@
                       </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
-                      <li><a class="" href="#"><i class="fa fa-plus text-danger" title="添加"></i></a>
+                      <li><a class="" href="#" data-toggle="modal" data-target="#addUser"><i class="fa fa-plus text-danger" title="添加"></i></a>
                       </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -92,6 +92,54 @@
           </div>
         </div>
         <!-- /page content -->
+        <!-- modal add user -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="addUser">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-danger">添加用户 <small><i></i>密码默认为 admin </small></h4>
+              </div>
+              <form class="form-horizontal" method="POST" action="/u/add">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="" class="control-label col-lg-2">用户名</label>
+                      <div class="col-lg-10">
+                        <input type="text" class="form-control" name="username" placeholder="新加用户名">
+                      </div>
+                      
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="control-label col-lg-2">用户等级</label>
+                      <div class="col-lg-10">
+                        <select name="role" class="form-control">
+                          <option value="A" disabled="">超级管理员</option>
+                          <option value="B" disabled="">中心管理员</option>
+                          <option value="C">部门管理员</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group" id="deptSelect">
+                      <label for="" class="control-label col-lg-2">所属部门</label>
+                      <div class="col-lg-10">
+                        <select name="deptId" class="form-control">
+                          <% for(var i=0; i< deptList.length ; i++){ %>
+                            <option value="<%= deptList[i].id %>"><%= deptList[i].dept %></option>
+                          <% } %>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                  <button type="submit" class="btn btn-primary">确定</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /modal add user -->
         <footer></footer>
       </div>
     </div>
@@ -116,7 +164,7 @@
     <script>
       $(function(){
         $('table').Tabledit({
-          url: '/a/org/ajax/jqueryTabledit/office',
+          url: '/u/update',
           rowIdentifier: 'data-id',
           // hideIdentifier: true,
           // editButton: false,
