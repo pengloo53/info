@@ -50,7 +50,9 @@ router.post('/add', function(req,res,next){
 router.post('/ajax/jqueryTabledit', function(req,res,next){
   var action = req.body.action;
   var username = req.body.username;
-  var email = req.body.email;
+  var userid = req.body.userid || '';
+  var email = req.body.email || '';
+  var role = req.body.role;
   var id = req.body.id;
   if(action === 'delete'){
     userModel.destroy({
@@ -59,7 +61,17 @@ router.post('/ajax/jqueryTabledit', function(req,res,next){
       res.send(JSON.stringify({message: 'delete success'}));  // jquery tabledit 要求返回json
     });
   }else if(action === 'edit'){
-
+    userModel.update({username: username, email:email, userid: userid},{
+      where: {id: id}
+    }).then(function(p){
+      res.send(JSON.stringify({message: 'edit success'}));  // jquery tabledit 要求返回json
+    });
+  }else if(action === 'restore'){
+    userModel.restore({
+      where : {id: id}
+    }).then(function(p){
+      res.send(JSON.stringify({message: 'cancel success'}));
+    });
   }
 });
 

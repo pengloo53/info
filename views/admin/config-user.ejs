@@ -62,7 +62,6 @@
                           <tr class="headings">
                             <th class="column-title hidden"># </th>
                             <th class="column-title">用户名 </th>
-                            <th class="column-title">密码 </th>
                             <th class="column-title">员工号 </th>
                             <th class="column-title">邮箱 </th>
                             <th class="column-title">角色 </th>
@@ -75,7 +74,6 @@
                           <tr class="even pointer" data-id="<%= userList[i].id %>">
                             <td class="hidden"><%= userList[i].id %></td>
                             <td class=" "><%= userList[i].username %></td>
-                            <td class=" "><%= userList[i].password %></td>
                             <td class=" "><%= userList[i].userid %></td>
                             <td class=" "><%= userList[i].email %></td>
                             <td class="a-right a-right "><%= userList[i].role %></td>
@@ -164,7 +162,7 @@
     <script>
       $(function(){
         $('table').Tabledit({
-          url: '/u/update',
+          url: '/u/ajax/jqueryTabledit',
           rowIdentifier: 'data-id',
           // hideIdentifier: true,
           // editButton: false,
@@ -195,8 +193,8 @@
             }
           },
           columns: {
-              identifier: [0, 'id'],  //  列从0开始，id是table的第2列
-              editable: [[1, 'office'],[2, 'owner'],[3, 'preparation'],[4, 'bz']]
+              identifier: [0, 'id'],  //  列从0开始，id是table的第0列
+              editable: [[1, 'username'],[2, 'userid'],[3, 'email']]
           },
           onDraw: function() {
               console.log('onDraw()');
@@ -220,8 +218,8 @@
               console.log('onAjax(action, serialize)');
               console.log(action);
               console.log(serialize);
-              if($('input[name=office]').val() == ''){
-                $('input[name=office]').parent().addClass('has-error');
+              if($('input[name=username]').val() == ''){
+                $('input[name=username]').parent().addClass('has-error');
                 return false;
               }
           }
