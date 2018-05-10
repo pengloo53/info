@@ -50,11 +50,17 @@ router.post('/add', function(req,res,next){
 router.post('/ajax/jqueryTabledit', function(req,res,next){
   var action = req.body.action;
   var username = req.body.username;
+  var email = req.body.email;
   var id = req.body.id;
   if(action === 'delete'){
-    userModel.destrod
-  }
+    userModel.destroy({
+      where: {id: id}
+    }).then(function(p){
+      res.send(JSON.stringify({message: 'delete success'}));  // jquery tabledit 要求返回json
+    });
+  }else if(action === 'edit'){
 
+  }
 });
 
 module.exports = router;
