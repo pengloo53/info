@@ -1,0 +1,33 @@
+<!-- modal add dept -->
+<div class="modal fade" tabindex="-1" role="dialog" id="addDept">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-danger">添加部门 </h4>
+      </div>
+      <form class="form-horizontal" method="POST" action="/a/org/addDept">
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="" class="control-label col-lg-2">部门 </label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" name="deptModal" placeholder="新添部门">
+              </div>
+              
+            </div>
+            <div class="form-group">
+              <label for="" class="control-label col-lg-2">负责人 </label>
+              <div class="col-lg-10">
+								<input type="text" class="form-control" name="owerModal" placeholder="填写部门负责人">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="submit" class="btn btn-primary">确定</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /modal add user -->

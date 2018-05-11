@@ -80,5 +80,34 @@ router.post('/ajax/jqueryTabledit/office', function(req,res,next){
   }
 });
 
+// action: add dept
+router.post('/addDept', function(req,res,next){
+  var dept = req.body.deptModal.trim();
+  var owner = req.body.owerModal.trim();
+  var centreId = req.session.user.centreId;
+  if(dept && owner){
+    deptModel.create({centreId: centreId,dept: dept,owner:owner}).then(function(p){
+      res.redirect('/admin/org/dept');
+    });
+  }else{
+    res.send('未填写完整');
+  }
+});
+
+// action: add office
+router.post('/addOffice', function(req,res,next){
+  var office = req.body.officeModal.trim();
+  var owner = req.body.owerModal.trim();
+  var centreId = req.session.user.centreId;
+  var deptId = req.body.deptId;
+  if (deptId && office && owner){
+    officeModel.create({centreId: centreId, deptId: deptId, office: office, owner:owner}).then(function(p){
+      res.redirect('/admin/org/office?deptId=' + deptId);
+    });
+  }else{
+    res.send('未填写完整');
+  }
+});
+
 
 module.exports = router;

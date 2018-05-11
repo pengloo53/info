@@ -63,7 +63,7 @@ router.get('/', getCentreInfo,getTotalByCentreId,function(req,res,next){
 });
 
 // page: config 用户管理
-router.get('/user',function(req,res,next){
+router.get('/config/user',function(req,res,next){
   var centreId = req.session.user.centreId;
   dbGet.getUserList(centreId, function(err,rows,fields){
     res.locals.userList = rows;
@@ -76,20 +76,20 @@ router.get('/user',function(req,res,next){
 });
 
 // page: organization 组织管理 部门详情
-router.get('/dept', getDeptList, function(req,res,next){
+router.get('/org/dept', getDeptList, function(req,res,next){
   res.render('admin/org-dept.ejs', {
     title: '部门详情'
   });
 });
 // page: organization 科室详情
-router.get('/office', getDeptInfo, getOfficeList, function(req,res,next){
+router.get('/org/office', getDeptInfo, getOfficeList, function(req,res,next){
   res.render('admin/org-office.ejs', {
-    title: '科室详情'
+    title: '科室详情',
   });
 });
 
 // page: 后台配置 - 岗位管理
-router.get('/post', getPostList,getDutyList,getGradeList,getStateList, function(req,res,next){
+router.get('/config/post', getPostList,getDutyList,getGradeList,getStateList, function(req,res,next){
   res.render('admin/config-post.ejs',{
     title: '岗位配置'
   });
