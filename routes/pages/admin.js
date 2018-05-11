@@ -64,8 +64,9 @@ router.get('/', getCentreInfo,getTotalByCentreId,function(req,res,next){
 
 // page: config 用户管理
 router.get('/user',function(req,res,next){
-  userModel.findAll().then(function(p){
-    res.locals.userList = p;
+  var centreId = req.session.user.centreId;
+  dbGet.getUserList(centreId, function(err,rows,fields){
+    res.locals.userList = rows;
     next();
   });
 }, getDeptList, function(req,res,next){

@@ -4,6 +4,7 @@
 
 var express = require('express');
 var router = express.Router();
+
 // 用户表模型
 var userModel = require('../models/user/user.js');
 // 工具中间件：添加Log
@@ -37,8 +38,10 @@ router.post('/add', function(req,res,next){
   var username = req.body.username.trim();
   var role = req.body.role;
   var deptId = req.body.deptId;
+  var centreId = req.session.user.centreId;
+  var password = 'admin'; // 默认密码
   if(username){
-    userModel.create({username: username,role:role,deptId:deptId}).then(function(p){
+    userModel.create({username: username,role:role,deptId:deptId,centreId:centreId,password: password}).then(function(p){
       res.redirect('/admin/user');
     });
   }else{

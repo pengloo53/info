@@ -39,8 +39,20 @@ function getTotalByCentreId(centreId , callback){
   });
 }
 
+function getUserList(centreId, callback){
+  var sql = 'select u.id id,u.username username,u.userid userid,u.email email,u.role role, c.centre centre,d.dept dept from user u left join fom_centre c on c.id = u.centreId left join fom_dept d on d.id = u.deptId where u.centreId = ' + centreId + ' and u.deletedAt is null order by u.deptId';
+  querySQL(sql, function(err, rows,fields){
+    callback(err,rows,fields);
+  });
+}
+
 exports.findStaffByDeptId = findStaffByDeptId;
 exports.findStaffByCentreId = findStaffByCentreId;
 exports.getLog = getLog;
 exports.getGroupFromCentre = getGroupFromCentre;
 exports.getTotalByCentreId = getTotalByCentreId;
+exports.getUserList = getUserList;
+
+// getUserList(1, function(err,rows,fields){
+//   console.log(rows);
+// });
