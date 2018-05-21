@@ -59,42 +59,9 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-// page: 用户中心-修改密码
-router.get('/c/passwd', getDeptInfo, function(req,res,next){
-  var user = req.session.user;
-  res.render('user/setting.ejs',{
-    title: '个人中心设置页',
-    user: user,
-  });
-});
-
-// action: update password
-router.post('/c/passwd', function(req,res,next){
-  var username = req.body.username;
-  var newPasswd = req.body.newPasswd;
-  var rePasswd = req.body.rePasswd;
-  if(!newPasswd || !rePasswd || newPasswd == '' || rePasswd == ''){
-    req.flash('error','输入完整再提交');
-    return res.redirect('/user/c/passwd');
-  }
-  if(newPasswd !== rePasswd){
-    req.flash('error','两次密码输入不同');
-    return res.redirect('/user/c/passwd');
-  }
-  userModel.update(
-    {password: rePasswd},
-    {where: {username: username}},
-    {fields: ['password']}
-  ).then(function(p){
-    addLog(req, 'user', '修改密码', '','','');
-    req.flash('success','更新密码成功');
-    res.redirect('/login/out');
-  });
-});
-
 // page: FOM表格页面
 router.get('/fom', getOfficeList, getDeptInfo, getCentreList, function(req,res,next){
-	res.render('user/fom.ejs',{
+	res.render('user/fom-index.ejs',{
 		title: '更新人员FOM表'
 	});
 });
@@ -126,21 +93,21 @@ router.get('/fom/get/officeList', function(req,res,next){
 
 // page: 获取添加人员表单
 router.get('/fom/add', getCentreInfo, getDeptInfo, getOfficeList, getStateList, getPostTypeList,getGradeList, function(req,res,next){
-  res.render('user/add.ejs', {
+  res.render('user/fom-add.ejs', {
     title: '添加新入职员工'
   });
 });
 
 // page: 获取显示人员页面
 router.get('/fom/show',getStaffInfo, getDeptInfo, function(req,res,next){
-  res.render('user/show.ejs', {
+  res.render('user/fom-show.ejs', {
     title: '显示员工信息'
   });
 });
 
 // page: 编辑岗位信息页面 - edit.ejs
 router.get('/fom/edit',getStaffInfo, getDeptInfo,getGradeList,getDutyList, getStateList, getPostList, getPostTypeList, function(req,res,next){
-  res.render('user/edit.ejs', {
+  res.render('user/fom-edit.ejs', {
     title: '编辑员工岗位信息'
   });
 });
